@@ -1,0 +1,59 @@
+/// Monthly revenue targets per region, 36 months x 5 regions (data/targets.csv).
+table FactTargets
+	lineageTag: 46897107-c0c4-513d-9717-1bb8aa8bd04e
+
+	column 'Month start'
+		dataType: dateTime
+		isHidden
+		formatString: yyyy-mm-dd
+		lineageTag: 4ec29516-fb70-5776-9d28-f7c8ba419df5
+		summarizeBy: none
+		sourceColumn: Month start
+
+		annotation SummarizationSetBy = User
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column RegionKey
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 68cf7810-5a11-5f98-93b0-34ac1693331b
+		summarizeBy: none
+		sourceColumn: RegionKey
+
+		annotation SummarizationSetBy = User
+
+	column 'Target revenue'
+		dataType: decimal
+		isHidden
+		formatString: € #,0
+		lineageTag: 171fdf2b-00a5-51aa-867e-f719bd5b2939
+		summarizeBy: sum
+		sourceColumn: Target revenue
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactTargets = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "targets.csv"), [Delimiter = ",", Columns = 3, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"Month", type text}, {"RegionCode", type text},
+				        {"TargetRevenueEUR", Currency.Type}}, "en-US"),
+				    MonthStart = Table.AddColumn(Typed, "Month start",
+				        each #date(Number.FromText(Text.Start([Month], 4), "en-US"), Number.FromText(Text.End([Month], 2), "en-US"), 1), type date),
+				    Regions = Table.TransformColumnTypes(Table.PromoteHeaders(Csv.Document(File.Contents(DataFolder & "regions.csv"), [Delimiter = ",", Columns = 4, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]), [PromoteAllScalars = true]),
+				        {{"RegionKey", Int64.Type}, {"RegionCode", type text}, {"Region", type text}, {"SortOrder", Int64.Type}}, "en-US"),
+				    WithRegion = Table.ExpandTableColumn(Table.NestedJoin(MonthStart, {"RegionCode"}, Regions, {"RegionCode"}, "Region",
+				        JoinKind.LeftOuter), "Region", {"RegionKey"}),
+				    Renamed = Table.RenameColumns(WithRegion, {{"TargetRevenueEUR", "Target revenue"}}),
+				    Selected = Table.SelectColumns(Renamed, {"Month start", "RegionKey", "Target revenue"}),
+				    Result = Table.TransformColumnTypes(Selected, {{"RegionKey", Int64.Type}}, "en-US")
+				in
+				    Result
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

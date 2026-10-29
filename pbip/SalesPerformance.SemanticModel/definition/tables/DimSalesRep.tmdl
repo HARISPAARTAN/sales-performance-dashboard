@@ -1,0 +1,79 @@
+/// Sales reps: 12 account managers, each in one home region (data/sales_reps.csv).
+table DimSalesRep
+	lineageTag: f5030b7e-70b8-5294-b15e-08a4cd2d238e
+
+	column SalesRepKey
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 086ad5b7-0905-5f72-8e2e-c1ba4d2267b7
+		summarizeBy: none
+		sourceColumn: SalesRepKey
+
+		annotation SummarizationSetBy = User
+
+	column 'Sales rep code'
+		dataType: string
+		lineageTag: e311444d-99f8-54e6-9977-f044c795038c
+		summarizeBy: none
+		sourceColumn: Sales rep code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sales rep'
+		dataType: string
+		lineageTag: 73c5ad5a-aafc-53e2-af92-431019b693ca
+		summarizeBy: none
+		sourceColumn: Sales rep
+
+		annotation SummarizationSetBy = Automatic
+
+	column E-mail
+		dataType: string
+		lineageTag: 05285a5e-b8e6-54aa-995e-f9b39b60d5ba
+		summarizeBy: none
+		sourceColumn: E-mail
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Home region'
+		dataType: string
+		lineageTag: 1645e0d0-a272-5d69-9586-fb0b01b500bf
+		summarizeBy: none
+		sourceColumn: Home region
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The rep's home region, for row-level security only (no relationship).
+	column RegionKey
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 3c291d9b-8de9-5ec1-bf47-1d322e00fe70
+		summarizeBy: none
+		sourceColumn: RegionKey
+
+		annotation SummarizationSetBy = User
+
+	partition DimSalesRep = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "sales_reps.csv"), [Delimiter = ",", Columns = 5, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"SalesRepKey", Int64.Type}, {"SalesRepCode", type text},
+				        {"SalesRepName", type text}, {"Email", type text}, {"RegionCode", type text}}, "en-US"),
+				    Regions = Table.TransformColumnTypes(Table.PromoteHeaders(Csv.Document(File.Contents(DataFolder & "regions.csv"), [Delimiter = ",", Columns = 4, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]), [PromoteAllScalars = true]),
+				        {{"RegionKey", Int64.Type}, {"RegionCode", type text}, {"Region", type text}, {"SortOrder", Int64.Type}}, "en-US"),
+				    WithRegion = Table.ExpandTableColumn(Table.NestedJoin(Typed, {"RegionCode"}, Regions, {"RegionCode"}, "Region",
+				        JoinKind.LeftOuter), "Region", {"RegionKey", "Region"}, {"RegionKey", "Home region"}),
+				    Renamed = Table.RenameColumns(WithRegion, {{"SalesRepCode", "Sales rep code"}, {"SalesRepName", "Sales rep"},
+				        {"Email", "E-mail"}}),
+				    Selected = Table.SelectColumns(Renamed, {"SalesRepKey", "Sales rep code", "Sales rep", "E-mail", "Home region", "RegionKey"}),
+				    Result = Table.TransformColumnTypes(Selected, {{"RegionKey", Int64.Type}, {"Home region", type text}}, "en-US")
+				in
+				    Result
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

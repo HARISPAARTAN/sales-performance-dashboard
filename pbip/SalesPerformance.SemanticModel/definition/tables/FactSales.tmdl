@@ -1,0 +1,192 @@
+/// Order lines 2023-01-02 to 2025-09-30 from the three yearly ERP workbooks in data/sales_orders/.
+table FactSales
+	lineageTag: 1f4dbeb1-9008-56bd-918d-c2a35d2329e0
+
+	column 'Order number'
+		dataType: string
+		lineageTag: d798e057-30ec-547a-8d5f-cde625833d1a
+		summarizeBy: none
+		sourceColumn: Order number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Order line'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 40e50277-6e06-5b25-8d15-7adf9f62a6cd
+		summarizeBy: none
+		sourceColumn: Order line
+
+		annotation SummarizationSetBy = User
+
+	column 'Order date'
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: f4c6a55c-4e2f-5c49-8631-bf86df20112e
+		summarizeBy: none
+		sourceColumn: Order date
+
+		annotation SummarizationSetBy = User
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ProductKey
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0029059d-218b-51d5-a983-c9183473156e
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+		annotation SummarizationSetBy = User
+
+	column CustomerKey
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 023e7bb7-e17f-5b13-a3cc-c04a3c0391c9
+		summarizeBy: none
+		sourceColumn: CustomerKey
+
+		annotation SummarizationSetBy = User
+
+	/// The customer's region at order time.
+	column RegionKey
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 16bc85af-50d3-5a23-b0e3-81748f3eb26d
+		summarizeBy: none
+		sourceColumn: RegionKey
+
+		annotation SummarizationSetBy = User
+
+	column SalesRepKey
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 7e7edf72-85e0-5b73-9d7e-50a27c24af78
+		summarizeBy: none
+		sourceColumn: SalesRepKey
+
+		annotation SummarizationSetBy = User
+
+	column Quantity
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 656faa33-b703-5f60-bcbf-cf019728dbb5
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Unit list price'
+		dataType: decimal
+		isHidden
+		formatString: € #,0.00
+		lineageTag: 61103ca5-9810-5113-8df7-eac02b1f6c22
+		summarizeBy: none
+		sourceColumn: Unit list price
+
+		annotation SummarizationSetBy = User
+
+	column 'Discount rate'
+		dataType: double
+		isHidden
+		formatString: 0.00 %
+		lineageTag: b636d404-02dd-53d8-855b-4bb4ffb27860
+		summarizeBy: none
+		sourceColumn: Discount rate
+
+		annotation SummarizationSetBy = User
+
+	column 'Unit cost'
+		dataType: decimal
+		isHidden
+		formatString: € #,0.00
+		lineageTag: 0d137730-8469-5a6d-8838-496a660b04af
+		summarizeBy: none
+		sourceColumn: Unit cost
+
+		annotation SummarizationSetBy = User
+
+	/// Quantity x Unit list price, before discount.
+	column 'Gross amount'
+		dataType: decimal
+		isHidden
+		formatString: € #,0.00
+		lineageTag: 1bb30444-ecc7-5ff0-849c-38dbe2d6c46e
+		summarizeBy: sum
+		sourceColumn: Gross amount
+
+		annotation SummarizationSetBy = Automatic
+
+	/// NetAmountEUR of the export: Quantity x Unit list price x (1 - Discount rate), half up to the cent.
+	column 'Net amount'
+		dataType: decimal
+		isHidden
+		formatString: € #,0.00
+		lineageTag: 56dbf343-a5ff-55f5-90bc-92c947058b8c
+		summarizeBy: sum
+		sourceColumn: Net amount
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Quantity x Unit cost.
+	column 'Cost amount'
+		dataType: decimal
+		isHidden
+		formatString: € #,0.00
+		lineageTag: 0a582c44-df48-5626-878a-146ef683625f
+		summarizeBy: sum
+		sourceColumn: Cost amount
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactSales = m
+		mode: import
+		source =
+				let
+				    Source = Folder.Files(DataFolder & "sales_orders"),
+				    Workbooks = Table.SelectRows(Source, each Text.StartsWith([Name], "sales_orders_") and [Extension] = ".xlsx"),
+				    Sorted = Table.Sort(Workbooks, {{"Name", Order.Ascending}}),
+				    Sheets = Table.AddColumn(Sorted, "Lines", each Table.PromoteHeaders(
+				        Table.Skip(Excel.Workbook([Content], false, true){[Item = "Orders", Kind = "Sheet"]}[Data], 2), [PromoteAllScalars = true])),
+				    Combined = Table.Combine(Sheets[Lines]),
+				    Typed = Table.TransformColumnTypes(Combined, {{"OrderNumber", type text}, {"OrderLine", Int64.Type}, {"OrderDate", type date},
+				        {"CustomerCode", type text}, {"SKU", type text}, {"SalesRepCode", type text}, {"Quantity", Int64.Type},
+				        {"UnitListPriceEUR", Currency.Type}, {"DiscountRate", type number}, {"UnitCostEUR", Currency.Type},
+				        {"NetAmountEUR", Currency.Type}}, "en-US"),
+				    Customers = Table.TransformColumnTypes(Table.PromoteHeaders(Csv.Document(File.Contents(DataFolder & "customers.csv"), [Delimiter = ",", Columns = 9, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]), [PromoteAllScalars = true]),
+				        {{"CustomerKey", Int64.Type}, {"CustomerCode", type text}, {"RegionCode", type text}}, "en-US"),
+				    Regions = Table.TransformColumnTypes(Table.PromoteHeaders(Csv.Document(File.Contents(DataFolder & "regions.csv"), [Delimiter = ",", Columns = 4, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]), [PromoteAllScalars = true]),
+				        {{"RegionKey", Int64.Type}, {"RegionCode", type text}, {"Region", type text}, {"SortOrder", Int64.Type}}, "en-US"),
+				    Products = Table.TransformColumnTypes(Table.PromoteHeaders(Csv.Document(File.Contents(DataFolder & "products.csv"), [Delimiter = ",", Columns = 11, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]), [PromoteAllScalars = true]),
+				        {{"ProductKey", Int64.Type}, {"SKU", type text}}, "en-US"),
+				    Reps = Table.TransformColumnTypes(Table.PromoteHeaders(Csv.Document(File.Contents(DataFolder & "sales_reps.csv"), [Delimiter = ",", Columns = 5, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]), [PromoteAllScalars = true]),
+				        {{"SalesRepKey", Int64.Type}, {"SalesRepCode", type text}}, "en-US"),
+				    CustomerRegions = Table.ExpandTableColumn(Table.NestedJoin(Table.SelectColumns(Customers, {"CustomerCode", "CustomerKey", "RegionCode"}),
+				        {"RegionCode"}, Regions, {"RegionCode"}, "Region", JoinKind.LeftOuter), "Region", {"RegionKey"}),
+				    WithCustomer = Table.ExpandTableColumn(Table.NestedJoin(Typed, {"CustomerCode"}, CustomerRegions, {"CustomerCode"}, "Customer",
+				        JoinKind.LeftOuter), "Customer", {"CustomerKey", "RegionKey"}),
+				    WithProduct = Table.ExpandTableColumn(Table.NestedJoin(WithCustomer, {"SKU"}, Products, {"SKU"}, "Product",
+				        JoinKind.LeftOuter), "Product", {"ProductKey"}),
+				    WithRep = Table.ExpandTableColumn(Table.NestedJoin(WithProduct, {"SalesRepCode"}, Reps, {"SalesRepCode"}, "Rep",
+				        JoinKind.LeftOuter), "Rep", {"SalesRepKey"}),
+				    Gross = Table.AddColumn(WithRep, "Gross amount", each [Quantity] * [UnitListPriceEUR], Currency.Type),
+				    CostAmount = Table.AddColumn(Gross, "Cost amount", each [Quantity] * [UnitCostEUR], Currency.Type),
+				    Renamed = Table.RenameColumns(CostAmount, {{"OrderNumber", "Order number"}, {"OrderLine", "Order line"},
+				        {"OrderDate", "Order date"}, {"UnitListPriceEUR", "Unit list price"}, {"DiscountRate", "Discount rate"},
+				        {"UnitCostEUR", "Unit cost"}, {"NetAmountEUR", "Net amount"}}),
+				    Selected = Table.SelectColumns(Renamed, {"Order number", "Order line", "Order date", "ProductKey", "CustomerKey", "RegionKey",
+				        "SalesRepKey", "Quantity", "Unit list price", "Discount rate", "Unit cost", "Gross amount", "Net amount", "Cost amount"}),
+				    Result = Table.TransformColumnTypes(Selected, {{"ProductKey", Int64.Type}, {"CustomerKey", Int64.Type},
+				        {"RegionKey", Int64.Type}, {"SalesRepKey", Int64.Type}}, "en-US")
+				in
+				    Result
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

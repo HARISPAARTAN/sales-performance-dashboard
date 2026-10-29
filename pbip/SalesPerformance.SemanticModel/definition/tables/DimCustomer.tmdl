@@ -1,0 +1,121 @@
+/// Customers: 400 retail accounts in 13 countries (data/customers.csv).
+table DimCustomer
+	lineageTag: 5ccb3858-1a1f-5e1d-bafc-d8a621112cff
+
+	column CustomerKey
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 28351036-cb12-564d-8284-c350e0f95f96
+		summarizeBy: none
+		sourceColumn: CustomerKey
+
+		annotation SummarizationSetBy = User
+
+	column 'Customer code'
+		dataType: string
+		lineageTag: c35e917b-e292-5cb0-ba7d-19452fe3ba0b
+		summarizeBy: none
+		sourceColumn: Customer code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Customer
+		dataType: string
+		lineageTag: 0b59d854-5c10-599e-8863-f40639997523
+		summarizeBy: none
+		sourceColumn: Customer
+
+		annotation SummarizationSetBy = Automatic
+
+	column Segment
+		dataType: string
+		lineageTag: 01055e1a-a866-519e-82fe-fcf586e28e64
+		summarizeBy: none
+		sourceColumn: Segment
+		sortByColumn: 'Segment sort'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Segment sort'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: dda487ae-4625-5acc-9841-d306df362419
+		summarizeBy: none
+		sourceColumn: Segment sort
+
+		annotation SummarizationSetBy = User
+
+	column Channel
+		dataType: string
+		lineageTag: b44ae484-fe56-557e-8a73-a10e0ddb61cd
+		summarizeBy: none
+		sourceColumn: Channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Country code'
+		dataType: string
+		lineageTag: e58c1697-9526-5336-ba59-5c59a89de772
+		summarizeBy: none
+		sourceColumn: Country code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: c1d6dd72-2dd8-5dd5-be8f-716047fe9267
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The customer's region, for row-level security only (no relationship).
+	column RegionKey
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0c06a38b-60ea-545c-ad3c-b0b4b5256ea9
+		summarizeBy: none
+		sourceColumn: RegionKey
+
+		annotation SummarizationSetBy = User
+
+	column 'Account since'
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: db437c47-6d2f-55fb-843b-b5626dd9f98c
+		summarizeBy: none
+		sourceColumn: Account since
+
+		annotation SummarizationSetBy = User
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition DimCustomer = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "customers.csv"), [Delimiter = ",", Columns = 9, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"CustomerKey", Int64.Type}, {"CustomerCode", type text},
+				        {"CustomerName", type text}, {"Segment", type text}, {"Channel", type text}, {"CountryCode", type text},
+				        {"Country", type text}, {"RegionCode", type text}, {"AccountSince", type date}}, "en-US"),
+				    Regions = Table.TransformColumnTypes(Table.PromoteHeaders(Csv.Document(File.Contents(DataFolder & "regions.csv"), [Delimiter = ",", Columns = 4, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]), [PromoteAllScalars = true]),
+				        {{"RegionKey", Int64.Type}, {"RegionCode", type text}, {"Region", type text}, {"SortOrder", Int64.Type}}, "en-US"),
+				    WithRegion = Table.ExpandTableColumn(Table.NestedJoin(Typed, {"RegionCode"}, Regions, {"RegionCode"}, "Region",
+				        JoinKind.LeftOuter), "Region", {"RegionKey"}),
+				    SegmentSort = Table.AddColumn(WithRegion, "Segment sort",
+				        each List.PositionOf({"Independent", "Chain", "Online"}, [Segment]) + 1, Int64.Type),
+				    Renamed = Table.RenameColumns(SegmentSort, {{"CustomerCode", "Customer code"}, {"CustomerName", "Customer"},
+				        {"CountryCode", "Country code"}, {"AccountSince", "Account since"}}),
+				    Selected = Table.SelectColumns(Renamed, {"CustomerKey", "Customer code", "Customer", "Segment", "Segment sort", "Channel",
+				        "Country code", "Country", "RegionKey", "Account since"}),
+				    Result = Table.TransformColumnTypes(Selected, {{"RegionKey", Int64.Type}}, "en-US")
+				in
+				    Result
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

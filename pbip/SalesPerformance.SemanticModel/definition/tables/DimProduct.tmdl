@@ -1,0 +1,150 @@
+/// Products: 180 SKUs in 6 categories and 19 subcategories (data/products.csv).
+table DimProduct
+	lineageTag: 0e834198-8bfe-5580-bb7f-8a85daceb95f
+
+	column ProductKey
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 4d88f6bd-b43b-523a-b8ad-cb9f8fdbc63b
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+		annotation SummarizationSetBy = User
+
+	column SKU
+		dataType: string
+		lineageTag: aecc2ab0-f071-52b2-b307-97f5938ea050
+		summarizeBy: none
+		sourceColumn: SKU
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product
+		dataType: string
+		lineageTag: d5b12b31-4f4e-579b-8e12-573a24f93109
+		summarizeBy: none
+		sourceColumn: Product
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: 65f2ba82-afcc-546a-969a-fc94b597cb0b
+		summarizeBy: none
+		sourceColumn: Category
+		sortByColumn: 'Category sort'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Category sort'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: df54bd14-15e1-5fbb-9ddf-4486d9304c9d
+		summarizeBy: none
+		sourceColumn: Category sort
+
+		annotation SummarizationSetBy = User
+
+	column Subcategory
+		dataType: string
+		lineageTag: f4339de4-2cac-5ad9-b0b2-bc93bdcc83dc
+		summarizeBy: none
+		sourceColumn: Subcategory
+		sortByColumn: 'Subcategory sort'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Subcategory sort'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 494ac1f9-16a1-5910-bd0e-5ac29fd729e8
+		summarizeBy: none
+		sourceColumn: Subcategory sort
+
+		annotation SummarizationSetBy = User
+
+	column Brand
+		dataType: string
+		lineageTag: 02d7903a-5cd3-51e5-b3de-01814afb8ec5
+		summarizeBy: none
+		sourceColumn: Brand
+
+		annotation SummarizationSetBy = Automatic
+
+	/// List price 2025 in EUR; not additive.
+	column 'List price'
+		dataType: decimal
+		formatString: € #,0.00
+		lineageTag: 0b437934-8254-53f0-90ab-31979476a25d
+		summarizeBy: none
+		sourceColumn: List price
+
+		annotation SummarizationSetBy = User
+
+	column 'Launch date'
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: c499dff3-9655-51cd-9e23-c31a751c91cf
+		summarizeBy: none
+		sourceColumn: Launch date
+
+		annotation SummarizationSetBy = User
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Discontinued date'
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 827ab28c-d720-51e8-b992-9052497b955a
+		summarizeBy: none
+		sourceColumn: Discontinued date
+
+		annotation SummarizationSetBy = User
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Status
+		dataType: string
+		lineageTag: f60f0d65-031d-58d0-b473-2211e022235e
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy Products
+		lineageTag: 4ab8e44c-206b-5bb1-972c-0c60f91a922e
+
+		level Category
+			lineageTag: 8057aa94-6bf9-5e2d-9c41-e11245033aaa
+			column: Category
+
+		level Subcategory
+			lineageTag: 613691f1-a052-5f3b-b86b-1e5eca014312
+			column: Subcategory
+
+		level Product
+			lineageTag: 88ffa3a6-8271-59d1-b68a-9c635e2cfd6c
+			column: Product
+
+	partition DimProduct = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "products.csv"), [Delimiter = ",", Columns = 11, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"ProductKey", Int64.Type}, {"SKU", type text}, {"ProductName", type text},
+				        {"Category", type text}, {"CategorySort", Int64.Type}, {"Subcategory", type text}, {"SubcategorySort", Int64.Type},
+				        {"Brand", type text}, {"ListPriceEUR", Currency.Type}, {"LaunchDate", type date}, {"DiscontinuedDate", type date}}, "en-US"),
+				    Status = Table.AddColumn(Typed, "Status", each if [DiscontinuedDate] = null then "Active" else "Discontinued", type text),
+				    Renamed = Table.RenameColumns(Status, {{"ProductName", "Product"}, {"CategorySort", "Category sort"},
+				        {"SubcategorySort", "Subcategory sort"}, {"ListPriceEUR", "List price"}, {"LaunchDate", "Launch date"},
+				        {"DiscontinuedDate", "Discontinued date"}})
+				in
+				    Renamed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

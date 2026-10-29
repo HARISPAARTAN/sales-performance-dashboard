@@ -1,0 +1,51 @@
+/// Field parameter: the dimension of the Overview bar chart (Category, Region, Segment, Channel).
+table 'Analyse by'
+	lineageTag: 6a8e60a0-a8bf-55cb-8dec-a86818e67c86
+
+	column 'Analyse by'
+		dataType: string
+		lineageTag: 18f99acd-bfd4-52ff-86ca-64c8ffb076bf
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Analyse by Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Analyse by Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Analyse by Fields'
+		dataType: string
+		isHidden
+		lineageTag: a72ff9c1-f998-5b21-af46-b715151850e7
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Analyse by Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Analyse by Order'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5dc85018-ed2d-55ab-908a-e173bbc0260c
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Analyse by' = calculated
+		mode: import
+		source =
+				{
+				    ("Category", NAMEOF('DimProduct'[Category]), 0),
+				    ("Region", NAMEOF('DimRegion'[Region]), 1),
+				    ("Segment", NAMEOF('DimCustomer'[Segment]), 2),
+				    ("Channel", NAMEOF('DimCustomer'[Channel]), 3)
+				}

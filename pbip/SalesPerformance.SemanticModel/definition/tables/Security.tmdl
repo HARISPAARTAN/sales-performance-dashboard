@@ -1,0 +1,42 @@
+/// Row-level security: which regions each regional manager sees (data/security.csv). Hidden, no relationship.
+table Security
+	isHidden
+	lineageTag: 09ab69fa-93be-5b91-995a-ef0fa6183200
+
+	column 'User e-mail'
+		dataType: string
+		lineageTag: 2168ab93-2d3e-5a8e-a1c0-653320bca98c
+		summarizeBy: none
+		sourceColumn: User e-mail
+
+		annotation SummarizationSetBy = Automatic
+
+	column RegionKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 70dfb2cc-a504-5ecd-ad98-bc03b334af95
+		summarizeBy: none
+		sourceColumn: RegionKey
+
+		annotation SummarizationSetBy = User
+
+	partition Security = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "security.csv"), [Delimiter = ",", Columns = 2, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"UserEmail", type text}, {"RegionCode", type text}}, "en-US"),
+				    Regions = Table.TransformColumnTypes(Table.PromoteHeaders(Csv.Document(File.Contents(DataFolder & "regions.csv"), [Delimiter = ",", Columns = 4, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]), [PromoteAllScalars = true]),
+				        {{"RegionKey", Int64.Type}, {"RegionCode", type text}, {"Region", type text}, {"SortOrder", Int64.Type}}, "en-US"),
+				    WithRegion = Table.ExpandTableColumn(Table.NestedJoin(Typed, {"RegionCode"}, Regions, {"RegionCode"}, "Region",
+				        JoinKind.LeftOuter), "Region", {"RegionKey"}),
+				    Renamed = Table.RenameColumns(WithRegion, {{"UserEmail", "User e-mail"}}),
+				    Selected = Table.SelectColumns(Renamed, {"User e-mail", "RegionKey"}),
+				    Result = Table.TransformColumnTypes(Selected, {{"RegionKey", Int64.Type}}, "en-US")
+				in
+				    Result
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

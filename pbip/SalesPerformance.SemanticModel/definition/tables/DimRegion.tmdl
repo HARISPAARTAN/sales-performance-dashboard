@@ -1,0 +1,56 @@
+/// Sales regions: DACH, Benelux, Nordics, France, Iberia (data/regions.csv).
+table DimRegion
+	lineageTag: 890bece0-efb1-5832-a78b-c0cd45d87ebd
+
+	column RegionKey
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c7e3b007-8a0f-505f-9afd-2553310859a9
+		summarizeBy: none
+		sourceColumn: RegionKey
+
+		annotation SummarizationSetBy = User
+
+	column 'Region code'
+		dataType: string
+		lineageTag: 405e41f0-e856-5760-8f41-add2bb784710
+		summarizeBy: none
+		sourceColumn: Region code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 34be5f08-2d7a-501c-8b8d-734583ffc994
+		summarizeBy: none
+		sourceColumn: Region
+		sortByColumn: 'Region sort'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Region sort'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 679f7149-9578-59eb-af91-84aeb3ceaad5
+		summarizeBy: none
+		sourceColumn: Region sort
+
+		annotation SummarizationSetBy = User
+
+	partition DimRegion = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "regions.csv"), [Delimiter = ",", Columns = 4, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"RegionKey", Int64.Type}, {"RegionCode", type text}, {"Region", type text},
+				        {"SortOrder", Int64.Type}}, "en-US"),
+				    Renamed = Table.RenameColumns(Typed, {{"RegionCode", "Region code"}, {"SortOrder", "Region sort"}})
+				in
+				    Renamed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

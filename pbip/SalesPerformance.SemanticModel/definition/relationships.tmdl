@@ -1,0 +1,27 @@
+relationship factsales-dimdate
+	fromColumn: FactSales.'Order date'
+	toColumn: DimDate.Date
+
+relationship factsales-dimproduct
+	fromColumn: FactSales.ProductKey
+	toColumn: DimProduct.ProductKey
+
+relationship factsales-dimcustomer
+	fromColumn: FactSales.CustomerKey
+	toColumn: DimCustomer.CustomerKey
+
+relationship factsales-dimregion
+	fromColumn: FactSales.RegionKey
+	toColumn: DimRegion.RegionKey
+
+relationship factsales-dimsalesrep
+	fromColumn: FactSales.SalesRepKey
+	toColumn: DimSalesRep.SalesRepKey
+
+relationship facttargets-dimdate
+	fromColumn: FactTargets.'Month start'
+	toColumn: DimDate.Date
+
+relationship facttargets-dimregion
+	fromColumn: FactTargets.RegionKey
+	toColumn: DimRegion.RegionKey

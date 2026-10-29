@@ -1,0 +1,11 @@
+/// Regional managers see only the regions listed for their sign-in address in Security.
+role 'Regional manager'
+	modelPermission: read
+
+	tablePermission Security = Security[User e-mail] = USERPRINCIPALNAME()
+
+	tablePermission DimRegion = DimRegion[RegionKey] IN CALCULATETABLE(VALUES(Security[RegionKey]), Security[User e-mail] = USERPRINCIPALNAME())
+
+	tablePermission DimCustomer = DimCustomer[RegionKey] IN CALCULATETABLE(VALUES(Security[RegionKey]), Security[User e-mail] = USERPRINCIPALNAME())
+
+	tablePermission DimSalesRep = DimSalesRep[RegionKey] IN CALCULATETABLE(VALUES(Security[RegionKey]), Security[User e-mail] = USERPRINCIPALNAME())

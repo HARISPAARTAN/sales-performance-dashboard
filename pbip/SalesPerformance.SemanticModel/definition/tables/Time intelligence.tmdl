@@ -1,0 +1,176 @@
+/// Calculation group: seven time calculations over month-index windows (docs/measures.md).
+table 'Time intelligence'
+	lineageTag: 8c4643d7-230a-5063-9e9b-5eae0f148fa8
+
+	calculationGroup
+		precedence: 10
+
+		/// The measure as filtered.
+		calculationItem Current = SELECTEDMEASURE()
+
+		/// The same months one year earlier (month index - 12), months with sales only.
+		calculationItem PY =
+				VAR past = CALCULATETABLE(VALUES(DimDate[Month index]), DimDate[Is past] = TRUE())
+				VAR last = MAXX(past, DimDate[Month index])
+				VAR guard =
+				    ISEMPTY(past)
+				        || ISSELECTEDMEASURE([Product rank], [Pareto cumulative %], [Pareto class], [Products for 80 %],
+				            [Last sales date], [Data until], [Selected product])
+				VAR pct = ISSELECTEDMEASURE([Gross margin %], [Discount %], [Target attainment %])
+				VAR full = MINX(past, DimDate[Month index]) > 12
+				VAR cur = CALCULATE(SELECTEDMEASURE(), DimDate[Is past] = TRUE())
+				VAR py =
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS(DimDate),
+				        TREATAS(SELECTCOLUMNS(past, "@m", DimDate[Month index] - 12), DimDate[Month index])
+				    )
+				RETURN
+				    IF(NOT guard, py)
+
+		/// Change against PY: the difference for amounts and counts, percentage points for percentages; blank without a full previous year.
+		calculationItem YoY =
+				VAR past = CALCULATETABLE(VALUES(DimDate[Month index]), DimDate[Is past] = TRUE())
+				VAR last = MAXX(past, DimDate[Month index])
+				VAR guard =
+				    ISEMPTY(past)
+				        || ISSELECTEDMEASURE([Product rank], [Pareto cumulative %], [Pareto class], [Products for 80 %],
+				            [Last sales date], [Data until], [Selected product])
+				VAR pct = ISSELECTEDMEASURE([Gross margin %], [Discount %], [Target attainment %])
+				VAR full = MINX(past, DimDate[Month index]) > 12
+				VAR cur = CALCULATE(SELECTEDMEASURE(), DimDate[Is past] = TRUE())
+				VAR py =
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS(DimDate),
+				        TREATAS(SELECTCOLUMNS(past, "@m", DimDate[Month index] - 12), DimDate[Month index])
+				    )
+				RETURN
+				    IF(NOT guard && full && NOT ISBLANK(cur) && NOT ISBLANK(py), IF(pct, (cur - py) * 100, cur - py))
+
+			formatStringDefinition = IF(ISSELECTEDMEASURE([Gross margin %], [Discount %], [Target attainment %]), "+0.0"" pp"";-0.0"" pp"";0.0"" pp""", SELECTEDMEASUREFORMATSTRING())
+
+		/// Relative change against PY for amounts and counts; blank for percentages and without a full previous year.
+		calculationItem 'YoY %' =
+				VAR past = CALCULATETABLE(VALUES(DimDate[Month index]), DimDate[Is past] = TRUE())
+				VAR last = MAXX(past, DimDate[Month index])
+				VAR guard =
+				    ISEMPTY(past)
+				        || ISSELECTEDMEASURE([Product rank], [Pareto cumulative %], [Pareto class], [Products for 80 %],
+				            [Last sales date], [Data until], [Selected product])
+				VAR pct = ISSELECTEDMEASURE([Gross margin %], [Discount %], [Target attainment %])
+				VAR full = MINX(past, DimDate[Month index]) > 12
+				VAR cur = CALCULATE(SELECTEDMEASURE(), DimDate[Is past] = TRUE())
+				VAR py =
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS(DimDate),
+				        TREATAS(SELECTCOLUMNS(past, "@m", DimDate[Month index] - 12), DimDate[Month index])
+				    )
+				RETURN
+				    IF(NOT guard && NOT pct && full, DIVIDE(cur - py, py))
+
+			formatStringDefinition = "+0.0 %;-0.0 %;0.0 %"
+
+		/// From January of the last month with sales in the selection to that month.
+		calculationItem YTD =
+				VAR past = CALCULATETABLE(VALUES(DimDate[Month index]), DimDate[Is past] = TRUE())
+				VAR last = MAXX(past, DimDate[Month index])
+				VAR guard =
+				    ISEMPTY(past)
+				        || ISSELECTEDMEASURE([Product rank], [Pareto cumulative %], [Pareto class], [Products for 80 %],
+				            [Last sales date], [Data until], [Selected product])
+				VAR pct = ISSELECTEDMEASURE([Gross margin %], [Discount %], [Target attainment %])
+				VAR full = MINX(past, DimDate[Month index]) > 12
+				VAR cur = CALCULATE(SELECTEDMEASURE(), DimDate[Is past] = TRUE())
+				VAR py =
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS(DimDate),
+				        TREATAS(SELECTCOLUMNS(past, "@m", DimDate[Month index] - 12), DimDate[Month index])
+				    )
+				RETURN
+				    IF(
+				        NOT guard,
+				        CALCULATE(
+				            SELECTEDMEASURE(),
+				            REMOVEFILTERS(DimDate),
+				            DimDate[Month index] >= last - MOD(last - 1, 12),
+				            DimDate[Month index] <= last
+				        )
+				    )
+
+		/// YTD one year earlier.
+		calculationItem PYTD =
+				VAR past = CALCULATETABLE(VALUES(DimDate[Month index]), DimDate[Is past] = TRUE())
+				VAR last = MAXX(past, DimDate[Month index])
+				VAR guard =
+				    ISEMPTY(past)
+				        || ISSELECTEDMEASURE([Product rank], [Pareto cumulative %], [Pareto class], [Products for 80 %],
+				            [Last sales date], [Data until], [Selected product])
+				VAR pct = ISSELECTEDMEASURE([Gross margin %], [Discount %], [Target attainment %])
+				VAR full = MINX(past, DimDate[Month index]) > 12
+				VAR cur = CALCULATE(SELECTEDMEASURE(), DimDate[Is past] = TRUE())
+				VAR py =
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS(DimDate),
+				        TREATAS(SELECTCOLUMNS(past, "@m", DimDate[Month index] - 12), DimDate[Month index])
+				    )
+				RETURN
+				    IF(
+				        NOT guard,
+				        CALCULATE(
+				            SELECTEDMEASURE(),
+				            REMOVEFILTERS(DimDate),
+				            DimDate[Month index] >= last - 12 - MOD(last - 1, 12),
+				            DimDate[Month index] <= last - 12
+				        )
+				    )
+
+		/// The twelve months up to the last month with sales in the selection; from December 2023.
+		calculationItem R12 =
+				VAR past = CALCULATETABLE(VALUES(DimDate[Month index]), DimDate[Is past] = TRUE())
+				VAR last = MAXX(past, DimDate[Month index])
+				VAR guard =
+				    ISEMPTY(past)
+				        || ISSELECTEDMEASURE([Product rank], [Pareto cumulative %], [Pareto class], [Products for 80 %],
+				            [Last sales date], [Data until], [Selected product])
+				VAR pct = ISSELECTEDMEASURE([Gross margin %], [Discount %], [Target attainment %])
+				VAR full = MINX(past, DimDate[Month index]) > 12
+				VAR cur = CALCULATE(SELECTEDMEASURE(), DimDate[Is past] = TRUE())
+				VAR py =
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS(DimDate),
+				        TREATAS(SELECTCOLUMNS(past, "@m", DimDate[Month index] - 12), DimDate[Month index])
+				    )
+				RETURN
+				    IF(
+				        NOT guard && last >= 12,
+				        CALCULATE(
+				            SELECTEDMEASURE(),
+				            REMOVEFILTERS(DimDate),
+				            DimDate[Month index] >= last - 11,
+				            DimDate[Month index] <= last
+				        )
+				    )
+
+	column 'Time calculation'
+		dataType: string
+		lineageTag: 4d4fe7d6-b846-5366-aa09-15142edcaba3
+		summarizeBy: none
+		sourceColumn: Name
+		sortByColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordinal
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 6ed827b5-cd53-5435-9c7a-c05dfa11e658
+		summarizeBy: sum
+		sourceColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic

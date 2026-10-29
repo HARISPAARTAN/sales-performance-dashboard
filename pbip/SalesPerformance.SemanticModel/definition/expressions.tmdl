@@ -1,0 +1,17 @@
+/// Folder of the committed data files, with a trailing backslash; set it to the clone's data folder.
+expression DataFolder = "E:\GITGUB\sales-performance-dashboard\data\" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]
+	lineageTag: ca70f16e-e1dc-5baf-beaa-62ce61ab69a0
+
+	annotation PBI_ResultType = Text
+
+/// First day of DimDate; a 1 January (the month index counts from it).
+expression StartDate = #date(2023, 1, 1) meta [IsParameterQuery = true, Type = "Date", IsParameterQueryRequired = true]
+	lineageTag: fbfdc692-fce0-5d0a-8947-5b46d41e4026
+
+	annotation PBI_ResultType = Date
+
+/// Last day of DimDate; the targets run to December 2025.
+expression EndDate = #date(2025, 12, 31) meta [IsParameterQuery = true, Type = "Date", IsParameterQueryRequired = true]
+	lineageTag: 672473c5-7c9c-5783-884f-fc053042cf76
+
+	annotation PBI_ResultType = Date

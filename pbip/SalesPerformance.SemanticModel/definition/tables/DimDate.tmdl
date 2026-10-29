@@ -1,0 +1,140 @@
+/// Calendar, one row per day from StartDate to EndDate; the model's date table.
+table DimDate
+	lineageTag: 58928882-de88-5c9b-85ee-3a26f912dd2d
+	dataCategory: Time
+
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: yyyy-mm-dd
+		lineageTag: 608be64d-f532-51f9-be89-e6b54a1e9d2e
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = User
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 29ed62aa-80bd-5920-ac20-adcda01ca3e1
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = User
+
+	column Quarter
+		dataType: string
+		lineageTag: 62ab9fc1-4c11-5322-a165-306c7cce2de7
+		summarizeBy: none
+		sourceColumn: Quarter
+		sortByColumn: 'Quarter number'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Quarter number'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: aa4ba05d-79e6-5192-b48b-61e48e99d3c5
+		summarizeBy: none
+		sourceColumn: Quarter number
+
+		annotation SummarizationSetBy = User
+
+	column Month
+		dataType: int64
+		formatString: 0
+		lineageTag: 8a30d1e8-a238-504d-b8dc-b926fe4ec26d
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = User
+
+	column 'Month name'
+		dataType: string
+		lineageTag: 8d11ec3d-7319-551b-a924-a8c21cc355f3
+		summarizeBy: none
+		sourceColumn: Month name
+		sortByColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month start'
+		dataType: dateTime
+		formatString: mmm yyyy
+		lineageTag: 4b2e3972-37c9-548e-b3ce-4139173dfb96
+		summarizeBy: none
+		sourceColumn: Month start
+
+		annotation SummarizationSetBy = User
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year-month
+		dataType: string
+		lineageTag: 917dd0f1-f57c-572a-8310-3747f285f706
+		summarizeBy: none
+		sourceColumn: Year-month
+		sortByColumn: 'Month index'
+
+		annotation SummarizationSetBy = Automatic
+
+	/// (Year - year of StartDate) x 12 + Month: 2023-01 = 1, 2025-12 = 36. The time-intelligence windows count in it.
+	column 'Month index'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 3ae1d832-0de5-5c51-81fc-b7d68f2a2322
+		summarizeBy: none
+		sourceColumn: Month index
+
+		annotation SummarizationSetBy = User
+
+	/// TRUE up to the last order date. No CALCULATE, so no context transition and no circular dependency.
+	column 'Is past' = DimDate[Date] <= MAX(FactSales[Order date])
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 7b00b35b-8f0e-5808-8f70-08eed7183abc
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+	hierarchy Calendar
+		lineageTag: d0f07195-21b3-5955-989c-58c88ea1ed9b
+
+		level Year
+			lineageTag: 1d0b94a3-8d24-5dd3-8f4c-8e651bb6b6e5
+			column: Year
+
+		level Quarter
+			lineageTag: 5ef1fd50-c2cb-5de2-9c61-bc087a5de294
+			column: Quarter
+
+		level 'Month name'
+			lineageTag: dc716c3b-97eb-5724-9f78-ac5b0cad5e09
+			column: 'Month name'
+
+	partition DimDate = m
+		mode: import
+		source =
+				let
+				    Days = Duration.Days(EndDate - StartDate) + 1,
+				    Dates = List.Dates(StartDate, Days, #duration(1, 0, 0, 0)),
+				    Base = Table.FromList(Dates, Splitter.SplitByNothing(), type table [Date = date]),
+				    Year = Table.AddColumn(Base, "Year", each Date.Year([Date]), Int64.Type),
+				    QuarterNumber = Table.AddColumn(Year, "Quarter number", each Date.QuarterOfYear([Date]), Int64.Type),
+				    Quarter = Table.AddColumn(QuarterNumber, "Quarter", each "Q" & Text.From([Quarter number], "en-US"), type text),
+				    Month = Table.AddColumn(Quarter, "Month", each Date.Month([Date]), Int64.Type),
+				    MonthName = Table.AddColumn(Month, "Month name", each Date.ToText([Date], [Format = "MMM", Culture = "en-US"]), type text),
+				    MonthStart = Table.AddColumn(MonthName, "Month start", each Date.StartOfMonth([Date]), type date),
+				    YearMonth = Table.AddColumn(MonthStart, "Year-month", each Date.ToText([Date], [Format = "yyyy-MM", Culture = "en-US"]), type text),
+				    MonthIndex = Table.AddColumn(YearMonth, "Month index", each ([Year] - Date.Year(StartDate)) * 12 + [Month], Int64.Type)
+				in
+				    MonthIndex
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

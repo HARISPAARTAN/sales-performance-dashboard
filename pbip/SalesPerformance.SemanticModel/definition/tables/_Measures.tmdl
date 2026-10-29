@@ -1,0 +1,194 @@
+/// Measure table: every report measure lives here; the single hidden column only anchors the table.
+table _Measures
+	lineageTag: 456049a0-0432-52f0-af72-57d9ac06b12f
+
+	/// Net revenue after discount, EUR: the sum of NetAmountEUR from the ERP export.
+	measure Revenue = SUM(FactSales[Net amount])
+		displayFolder: Sales
+		lineageTag: 190ab146-a639-56cf-ace1-c2c9d00f955a
+
+		formatStringDefinition = VAR v = ABS(SELECTEDMEASURE()) RETURN IF(v >= 1E6, "€ #,0.00,,"" m""", IF(v >= 1E4, "€ #,0.0,"" k""", "€ #,0"))
+
+	/// List value before discount, EUR: quantity x list price.
+	measure 'Gross sales' = SUM(FactSales[Gross amount])
+		displayFolder: Sales
+		lineageTag: 06389d1c-ff8e-5888-bfe3-f9cf8c93d780
+
+		formatStringDefinition = VAR v = ABS(SELECTEDMEASURE()) RETURN IF(v >= 1E6, "€ #,0.00,,"" m""", IF(v >= 1E4, "€ #,0.0,"" k""", "€ #,0"))
+
+	/// Cost of goods sold, EUR: quantity x unit cost.
+	measure Cost = SUM(FactSales[Cost amount])
+		displayFolder: Sales
+		lineageTag: 507d6aeb-2a91-5e43-b424-626f04a126a5
+
+		formatStringDefinition = VAR v = ABS(SELECTEDMEASURE()) RETURN IF(v >= 1E6, "€ #,0.00,,"" m""", IF(v >= 1E4, "€ #,0.0,"" k""", "€ #,0"))
+
+	/// Revenue minus cost, EUR.
+	measure 'Gross margin' = [Revenue] - [Cost]
+		displayFolder: Sales
+		lineageTag: b01dd2ec-3a0a-5377-af52-729c6854045f
+
+		formatStringDefinition = VAR v = ABS(SELECTEDMEASURE()) RETURN IF(v >= 1E6, "€ #,0.00,,"" m""", IF(v >= 1E4, "€ #,0.0,"" k""", "€ #,0"))
+
+	/// Gross margin as a share of revenue.
+	measure 'Gross margin %' = DIVIDE([Gross margin], [Revenue])
+		formatString: 0.0 %
+		displayFolder: Sales
+		lineageTag: c3a69b58-53dd-52ff-ad16-4f3f4cc3ebc1
+
+	/// Discount granted as a share of the list value.
+	measure 'Discount %' = DIVIDE([Gross sales] - [Revenue], [Gross sales])
+		formatString: 0.0 %
+		displayFolder: Sales
+		lineageTag: 24c9c8b3-539f-555b-9873-22ccc8d869c5
+
+	/// Units sold.
+	measure Units = SUM(FactSales[Quantity])
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: 676c1d69-46a2-5047-b621-449aa858e3e5
+
+	/// Distinct orders; an order counts once if any of its lines is in the filter context.
+	measure Orders = DISTINCTCOUNT(FactSales[Order number])
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: 8ec3658f-7c92-53ba-9b0d-9d27592ad6cc
+
+	/// Revenue per order, EUR.
+	measure 'Average order value' = DIVIDE([Revenue], [Orders])
+		formatString: € #,0
+		displayFolder: Sales
+		lineageTag: 9f0c58b7-a116-5e5d-a8c4-9143bc5e135f
+
+	/// Customers with at least one order line.
+	measure 'Active customers' = DISTINCTCOUNT(FactSales[CustomerKey])
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: e4e00cca-1205-5fec-acc2-7dd5fa6a00bd
+
+	/// Revenue target, EUR. Targets exist per region and month only, so the measure is blank under a product, customer or sales-rep filter.
+	measure Target =
+			IF(
+			    ISFILTERED(DimProduct) || ISFILTERED(DimCustomer) || ISFILTERED(DimSalesRep),
+			    BLANK(),
+			    SUM(FactTargets[Target revenue])
+			)
+		displayFolder: Targets
+		lineageTag: 973e5f3c-71f9-559c-bd9c-23ab1f8147d0
+
+		formatStringDefinition = VAR v = ABS(SELECTEDMEASURE()) RETURN IF(v >= 1E6, "€ #,0.00,,"" m""", IF(v >= 1E4, "€ #,0.0,"" k""", "€ #,0"))
+
+	/// Target of the months with sales data (Is past), EUR.
+	measure 'Target to date' = CALCULATE([Target], DimDate[Is past] = TRUE())
+		displayFolder: Targets
+		lineageTag: ec96c62d-8482-59c4-82e3-71ac9c1a6922
+
+		formatStringDefinition = VAR v = ABS(SELECTEDMEASURE()) RETURN IF(v >= 1E6, "€ #,0.00,,"" m""", IF(v >= 1E4, "€ #,0.0,"" k""", "€ #,0"))
+
+	/// Revenue as a share of the target to date.
+	measure 'Target attainment %' = DIVIDE([Revenue], [Target to date])
+		formatString: 0.0 %
+		displayFolder: Targets
+		lineageTag: 6fbffa85-3081-54a1-bfde-3ed1b41b2de0
+
+	/// Revenue minus target to date, EUR; negative when behind target.
+	measure 'Target gap' = IF(NOT ISBLANK([Target to date]), [Revenue] - [Target to date])
+		displayFolder: Targets
+		lineageTag: 9ecfb6de-9ac7-53e8-9a5e-4c1419a68060
+
+		formatStringDefinition = VAR v = ABS(SELECTEDMEASURE()) RETURN IF(v >= 1E6, "€ #,0.00,,"" m""", IF(v >= 1E4, "€ #,0.0,"" k""", "€ #,0"))
+
+	/// Revenue rank of one product among the products in the outer filters (ties share a rank, SKIP); blank unless one product is in context.
+	measure 'Product rank' =
+			VAR rev = [Revenue]
+			RETURN
+			    IF(
+			        HASONEVALUE(DimProduct[Product]) && NOT ISBLANK(rev),
+			        CALCULATE(
+			            RANKX(VALUES(DimProduct[Product]), [Revenue], rev, DESC, SKIP),
+			            REMOVEFILTERS(DimProduct[Product], DimProduct[SKU]),
+			            ALLSELECTED(DimProduct[Category])
+			        )
+			    )
+		formatString: 0
+		displayFolder: Products
+		lineageTag: 36be9c95-3cc7-5916-938e-57133f5a0c15
+
+	/// Share of revenue held by this product and every product with at least its revenue (ties share a value).
+	measure 'Pareto cumulative %' =
+			VAR rev = [Revenue]
+			VAR products =
+			    CALCULATETABLE(
+			        ADDCOLUMNS(VALUES(DimProduct[Product]), "@rev", [Revenue]),
+			        REMOVEFILTERS(DimProduct[Product], DimProduct[SKU]),
+			        ALLSELECTED(DimProduct[Category])
+			    )
+			RETURN
+			    IF(
+			        HASONEVALUE(DimProduct[Product]) && NOT ISBLANK(rev),
+			        DIVIDE(SUMX(FILTER(products, [@rev] >= rev), [@rev]), SUMX(products, [@rev]))
+			    )
+		formatString: 0.0 %
+		displayFolder: Products
+		lineageTag: a793bd1d-1b31-5456-bd7c-5b479855aaac
+
+	/// A up to 80 % cumulative revenue, B up to 95 %, C above.
+	measure 'Pareto class' = VAR c = [Pareto cumulative %] RETURN IF(NOT ISBLANK(c), IF(c <= 0.8, "A", IF(c <= 0.95, "B", "C")))
+		displayFolder: Products
+		lineageTag: a69604c1-1bbf-5713-bf0d-070e1b20d6f8
+
+	/// Number of products whose cumulative revenue stays within 80 % of the total.
+	measure 'Products for 80 %' =
+			VAR products =
+			    CALCULATETABLE(
+			        ADDCOLUMNS(VALUES(DimProduct[Product]), "@rev", [Revenue]),
+			        REMOVEFILTERS(DimProduct[Product], DimProduct[SKU]),
+			        ALLSELECTED(DimProduct[Category])
+			    )
+			VAR total = SUMX(products, [@rev])
+			VAR withCum =
+			    ADDCOLUMNS(
+			        FILTER(products, [@rev] > 0),
+			        "@cum", VAR r = [@rev] RETURN SUMX(FILTER(products, [@rev] >= r), [@rev])
+			    )
+			RETURN
+			    COUNTROWS(FILTER(withCum, [@cum] <= 0.8 * total))
+		formatString: #,0
+		displayFolder: Products
+		lineageTag: 1285fe87-4040-55fa-b6a6-9bd5fd34bd89
+
+	/// Date of the latest order line in the model, independent of filters.
+	measure 'Last sales date' = CALCULATE(MAX(FactSales[Order date]), REMOVEFILTERS())
+		formatString: d mmm yyyy
+		displayFolder: Info
+		lineageTag: 0b1145c6-35fc-5a6d-a6b0-2b950569d331
+
+	/// Header text: the latest order date in English whatever the viewer's locale.
+	measure 'Data until' = "Data until " & FORMAT([Last sales date], "d mmm yyyy", "en-US")
+		displayFolder: Info
+		lineageTag: fde16b39-f6aa-5b7d-87fe-12094fa729f7
+
+	/// The product in context, for the product tooltip; blank for several.
+	measure 'Selected product' = SELECTEDVALUE(DimProduct[Product])
+		displayFolder: Products
+		lineageTag: 4be908ac-fa8f-5366-9b52-85f8a5a8163c
+
+	/// Number of order lines loaded.
+	measure 'Order lines' = COUNTROWS(FactSales)
+		formatString: #,0
+		displayFolder: Info
+		lineageTag: a9668921-b804-5d52-aa51-da0f6514fc49
+
+	column Anchor
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 33765dc3-5d38-5457-95cc-4d7a776e5ba1
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = User
+
+	partition _Measures = calculated
+		mode: import
+		source = {BLANK()}
