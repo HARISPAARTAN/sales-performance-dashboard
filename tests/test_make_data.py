@@ -5,6 +5,7 @@ from __future__ import annotations
 import csv
 import datetime as dt
 import re
+import zipfile
 from decimal import ROUND_HALF_UP, Decimal
 from pathlib import Path
 
@@ -40,6 +41,15 @@ def read_csv(name: str) -> list[dict[str, str]]:
 def test_check_matches_a_fresh_build(capsys: pytest.CaptureFixture[str]) -> None:
     assert make_data.main(["--check"]) == 0
     assert "matches a fresh build" in capsys.readouterr().out
+
+
+def test_workbook_entries_record_no_platform(tmp_path: Path) -> None:
+    make_data.generate(tmp_path)
+    for year, committed in zip((2023, 2024, 2025), WORKBOOKS, strict=True):
+        fresh = tmp_path / "sales_orders" / f"sales_orders_{year}.xlsx"
+        for path in (committed, fresh):
+            with zipfile.ZipFile(path) as archive:
+                assert {item.create_system for item in archive.infolist()} == {0}, path
 
 
 def test_every_file_is_at_most_2_mb() -> None:
