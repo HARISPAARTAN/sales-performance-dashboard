@@ -17,7 +17,7 @@
           "From": [
             {
               "Entity": "Time intelligence",
-              "Name": "f",
+              "Name": "f0",
               "Type": 0
             }
           ],
@@ -31,7 +31,7 @@
                       "Column": {
                         "Expression": {
                           "SourceRef": {
-                            "Source": "f"
+                            "Source": "f0"
                           }
                         },
                         "Property": "Time calculation"

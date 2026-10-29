@@ -17,7 +17,7 @@
           "From": [
             {
               "Entity": "_Measures",
-              "Name": "f",
+              "Name": "f0",
               "Type": 0
             }
           ],
@@ -31,7 +31,7 @@
                     "Measure": {
                       "Expression": {
                         "SourceRef": {
-                          "Source": "f"
+                          "Source": "f0"
                         }
                       },
                       "Property": "Revenue"

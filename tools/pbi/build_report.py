@@ -34,7 +34,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))  # lets `python tools/pbi/build_report.py` import its neighbours
 
 from build_theme import dark_tokens  # noqa: E402
-from pbir import PROJECT, SCHEMAS, Visual, field_ref, slicer_selection, stable_name  # noqa: E402
+from pbir import PROJECT, SCHEMAS, Visual, _quoted, field_ref, projection, slicer_selection, stable_name  # noqa: E402
 
 ROOT = HERE.parents[1]
 REPORT = ROOT / PROJECT["folder"] / f"{PROJECT['name']}.Report"
@@ -87,19 +87,22 @@ class Colours:
         return self.tokens[name]
 
 
-def _scope(entity: str, prop: str, value: str) -> dict:
-    """The data selector of one series value, in the shape Desktop writes for manual series colours."""
-    right = {"Literal": {"Value": "'" + value.replace("'", "''") + "'"}}
+def _scope(entity: str, prop: str, value: str | bool | int | float) -> dict:
+    """The data selector of one series value, typed like the column (text, number, true or false, date), in the shape
+    Desktop writes for manual series colours."""
+    right = {"Literal": {"Value": _quoted(value)}}
     return {"data": [{"scopeId": {"Comparison": {"ComparisonKind": 0, "Left": _column(entity, prop), "Right": right}}}]}
 
 
 def _series(spec: dict, colours: Colours) -> dict:
     """Series colours and dashed lines by legend value: {"field": [entity, column], "colours": {value: token},
-    "dashed": [value]}."""
+    "dashed": [value]}. JSON keys are text; for a number or true/false legend value write "colours" as pairs
+    [[2025, token], ...]."""
     entity, prop = spec["field"]
+    pairs = spec["colours"].items() if isinstance(spec["colours"], dict) else spec["colours"]
     fills = [
         {"properties": {"fill": _solid(colours(token))}, "selector": _scope(entity, prop, value)}
-        for value, token in spec["colours"].items()
+        for value, token in pairs
     ]
     out = {"dataPoint": fills}
     dashed = [
@@ -174,14 +177,17 @@ def _gradient(spec: dict, colours: Colours) -> list[dict]:
     return [
         {
             "properties": {"backColor": fill},
-            "selector": {"data": [{"dataViewWildcard": {"matchingOption": 1}}], "metadata": f"{entity}.{prop}"},
+            "selector": {
+                "data": [{"dataViewWildcard": {"matchingOption": 1}}],
+                "metadata": projection(entity, prop, kind)["queryRef"],
+            },
         }
     ]
 
 
 def _data_bars(spec: dict, colours: Colours) -> list[dict]:
     """Data bars behind the values of one table column."""
-    entity, prop, _ = spec["field"]
+    entity, prop, kind = spec["field"]
     bars = {
         "positiveColor": _solid(colours(spec["colour"])),
         "negativeColor": _solid(colours("danger")),
@@ -189,7 +195,7 @@ def _data_bars(spec: dict, colours: Colours) -> list[dict]:
         "reverseDirection": _lit("false"),
         "hideText": _lit("false"),
     }
-    return [{"properties": {"dataBars": bars}, "selector": {"metadata": f"{entity}.{prop}"}}]
+    return [{"properties": {"dataBars": bars}, "selector": {"metadata": projection(entity, prop, kind)["queryRef"]}}]
 
 
 def _formatting(spec: dict, colours: Colours) -> dict:

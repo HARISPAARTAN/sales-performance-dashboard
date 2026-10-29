@@ -6,6 +6,7 @@ shared unchanged by every repository that copies tools/pbi/."""
 from __future__ import annotations
 
 import copy
+import datetime
 import json
 import re
 import uuid
@@ -185,43 +186,56 @@ def _field_parameter_role(parameter: tuple[str, str], default: tuple[str, str, s
 COMPARISONS = {"=": 0, ">": 1, ">=": 2, "<": 3, "<=": 4}  # PBIR ComparisonKind codes
 
 
-def _comparison_filter(name: str, spec: dict) -> dict:
+def _comparison_filter(name: str, spec: dict, alias: str = "f") -> dict:
     """Visual-level advanced filter in the shape Desktop writes for "is greater than (or equal to)": on a whole-number column
     {"field": [entity, column], "op": ">=", "value": 2019}, or on a measure {"field": [entity, measure], "kind": "Measure",
-    "op": ">", "value": 0}, which keeps the rows of the visual where the measure passes (a blank measure never does)."""
+    "op": ">", "value": 0}, which keeps the rows of the visual where the measure passes (a blank measure never does).
+    `alias` names the table in the filter's `From`; the filters of one visual use different aliases."""
     entity, prop = spec["field"]
     kind = spec.get("kind", "Column")
     if kind not in ("Column", "Measure"):
         raise ValueError(f"a comparison filter is on a Column or a Measure, not {kind!r}")
     value = f"{int(spec['value'])}L" if kind == "Column" else f"{float(spec['value']):.15g}D"
-    left = {kind: {"Expression": {"SourceRef": {"Source": "f"}}, "Property": prop}}
+    left = {kind: {"Expression": {"SourceRef": {"Source": alias}}, "Property": prop}}
     condition = {"Comparison": {"ComparisonKind": COMPARISONS[spec["op"]], "Left": left, "Right": {"Literal": {"Value": value}}}}
     return {
         "name": name,
         "field": field_ref(entity, prop, kind),
         "type": "Advanced",
-        "filter": {"Version": 2, "From": [{"Name": "f", "Entity": entity, "Type": 0}], "Where": [{"Condition": condition}]},
+        "filter": {"Version": 2, "From": [{"Name": alias, "Entity": entity, "Type": 0}], "Where": [{"Condition": condition}]},
     }
 
 
-def _in_filter(name: str, spec: dict) -> dict:
+def _in_filter(name: str, spec: dict, alias: str = "f") -> dict:
     """Visual-level basic filter in the shape Desktop writes for a ticked value list: {"field": [entity, column],
-    "in": ["YoY %"]} keeps the rows (or, on a calculation group column, applies the calculation items) listed."""
+    "in": ["YoY %"]} keeps the rows (or, on a calculation group column, applies the calculation items) listed.
+    `alias` names the table in the filter's `From`; the filters of one visual use different aliases."""
     entity, prop = spec["field"]
     values = [[{"Literal": {"Value": _quoted(v)}}] for v in spec["in"]]
-    column = {"Column": {"Expression": {"SourceRef": {"Source": "f"}}, "Property": prop}}
+    column = {"Column": {"Expression": {"SourceRef": {"Source": alias}}, "Property": prop}}
     return {
         "name": name,
         "field": field_ref(entity, prop, "Column"),
         "type": "Categorical",
-        "filter": {"Version": 2, "From": [{"Name": "f", "Entity": entity, "Type": 0}],
+        "filter": {"Version": 2, "From": [{"Name": alias, "Entity": entity, "Type": 0}],
                    "Where": [{"Condition": {"In": {"Expressions": [column], "Values": values}}}]},
     }
 
 
-def _quoted(value: str | int) -> str:
-    """A literal value as PBIR writes it: text in single quotes, a whole number with the L suffix."""
-    return f"{int(value)}L" if isinstance(value, int) else "'" + str(value).replace("'", "''") + "'"
+def _quoted(value: str | bool | int | float | datetime.date) -> str:
+    """A literal value as PBIR writes it: true or false, a whole number with the L suffix, a decimal with the D suffix,
+    a date or date-time as datetime'2025-01-01T00:00:00', anything else as text in single quotes (a quote is doubled)."""
+    if isinstance(value, bool):  # before int: bool is a subclass of int
+        return "true" if value else "false"
+    if isinstance(value, int):
+        return f"{value}L"
+    if isinstance(value, float):
+        return f"{value:.15g}D"
+    if isinstance(value, datetime.datetime):
+        return f"datetime'{value.isoformat(timespec='seconds')}'"
+    if isinstance(value, datetime.date):
+        return f"datetime'{value.isoformat()}T00:00:00'"
+    return "'" + str(value).replace("'", "''") + "'"
 
 
 def slicer_selection(entity: str, prop: str, values: list) -> dict:
@@ -318,7 +332,7 @@ class Visual:
             e, p, k = sort["field"]
             v["visual"]["query"]["sortDefinition"] = {"sort": [{"field": field_ref(e, p, k), "direction": sort["direction"]}]}
         visual_filters = [_top_n_filter(stable_name(name, "topn"), top_n)] if top_n else []
-        visual_filters += [(_in_filter if "in" in f else _comparison_filter)(stable_name(name, "filter", str(i)), f)
+        visual_filters += [(_in_filter if "in" in f else _comparison_filter)(stable_name(name, "filter", str(i)), f, f"f{i}")
                            for i, f in enumerate(filters or [])]
         if visual_filters:
             v["filterConfig"] = {"filters": visual_filters}
@@ -383,19 +397,13 @@ def iter_fields(node, aliases: dict[str, str] | None = None):
     """Yield (entity, property, kind) for every Column, Measure or hierarchy Level reference anywhere below `node`
     (queryState, objects, sort, filters, bookmark filters). kind is the node type, so an aggregation yields its Column;
     a level yields ("Table", "Hierarchy/Level", "Level").
-    A `Source` alias is resolved through the `From` entries (`Name` -> `Entity`) found below `node`."""
-    if aliases is None:
-        aliases = {}
-        stack = [node]
-        while stack:
-            cur = stack.pop()
-            if isinstance(cur, dict):
-                if "Name" in cur and "Entity" in cur and "Property" not in cur:
-                    aliases[cur["Name"]] = cur["Entity"]
-                stack.extend(cur.values())
-            elif isinstance(cur, list):
-                stack.extend(cur)
+    A `Source` alias is resolved through the `From` entries (`Name` -> `Entity`) of the nearest enclosing `From`, so
+    the filters of one visual may reuse an alias for different tables."""
+    aliases = aliases or {}
     if isinstance(node, dict):
+        sources = node.get("From")
+        if isinstance(sources, list):
+            aliases = {**aliases, **{s["Name"]: s["Entity"] for s in sources if isinstance(s, dict) and "Name" in s and "Entity" in s}}
         level = node.get("HierarchyLevel")
         if isinstance(level, dict) and "Level" in level:
             hierarchy = level.get("Expression", {}).get("Hierarchy", {})
