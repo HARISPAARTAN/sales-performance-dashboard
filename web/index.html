@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sales Performance Dashboard · Veltrano Outdoor (demo)</title>
+  <link rel="icon" href="data:,">
+  <meta name="description" content="HTML replica of a Power BI sales dashboard for Veltrano Outdoor, a fictional outdoor-equipment wholesaler. Invented data.">
+  <script src="kit/theme-boot.js"></script>
+  <link rel="stylesheet" href="kit/fonts/fonts.css">
+  <link rel="stylesheet" href="kit/tokens.css">
+  <link rel="stylesheet" href="kit/base.css">
+  <link rel="stylesheet" href="assets/css/app.css">
+  <script src="vendor/echarts.min.js" defer></script>
+  <script type="module" src="assets/js/app.js"></script>
+</head>
+<body>
+  <div class="pf-page" id="app" data-state="loading">
+    <header class="pf-header">
+      <a class="pf-brand" href="#overview"><span class="pf-brand__mark" aria-hidden="true">VO</span><span class="pf-brand__name">Veltrano Outdoor · Sales performance</span></a>
+      <div class="pf-header__tools">
+        <span class="pf-pill pf-pill--muted" id="data-until">Data until –</span>
+        <button type="button" class="pf-btn pf-btn--ghost pf-btn--sm" id="about-open" aria-haspopup="dialog">About</button>
+        <span id="theme-toggle"></span>
+      </div>
+    </header>
+
+    <nav class="m-tabs" aria-label="Report pages">
+      <div class="pf-tabs" role="tablist" aria-label="Report pages" id="tabs">
+        <button type="button" class="pf-tab" role="tab" id="tab-overview" aria-controls="panel-overview" aria-selected="true">Overview</button>
+        <button type="button" class="pf-tab" role="tab" id="tab-trends" aria-controls="panel-trends" aria-selected="false">Trends</button>
+        <button type="button" class="pf-tab" role="tab" id="tab-products" aria-controls="panel-products" aria-selected="false">Products</button>
+        <button type="button" class="pf-tab" role="tab" id="tab-regions" aria-controls="panel-regions" aria-selected="false">Regions</button>
+        <button type="button" class="pf-tab" role="tab" id="tab-customers" aria-controls="panel-customers" aria-selected="false">Customers</button>
+        <button type="button" class="pf-tab" role="tab" id="tab-targets" aria-controls="panel-targets" aria-selected="false">Targets</button>
+      </div>
+    </nav>
+
+    <section class="filters" id="filters" aria-label="Filters">
+      <div class="filters__head">
+        <span class="filters__summary" id="filter-summary"></span>
+        <button type="button" class="pf-btn pf-btn--sm" id="filters-toggle" aria-expanded="false" aria-controls="filters-body">Filters</button>
+      </div>
+      <div class="filters__body" id="filters-body">
+        <div class="f-field" role="group" aria-labelledby="f-year">
+          <span class="f-label" id="f-year">Year</span>
+          <div class="pf-chips" id="year-chips"></div>
+        </div>
+        <div class="f-field" role="group" aria-labelledby="f-months">
+          <span class="f-label" id="f-months">Months</span>
+          <div class="f-months">
+            <select class="pf-select" id="month-from" aria-label="First month"></select>
+            <span class="pf-label" aria-hidden="true">to</span>
+            <select class="pf-select" id="month-to" aria-label="Last month"></select>
+          </div>
+        </div>
+        <div class="f-field">
+          <span class="f-label" id="f-region">Region</span>
+          <details class="menu" id="region-menu">
+            <summary class="pf-select" aria-labelledby="f-region region-label"><span id="region-label">All regions</span></summary>
+            <div class="menu__list" role="group" aria-labelledby="f-region" id="region-list"></div>
+          </details>
+        </div>
+        <div class="f-field" id="category-field">
+          <span class="f-label" id="f-category">Category</span>
+          <details class="menu" id="category-menu">
+            <summary class="pf-select" aria-labelledby="f-category category-label"><span id="category-label">All categories</span></summary>
+            <div class="menu__list" role="group" aria-labelledby="f-category" id="category-list"></div>
+          </details>
+          <p class="f-note" id="category-note" hidden></p>
+        </div>
+        <div class="f-spacer"></div>
+        <div class="f-field">
+          <span class="f-label">Cross-filter</span>
+          <span id="cross-chip"></span>
+        </div>
+        <button type="button" class="pf-btn pf-btn--sm" id="reset">Reset</button>
+      </div>
+    </section>
+
+    <main>
+      <p class="app-loading" id="loading">Loading the data…</p>
+
+      <section class="pf-tabpanel" role="tabpanel" id="panel-overview" aria-labelledby="tab-overview">
+        <div class="pf-grid kpis" id="overview-tiles"></div>
+        <div class="layout">
+          <div class="pf-stack" style="gap:16px">
+            <article class="pf-card">
+              <div class="ct"><h2>Revenue by month, current vs previous year</h2><span class="sub">EUR, whole months</span></div>
+              <div class="chart" id="chart-revenue-py" role="img" aria-label="Line chart: revenue by month, current and previous year"></div>
+              <div class="legend"><span><i></i>Current</span><span><i class="py"></i>Previous year</span></div>
+            </article>
+            <article class="pf-card">
+              <div class="ct"><h2>Revenue and gross margin % by month</h2><span class="sub">columns EUR · line %</span></div>
+              <div class="chart" id="chart-revenue-margin" role="img" aria-label="Combo chart: revenue columns and gross margin % line by month"></div>
+              <div class="legend"><span><i class="bar"></i>Revenue</span><span><i class="l2"></i>Gross margin %</span></div>
+            </article>
+          </div>
+          <article class="pf-card">
+            <div class="ct">
+              <h2 id="analyse-title">Revenue by category</h2>
+              <div class="segctl" role="group" aria-label="Analyse by" id="analyse-by"></div>
+            </div>
+            <div class="chart chart--tall" id="chart-analyse" role="img" aria-label="Bar chart: revenue by the selected dimension"></div>
+            <p class="hint" id="analyse-hint">Click a bar to cross-filter the page; click it again to clear · hover shows gross margin %</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="pf-tabpanel" role="tabpanel" id="panel-trends" aria-labelledby="tab-trends" hidden>
+        <div class="pf-grid kpis kpis--4" id="trends-tiles"></div>
+        <div class="layout layout--even">
+          <article class="pf-card">
+            <div class="ct"><h2>Revenue: current, PY and rolling 12 months</h2><span class="sub">R12 on the right axis</span></div>
+            <div class="chart" id="chart-trend" role="img" aria-label="Line chart: revenue current, previous year and rolling 12 months"></div>
+            <div class="legend"><span><i></i>Current</span><span><i class="py"></i>PY</span><span><i class="l2"></i>R12</span></div>
+          </article>
+          <article class="pf-card">
+            <div class="ct"><h2>Units by month and category</h2><span class="sub">pieces</span></div>
+            <div class="chart" id="chart-units" role="img" aria-label="Stacked column chart: units by month and category"></div>
+          </article>
+        </div>
+        <article class="pf-card wide">
+          <div class="ct"><h2>Revenue time intelligence</h2><span class="sub">the seven items of the calculation group, by month</span></div>
+          <div id="table-ti"></div>
+        </article>
+      </section>
+
+      <section class="pf-tabpanel" role="tabpanel" id="panel-products" aria-labelledby="tab-products" hidden>
+        <div class="pf-grid kpis kpis--4" id="products-tiles"></div>
+        <div class="layout">
+          <article class="pf-card">
+            <div class="ct"><h2>Pareto: top 40 products</h2><span class="sub">columns revenue · line cumulative %</span></div>
+            <div class="chart chart--mid" id="chart-pareto" role="img" aria-label="Pareto chart: revenue of the top 40 products with the cumulative share"></div>
+          </article>
+          <article class="pf-card">
+            <div class="ct">
+              <h2>Revenue by category</h2>
+              <label class="drill-pick">Drill into <select class="pf-select" id="drill-select"></select></label>
+            </div>
+            <nav class="crumbs" id="crumbs" aria-label="Drill path"></nav>
+            <div class="chart" id="chart-category" role="img" aria-label="Bar chart: revenue by category or by the subcategories of the drilled category"></div>
+            <p class="hint">Click a category to drill into its subcategories; the drilled category also filters the Pareto and the table</p>
+          </article>
+        </div>
+        <article class="pf-card wide">
+          <div class="ct"><h2>Products</h2><span class="sub">sortable · 25 rows per page · hover or focus a SKU for the tooltip</span></div>
+          <div id="table-products"></div>
+        </article>
+      </section>
+
+      <section class="pf-tabpanel" role="tabpanel" id="panel-regions" aria-labelledby="tab-regions" hidden>
+        <div class="pf-grid kpis kpis--4" id="regions-tiles"></div>
+        <div class="layout layout--even">
+          <article class="pf-card">
+            <div class="ct"><h2>Revenue by region, current vs PY</h2><span class="sub">click a region to cross-filter</span></div>
+            <div class="chart" id="chart-regions" role="img" aria-label="Bar chart: revenue by region, current and previous year"></div>
+            <div class="legend"><span><i class="bar"></i>Current</span><span><i class="pybar"></i>PY</span></div>
+          </article>
+          <article class="pf-card">
+            <div class="ct"><h2>Revenue by month and region</h2><span class="sub">EUR</span></div>
+            <div class="chart" id="chart-region-months" role="img" aria-label="Stacked column chart: revenue by month and region"></div>
+          </article>
+        </div>
+        <div class="layout">
+          <article class="pf-card">
+            <div class="ct"><h2>Regions and countries</h2><span class="sub">sortable</span></div>
+            <div id="table-countries"></div>
+          </article>
+          <article class="pf-card">
+            <div class="ct"><h2>Discount % vs gross margin % by country</h2><span class="sub">x discount · y margin · size revenue</span></div>
+            <div class="chart chart--mid" id="chart-scatter" role="img" aria-label="Scatter chart: discount % against gross margin % per country"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="pf-tabpanel" role="tabpanel" id="panel-customers" aria-labelledby="tab-customers" hidden>
+        <div class="pf-grid kpis kpis--4" id="customers-tiles"></div>
+        <article class="pf-card wide">
+          <div class="ct"><h2>Customers</h2><span class="sub">sortable · 25 rows per page · the category filter does not apply here</span></div>
+          <div class="table-tools">
+            <label class="pf-visually-hidden" for="customer-search">Search customers</label>
+            <input class="pf-input" type="search" id="customer-search" placeholder="Search code, customer, country or sales rep" autocomplete="off">
+          </div>
+          <div id="table-customers"></div>
+        </article>
+      </section>
+
+      <section class="pf-tabpanel" role="tabpanel" id="panel-targets" aria-labelledby="tab-targets" hidden>
+        <div class="pf-grid kpis" id="targets-tiles"></div>
+        <div class="layout">
+          <article class="pf-card">
+            <div class="ct"><h2>Revenue vs target by month</h2><span class="sub">one scale · months without sales show the target only</span></div>
+            <div class="chart" id="chart-target" role="img" aria-label="Combo chart: revenue columns and target line by month"></div>
+            <div class="legend"><span><i class="bar"></i>Revenue</span><span><i class="l2"></i>Target</span></div>
+          </article>
+          <article class="pf-card">
+            <div class="ct"><h2>Target attainment % by region</h2><span class="sub">line at 100 %</span></div>
+            <div class="chart" id="chart-attainment" role="img" aria-label="Bar chart: target attainment % by region"></div>
+            <div class="legend"><span><i class="ok"></i>≥ 100 %</span><span><i class="warn"></i>&lt; 100 %</span></div>
+          </article>
+        </div>
+        <article class="pf-card wide">
+          <div class="ct"><h2>Attainment by region and month</h2><span class="sub">% of target, months with sales</span></div>
+          <div class="pf-table-wrap" tabindex="0" role="region" aria-label="Attainment by region and month">
+            <table class="pf-table att" id="table-attainment"><thead><tr></tr></thead><tbody></tbody></table>
+          </div>
+          <div class="att-scale" aria-hidden="true"><span>90 %</span><i class="att-scale__low"></i><span>100 %</span><i class="att-scale__mid"></i><span>110 %</span><i class="att-scale__high"></i></div>
+        </article>
+      </section>
+
+      <p class="store-note" id="store-note">
+        <span>The filters, the tab and Analyse by are remembered in this browser only.</span>
+        <button type="button" class="pf-btn pf-btn--ghost pf-btn--sm" id="forget">Forget the saved view</button>
+      </p>
+    </main>
+
+    <footer class="pf-footer">
+      <p>Rebuilt from memory as a demo. The original client's name and data are not used.</p>
+      <p>Sales Performance Dashboard · MIT · ECharts Apache-2.0 · <a href="https://github.com/HARISPAARTAN/sales-performance-dashboard">Source code</a></p>
+    </footer>
+  </div>
+
+  <div class="tip" id="tip" role="tooltip" hidden></div>
+
+  <dialog class="about" id="about" aria-labelledby="about-title">
+    <div class="about__body">
+      <h2 id="about-title">About this replica</h2>
+      <p>Demo with invented data for a fictional company. Veltrano Outdoor is a fictional outdoor-equipment wholesaler in Innsbruck, Austria, that sells tents, sleeping gear, backpacks, apparel, footwear and cooking gear to about 400 retailers in 13 European countries.</p>
+      <h3>Sources</h3>
+      <ul>
+        <li>Three yearly order exports (<code>data/sales_orders/sales_orders_2023.xlsx</code> to <code>_2025.xlsx</code>, 2 January 2023 to 30 September 2025) and the monthly targets per region (<code>data/targets.csv</code>, to December 2025).</li>
+        <li>Products, customers, regions, sales reps and the security table as CSV files, all written by <code>tools/make_data.py</code> with seed 41.</li>
+      </ul>
+      <h3>Model</h3>
+      <ul>
+        <li>The Power BI model is a star schema: FactSales and FactTargets with DimDate, DimProduct, DimCustomer, DimRegion and DimSalesRep.</li>
+        <li>A calculation group <code>Time intelligence</code> (Current, PY, YoY, YoY %, YTD, PYTD, R12), a field parameter <code>Analyse by</code> and the role <code>Regional manager</code> (dynamic row-level security).</li>
+        <li>This page computes the same measures in JavaScript from <code>replica.json</code>, built by <code>tools/build_replica_data.py</code> through the Python reference; a parity test compares every tab with the reference. Row-level security exists only in the report.</li>
+      </ul>
+      <h3>Rules</h3>
+      <ul>
+        <li>Whole months only; a year with months still to come compares like for like with the same months of the previous year.</li>
+        <li>YoY is blank without a full previous year in the data (2023); a tile then shows n/a with the reason.</li>
+        <li>Targets are set per region and month, so the category filter does not apply on the Customers and Targets tabs.</li>
+      </ul>
+      <p>Rebuilt from memory as a demo. The original client's name and data are not used.</p>
+      <form method="dialog" class="about__close"><button class="pf-btn pf-btn--primary pf-btn--sm" value="close">Close</button></form>
+    </div>
+  </dialog>
+</body>
+</html>
