@@ -67,6 +67,10 @@ The theme `Veltrano Dark` is generated from the kit's dark tokens: `uv run pytho
 - Kit: with a newer tag in the local clone `E:\GITGUB\portfolio-kit`, run `uv run python tools/sync_kit.py --tag <tag>`, then `uv run python tools/sync_kit.py --check`, change the tag in `.github/workflows/ci.yml` (job `kit`), and run `node tools/checks/contrast.mjs` and the screenshots.
 - ECharts: `web/vendor/echarts.min.js` is version 5.6.0 (Apache-2.0, licence in `web/vendor/LICENSE-echarts.txt`). A new version is a new download with its SHA-256 recorded in the commit message; the chart options live in `web/assets/js/charts.js`, and `tests/replica/charts.test.mjs` and the screenshots show what changed.
 
+## Updating Faker or numpy
+
+Updating Faker changes the person names: regenerate the data and the replica data (`uv run python tools/make_data.py`, then `uv run python tools/build_replica_data.py`). Dependabot ignores Faker and numpy feature releases for that reason.
+
 ## Checks before a push
 
 ```bash

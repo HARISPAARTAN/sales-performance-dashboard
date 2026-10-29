@@ -5,6 +5,11 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    # a new Faker release can change the generated names, a numpy feature release the random streams: both change data files
+    ignore:
+      - dependency-name: "faker"
+      - dependency-name: "numpy"
+        update-types: ["version-update:semver-minor", "version-update:semver-major"]
     commit-message:
       prefix: "build(deps)"
     groups:
