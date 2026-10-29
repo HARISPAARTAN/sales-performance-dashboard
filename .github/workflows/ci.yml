@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  python:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          version: "0.11.8"
+          python-version: "3.13"
+      - run: uv sync --locked
+      - name: The lock file is current
+        run: uv lock --check
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - name: Tests (the TOM parse test skips without build/tom)
+        run: uv run pytest -q
+      - name: Data equal a fresh build
+        run: uv run python tools/make_data.py --check
+      - name: Replica data equal a fresh build
+        run: uv run python tools/build_replica_data.py --check
+      - name: The report theme matches the kit tokens
+        run: uv run python tools/pbi/build_theme.py --check
+      - name: Scrub
+        run: uv run python tools/checks/scrub.py
+
+  replica:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Filter and chart code
+        run: node --test "tests/replica/*.test.mjs"
+      - name: Contrast
+        run: node tools/checks/contrast.mjs
+      - name: Page weight
+        run: python3 tools/check_page_weight.py
+      - name: Links (offline)
+        run: OFFLINE=1 node tools/checks/verify-site.mjs
+
+  kit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: portfolio-kit at the pinned tag
+        uses: actions/checkout@v7
+        with:
+          repository: HARISPAARTAN/portfolio-kit
+          ref: v0.1.0
+          path: .kit
+          persist-credentials: false
+      - name: web/kit matches portfolio-kit v0.1.0
+        run: python3 tools/sync_kit.py --check --kit .kit
