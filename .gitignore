@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+build/
+dist/
+.kit/
+*.log
+.env
+pbip/**/.pbi/localSettings.json
+pbip/**/.pbi/cache.abf
+pbip/**/.pbi/editorSettings.json
+pbip/**/.pbi/unappliedChanges.json
+pbip/**/cache.abf

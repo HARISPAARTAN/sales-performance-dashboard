@@ -1,0 +1,60 @@
+[project]
+name = "sales-performance-dashboard"
+version = "0.1.0"
+description = "Power BI sales dashboard for a fictional outdoor-equipment wholesaler: PBIP source, a pandas reference and an HTML replica."
+readme = "README.md"
+requires-python = ">=3.13"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Harithas Harikaran" }]
+dependencies = [
+  "faker>=37",
+  "numpy==2.5.4",
+  "openpyxl==3.1.5",
+  "pandas==3.1.0",
+]
+
+[dependency-groups]
+dev = [
+  "jsonschema==4.26.0",
+  "pytest==9.2.0",
+  "referencing==0.37.0",
+  "ruff==0.17.3",
+]
+pbi = ["pythonnet==3.2.1"]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+minversion = "9.0"
+testpaths = ["tests"]
+pythonpath = ["tests", "tools", "tools/pbi"]
+addopts = ["-ra", "--strict-markers"]
+markers = [
+  "pbi: offline checks of the Power BI project files",
+  "tom: parses the model with the TOM assemblies in build/tom (uv sync --group pbi, tools/pbi/copy_tom.py)",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py313"
+src = ["tests", "tools", "tools/pbi"]
+# tools/sync_kit.py is portfolio-kit's reference script, kept byte-identical to the kit's copy
+extend-exclude = ["tools/sync_kit.py"]
+
+[tool.ruff.format]
+# adapted from energiewende-monitor with the smallest diff, so it keeps that repository's layout
+exclude = ["tools/pbi/pbir.py"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.ruff.lint.per-file-ignores]
+"tools/pbi/pbir.py" = ["E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = [
+  "build_replica_data", "build_report", "build_theme", "check_page_weight", "conftest", "copy_tom",
+  "diagram_layout", "make_data", "make_public_variant", "pbir", "reference", "tmdl", "vendor_schemas",
+]
