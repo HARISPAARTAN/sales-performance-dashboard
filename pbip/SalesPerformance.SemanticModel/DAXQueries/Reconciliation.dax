@@ -1,0 +1,40 @@
+// Reconciliation R01-R14 (docs/reconciliation.md): one row per check, the value as text with six decimals in
+// en-US, so the grid shows every digit whatever the locale of Desktop. Run after a refresh (Run, or F5); copy the
+// Value column into the Desktop column of docs/reconciliation.md. R15 and R16 are read under View as from the
+// Overview page (docs/desktop-session.md, step 8).
+EVALUATE
+UNION(
+    ROW("Id", "R01", "Check", "Revenue 2024",
+        "Value", FORMAT(CALCULATE([Revenue], DimDate[Year] = 2024), "0.000000", "en-US")),
+    ROW("Id", "R02", "Check", "Revenue 2025",
+        "Value", FORMAT(CALCULATE([Revenue], DimDate[Year] = 2025), "0.000000", "en-US")),
+    ROW("Id", "R03", "Check", "Gross margin % 2024",
+        "Value", FORMAT(CALCULATE([Gross margin %], DimDate[Year] = 2024), "0.000000", "en-US")),
+    ROW("Id", "R04", "Check", "Orders 2024",
+        "Value", FORMAT(CALCULATE([Orders], DimDate[Year] = 2024), "0.000000", "en-US")),
+    ROW("Id", "R05", "Check", "Average order value 2024",
+        "Value", FORMAT(CALCULATE([Average order value], DimDate[Year] = 2024), "0.000000", "en-US")),
+    ROW("Id", "R06", "Check", "Discount % 2024",
+        "Value", FORMAT(CALCULATE([Discount %], DimDate[Year] = 2024), "0.000000", "en-US")),
+    ROW("Id", "R07", "Check", "Units 2024 Tents",
+        "Value", FORMAT(CALCULATE([Units], DimDate[Year] = 2024, DimProduct[Category] = "Tents"), "0.000000", "en-US")),
+    ROW("Id", "R08", "Check", "Revenue YoY % 2025",
+        "Value", FORMAT(CALCULATE([Revenue], DimDate[Year] = 2025,
+            'Time intelligence'[Time calculation] = "YoY %"), "0.000000", "en-US")),
+    ROW("Id", "R09", "Check", "Revenue R12 September 2025",
+        "Value", FORMAT(CALCULATE([Revenue], DimDate[Year] = 2025, DimDate[Month] = 9,
+            'Time intelligence'[Time calculation] = "R12"), "0.000000", "en-US")),
+    ROW("Id", "R10", "Check", "Revenue PYTD 2025",
+        "Value", FORMAT(CALCULATE([Revenue], DimDate[Year] = 2025,
+            'Time intelligence'[Time calculation] = "PYTD"), "0.000000", "en-US")),
+    ROW("Id", "R11", "Check", "Target 2025 DACH",
+        "Value", FORMAT(CALCULATE([Target], DimDate[Year] = 2025, DimRegion[Region] = "DACH"), "0.000000", "en-US")),
+    ROW("Id", "R12", "Check", "Target attainment % 2025 DACH",
+        "Value", FORMAT(CALCULATE([Target attainment %], DimDate[Year] = 2025, DimRegion[Region] = "DACH"),
+            "0.000000", "en-US")),
+    ROW("Id", "R13", "Check", "Products for 80 % 2024",
+        "Value", FORMAT(CALCULATE([Products for 80 %], DimDate[Year] = 2024), "0.000000", "en-US")),
+    ROW("Id", "R14", "Check", "Order lines",
+        "Value", FORMAT([Order lines], "0.000000", "en-US"))
+)
+ORDER BY [Id]
