@@ -44,7 +44,7 @@ def harmless(scrub: ModuleType, monkeypatch: pytest.MonkeyPatch) -> None:
 
 def git(*args: str, cwd: Path) -> None:
     subprocess.run(
-        ["git", "-c", "user.name=test", "-c", "user.email=test@example.org", *args],
+        ["git", "-c", "user.name=test", "-c", "user.email=test@veltrano.example", *args],
         cwd=cwd,
         check=True,
         capture_output=True,
@@ -97,7 +97,8 @@ def test_local_patterns_and_the_allowlist(scrub: ModuleType, tmp_path: Path) -> 
     assert len(patterns) == 2
     allowed = "sales.desk" + "@veltrano.example"
     address = "someone" + "@mail.test"  # split so that this file itself holds no address
-    text = f"Write to {allowed} or {address}.\nSecretCorp Ltd.\nci@example.org\n"
+    reserved = "ci" + "@" + "example.org"  # an address on a reserved example domain, split for the same reason
+    text = f"Write to {allowed} or {address}.\nSecretCorp Ltd.\n{reserved}\n"
     hits = scrub.scan_text(text, "x.md", patterns)
     assert [(hit.line, hit.rule, hit.text) for hit in hits] == [
         (1, "local pattern #2", "s****"),
