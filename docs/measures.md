@@ -484,8 +484,8 @@ The replica's segmented control does the same in `web/assets/js/model.js`.
 
 ## Role Regional manager
 
-Regional managers see only the regions listed for their sign-in address in Security. Model permission `read`. Security filters are not filter context, so
-`ISFILTERED` in `Target` stays false under the role. A sign-in address without a row in `Security` sees no data.
+Regional managers see only the regions listed for their sign-in address in Security. Model permission `read`. Whether the role filters on `DimCustomer` and `DimSalesRep` make `ISFILTERED` in `Target` true is
+checked in the Desktop session (`desktop-session.md`, step 8); a blank target tile for a role member means the measure is reworked. A sign-in address without a row in `Security` sees no data.
 
 ### Filter on Security
 

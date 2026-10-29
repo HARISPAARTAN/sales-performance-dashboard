@@ -8,7 +8,7 @@ The brief asks that regional managers see only their own regions. There are four
 
 ## Decision
 
-The table `Security` (from `data/security.csv`: one row per sign-in address and region, five rows) is hidden and has no relationship. The role `Regional manager` filters `Security` to `USERPRINCIPALNAME()` and filters `DimRegion`, `DimCustomer` and `DimSalesRep` with `RegionKey IN CALCULATETABLE(VALUES(Security[RegionKey]), Security[User e-mail] = USERPRINCIPALNAME())`. `DimRegion` filters both facts; the customer and rep filters keep other regions' names out of slicers and tables. Security filters are not filter context, so `ISFILTERED` in `Target` stays false under the role.
+The table `Security` (from `data/security.csv`: one row per sign-in address and region, five rows) is hidden and has no relationship. The role `Regional manager` filters `Security` to `USERPRINCIPALNAME()` and filters `DimRegion`, `DimCustomer` and `DimSalesRep` with `RegionKey IN CALCULATETABLE(VALUES(Security[RegionKey]), Security[User e-mail] = USERPRINCIPALNAME())`. `DimRegion` filters both facts; the customer and rep filters keep other regions' names out of slicers and tables. `Target` blanks itself when `DimCustomer` or `DimSalesRep` is filtered; whether the role filters on those tables count as such a filter is checked in the Desktop session (step 8 of `../desktop-session.md`), and the measure is reworked if the target tiles are blank for a role member.
 
 ## Consequences
 
