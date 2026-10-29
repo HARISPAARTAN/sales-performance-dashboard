@@ -20,6 +20,7 @@ let model;
 let state;
 let host;
 const tables = {};
+const barMax = {};
 
 // ---------------------------------------------------------------- formatting
 
@@ -200,12 +201,14 @@ function table(name, el, options, sortKey, dir = 'desc') {
 
 const num = (format) => ({ align: 'right', format });
 
-function dataBar(max) {
+// The scale is read on every cell, so it follows the rows of the latest render (the table keeps its columns).
+function dataBar(name) {
   return (value) => {
+    const max = barMax[name];
     const box = document.createElement('span');
     box.className = 'dbar';
     const bar = document.createElement('i');
-    bar.style.width = `${max > 0 ? Math.max(0, (100 * value) / max) : 0}%`;
+    bar.style.width = `${max > 0 ? Math.min(100, Math.max(0, (100 * value) / max)) : 0}%`;
     const text = document.createElement('span');
     text.textContent = money(value);
     box.append(bar, text);
@@ -220,6 +223,11 @@ function skuButton(value) {
   button.dataset.sku = value;
   button.textContent = value;
   return button;
+}
+
+// The tab strip scrolls sideways on narrow screens, so the selected tab is brought into view.
+function showActiveTab() {
+  $('tabs').querySelector('[aria-selected="true"]')?.scrollIntoView({ inline: 'nearest', block: 'nearest', behavior: motion() ? 'smooth' : 'auto' });
 }
 
 // ---------------------------------------------------------------- product tooltip
@@ -386,7 +394,7 @@ function renderProducts(c) {
   host.draw($('chart-pareto'), charts.pareto(view.pareto, c, motion()));
   const rows = model.productRows(state);
   tipRows = new Map(rows.map((r) => [r.sku, r]));
-  const max = Math.max(0, ...rows.map((r) => r.revenue));
+  barMax.products = Math.max(0, ...rows.map((r) => r.revenue));
   table('products', $('table-products'), {
     caption: 'Products ranked by revenue',
     pageSize: 25,
@@ -395,7 +403,7 @@ function renderProducts(c) {
       { key: 'sku', label: 'SKU', format: skuButton },
       { key: 'name', label: 'Product' },
       { key: 'category', label: 'Category' },
-      { key: 'revenue', label: 'Revenue', ...num(dataBar(max)) },
+      { key: 'revenue', label: 'Revenue', ...num(dataBar('products')) },
       { key: 'margin', label: 'Margin %', ...num((v) => fmt.pct(v)) },
       { key: 'units', label: 'Units', ...num((v) => fmt.int(v)) },
       { key: 'cumulative', label: 'Cumulative %', ...num((v) => fmt.pct(v)) },
@@ -595,6 +603,7 @@ async function start() {
   });
   const tabs = initTabs($('tabs'), {
     onChange: (id) => {
+      showActiveTab();
       const tab = id.replace('tab-', '');
       if (tab === state.tab) return;
       history.replaceState(null, '', `#${tab}`);

@@ -45,6 +45,35 @@
   box-shadow: var(--shadow);
 }
 
+/* Keyboard focus and anchors must not land under the sticky filter bar. The bar has no height token, so these are
+   measured heights plus a little room: 90 px from 1200 px wide (wraps to 162 px below that, 234 px at 600 px),
+   about 60 px collapsed under 600 px (the opened panel there is taller and is not covered). */
+:root {
+  --filters-h: 96px;
+}
+
+@media (max-width: 1199.98px) {
+  :root {
+    --filters-h: 168px;
+  }
+}
+
+@media (max-width: 719.98px) {
+  :root {
+    --filters-h: 240px;
+  }
+}
+
+@media (max-width: 599.98px) {
+  :root {
+    --filters-h: 68px;
+  }
+}
+
+:root:has(body.pf-has-banner) {
+  scroll-padding-top: calc(var(--pf-banner-h) + env(safe-area-inset-top) + var(--filters-h) + 8px);
+}
+
 .filters__head {
   display: none;
   align-items: center;
