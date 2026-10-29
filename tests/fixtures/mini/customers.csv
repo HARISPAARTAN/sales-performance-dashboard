@@ -1,0 +1,4 @@
+CustomerKey,CustomerCode,CustomerName,Segment,Channel,CountryCode,Country,RegionCode,AccountSince
+1,C0001,Albek Outdoor,Independent,Direct,AT,Austria,DACH,2015-03-01
+2,C0002,Brandor Sport Group,Chain,Direct,DE,Germany,DACH,2012-06-01
+3,C0003,Corfell Online,Online,Distributor,SE,Sweden,NRD,2019-09-01

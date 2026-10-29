@@ -1,0 +1,3 @@
+SalesRepKey,SalesRepCode,SalesRepName,Email,RegionCode
+1,R01,Alex Example,alex.example@veltrano.example,DACH
+2,R02,Robin Sample,robin.sample@veltrano.example,NRD

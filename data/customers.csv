@@ -1,0 +1,401 @@
+CustomerKey,CustomerCode,CustomerName,Segment,Channel,CountryCode,Country,RegionCode,AccountSince
+1,C0001,Kelmo Outdoor,Independent,Direct,AT,Austria,DACH,2011-09-01
+2,C0002,Norvik Bergsport,Independent,Direct,AT,Austria,DACH,2011-02-01
+3,C0003,Grimjar Bergsport,Independent,Direct,AT,Austria,DACH,2019-08-01
+4,C0004,Ulra Online,Online,Direct,AT,Austria,DACH,2017-02-01
+5,C0005,Rossund Online,Online,Direct,AT,Austria,DACH,2018-06-01
+6,C0006,Branra Online,Online,Direct,AT,Austria,DACH,2017-08-01
+7,C0007,Corkast Online,Online,Direct,AT,Austria,DACH,2013-03-01
+8,C0008,Ulsund Trail Shop,Independent,Direct,AT,Austria,DACH,2011-03-01
+9,C0009,Keldal Sport Group,Chain,Direct,AT,Austria,DACH,2017-09-01
+10,C0010,Ormdor Online,Online,Direct,AT,Austria,DACH,2018-02-01
+11,C0011,Branmo Online,Online,Direct,AT,Austria,DACH,2008-02-01
+12,C0012,Brangard Bergsport,Independent,Direct,AT,Austria,DACH,2013-05-01
+13,C0013,Alby Trail Shop,Independent,Direct,AT,Austria,DACH,2018-11-01
+14,C0014,Kelvik Trail Shop,Independent,Direct,AT,Austria,DACH,2015-03-01
+15,C0015,Grimsund Trail Shop,Independent,Direct,AT,Austria,DACH,2021-11-01
+16,C0016,Alholm Outdoor,Independent,Direct,AT,Austria,DACH,2021-07-01
+17,C0017,Peldal Bergsport,Independent,Direct,AT,Austria,DACH,2019-04-01
+18,C0018,Vartind Trail Shop,Independent,Direct,AT,Austria,DACH,2020-03-01
+19,C0019,Altind Online,Online,Direct,AT,Austria,DACH,2008-08-01
+20,C0020,Corren Trail Shop,Independent,Distributor,AT,Austria,DACH,2010-02-01
+21,C0021,Ystby Online,Online,Direct,AT,Austria,DACH,2021-05-01
+22,C0022,Pello Sport Group,Chain,Distributor,AT,Austria,DACH,2021-04-01
+23,C0023,Kelra Sport Group,Chain,Distributor,AT,Austria,DACH,2020-09-01
+24,C0024,Sile Outdoor,Independent,Direct,AT,Austria,DACH,2009-04-01
+25,C0025,Jormo Online,Online,Direct,AT,Austria,DACH,2011-11-01
+26,C0026,Eldstad Trail Shop,Independent,Direct,AT,Austria,DACH,2015-10-01
+27,C0027,Iske Bergsport,Independent,Direct,AT,Austria,DACH,2022-11-01
+28,C0028,Rosbek Online,Online,Distributor,AT,Austria,DACH,2010-01-01
+29,C0029,Lunjar Trail Shop,Independent,Direct,AT,Austria,DACH,2021-03-01
+30,C0030,Wengard Sport Group,Chain,Direct,AT,Austria,DACH,2012-07-01
+31,C0031,Ystfell Bergsport,Independent,Direct,AT,Austria,DACH,2008-04-01
+32,C0032,Ystka Outdoor,Independent,Direct,AT,Austria,DACH,2010-09-01
+33,C0033,Nore Trail Shop,Independent,Direct,AT,Austria,DACH,2014-05-01
+34,C0034,Kelstad Online,Online,Direct,AT,Austria,DACH,2013-01-01
+35,C0035,Marfell Bergsport,Independent,Direct,AT,Austria,DACH,2018-04-01
+36,C0036,Ormgard Online,Online,Direct,AT,Austria,DACH,2021-04-01
+37,C0037,Corgard Bergsport,Independent,Direct,AT,Austria,DACH,2015-05-01
+38,C0038,Corka Bergsport,Independent,Direct,AT,Austria,DACH,2012-07-01
+39,C0039,Kelren Outdoor,Independent,Direct,AT,Austria,DACH,2014-04-01
+40,C0040,Haldal Online,Online,Direct,AT,Austria,DACH,2009-09-01
+41,C0041,Falkast Bergsport,Independent,Direct,AT,Austria,DACH,2020-06-01
+42,C0042,Almo Sport Group,Chain,Direct,AT,Austria,DACH,2008-11-01
+43,C0043,Branholm Sport Group,Chain,Direct,AT,Austria,DACH,2020-09-01
+44,C0044,Tamka Online,Online,Direct,AT,Austria,DACH,2014-06-01
+45,C0045,Lunholm Trail Shop,Independent,Direct,AT,Austria,DACH,2020-02-01
+46,C0046,Pelra Trail Shop,Independent,Direct,AT,Austria,DACH,2022-09-01
+47,C0047,Lunlind Outdoor,Independent,Direct,AT,Austria,DACH,2023-04-03
+48,C0048,Ystra Outdoor,Independent,Direct,AT,Austria,DACH,2010-09-01
+49,C0049,Grimdor Online,Online,Direct,AT,Austria,DACH,2010-02-01
+50,C0050,Jorka Bergsport,Independent,Direct,AT,Austria,DACH,2010-03-01
+51,C0051,Rosdor Outdoor,Independent,Direct,AT,Austria,DACH,2023-05-01
+52,C0052,Hale Trail Shop,Independent,Direct,AT,Austria,DACH,2018-07-01
+53,C0053,Rosmo Bergsport,Independent,Direct,AT,Austria,DACH,2012-12-01
+54,C0054,Roskast Trail Shop,Independent,Direct,AT,Austria,DACH,2011-05-01
+55,C0055,Falka Online,Online,Direct,AT,Austria,DACH,2015-10-01
+56,C0056,Cornes Online,Online,Direct,DE,Germany,DACH,2020-04-01
+57,C0057,Varren Trail Shop,Independent,Direct,DE,Germany,DACH,2023-05-01
+58,C0058,Wensund Trail Shop,Independent,Direct,DE,Germany,DACH,2012-02-01
+59,C0059,Tamtind Outdoor,Independent,Direct,DE,Germany,DACH,2009-10-01
+60,C0060,Ormmo Trail Shop,Independent,Direct,DE,Germany,DACH,2008-09-01
+61,C0061,Corstad Outdoor,Independent,Direct,DE,Germany,DACH,2022-03-01
+62,C0062,Algard Online,Online,Direct,DE,Germany,DACH,2018-09-01
+63,C0063,Bransund Trail Shop,Independent,Distributor,DE,Germany,DACH,2009-12-01
+64,C0064,Varkast Bergsport,Independent,Direct,DE,Germany,DACH,2023-06-01
+65,C0065,Ormjar Bergsport,Independent,Direct,DE,Germany,DACH,2009-04-01
+66,C0066,Jorlo Sport Group,Chain,Direct,DE,Germany,DACH,2022-05-01
+67,C0067,Ulfell Bergsport,Independent,Direct,DE,Germany,DACH,2012-07-01
+68,C0068,Ystjar Sport Group,Chain,Direct,DE,Germany,DACH,2013-11-01
+69,C0069,Kelbek Trail Shop,Independent,Direct,DE,Germany,DACH,2014-03-01
+70,C0070,Ormlo Online,Online,Direct,DE,Germany,DACH,2014-10-01
+71,C0071,Isklind Trail Shop,Independent,Direct,DE,Germany,DACH,2014-11-01
+72,C0072,Lunren Online,Online,Direct,DE,Germany,DACH,2023-07-03
+73,C0073,Ormka Trail Shop,Independent,Direct,DE,Germany,DACH,2021-05-01
+74,C0074,Jorren Trail Shop,Independent,Direct,DE,Germany,DACH,2014-10-01
+75,C0075,Kele Online,Online,Direct,DE,Germany,DACH,2018-05-01
+76,C0076,Eldren Online,Online,Direct,DE,Germany,DACH,2021-03-01
+77,C0077,Halgard Trail Shop,Independent,Direct,DE,Germany,DACH,2022-04-01
+78,C0078,Iskfell Online,Online,Direct,DE,Germany,DACH,2012-12-01
+79,C0079,Vargard Trail Shop,Independent,Direct,DE,Germany,DACH,2010-09-01
+80,C0080,Corbek Outdoor,Independent,Direct,DE,Germany,DACH,2015-09-01
+81,C0081,Rosdal Trail Shop,Independent,Direct,DE,Germany,DACH,2022-08-01
+82,C0082,Eldwald Trail Shop,Independent,Direct,DE,Germany,DACH,2016-11-01
+83,C0083,Normo Online,Online,Direct,DE,Germany,DACH,2009-11-01
+84,C0084,Ulby Bergsport,Independent,Direct,DE,Germany,DACH,2011-12-01
+85,C0085,Orme Online,Online,Direct,DE,Germany,DACH,2015-11-01
+86,C0086,Grimby Bergsport,Independent,Direct,DE,Germany,DACH,2021-05-01
+87,C0087,Ulka Bergsport,Independent,Direct,DE,Germany,DACH,2008-04-01
+88,C0088,Silstad Trail Shop,Independent,Direct,DE,Germany,DACH,2013-06-01
+89,C0089,Marstad Trail Shop,Independent,Direct,DE,Germany,DACH,2016-01-01
+90,C0090,Ystren Online,Online,Direct,DE,Germany,DACH,2016-08-01
+91,C0091,Brankast Outdoor,Independent,Direct,DE,Germany,DACH,2022-10-01
+92,C0092,Norjar Online,Online,Direct,DE,Germany,DACH,2023-07-03
+93,C0093,Mardal Trail Shop,Independent,Direct,DE,Germany,DACH,2008-04-01
+94,C0094,Core Outdoor,Independent,Direct,DE,Germany,DACH,2019-09-01
+95,C0095,Sillind Outdoor,Independent,Direct,DE,Germany,DACH,2012-11-01
+96,C0096,Jore Bergsport,Independent,Direct,DE,Germany,DACH,2015-11-01
+97,C0097,Yste Trail Shop,Independent,Direct,DE,Germany,DACH,2015-08-01
+98,C0098,Kello Outdoor,Independent,Direct,DE,Germany,DACH,2010-03-01
+99,C0099,Zelgard Trail Shop,Independent,Direct,DE,Germany,DACH,2017-09-01
+100,C0100,Dalsund Outdoor,Independent,Direct,DE,Germany,DACH,2012-12-01
+101,C0101,Iskka Bergsport,Independent,Direct,DE,Germany,DACH,2021-05-01
+102,C0102,Tamby Trail Shop,Independent,Direct,DE,Germany,DACH,2011-02-01
+103,C0103,Zeldal Sport Group,Chain,Distributor,DE,Germany,DACH,2021-10-01
+104,C0104,Tamstad Trail Shop,Independent,Direct,DE,Germany,DACH,2023-08-01
+105,C0105,Tamdal Trail Shop,Independent,Direct,DE,Germany,DACH,2009-11-01
+106,C0106,Rosfell Sport Group,Chain,Direct,DE,Germany,DACH,2015-01-01
+107,C0107,Yststad Online,Online,Direct,DE,Germany,DACH,2023-09-01
+108,C0108,Eldmo Trail Shop,Independent,Direct,DE,Germany,DACH,2009-07-01
+109,C0109,Ormby Trail Shop,Independent,Direct,DE,Germany,DACH,2018-08-01
+110,C0110,Isknes Outdoor,Independent,Direct,DE,Germany,DACH,2011-06-01
+111,C0111,Tamfell Online,Online,Direct,DE,Germany,DACH,2008-09-01
+112,C0112,Ormnes Bergsport,Independent,Direct,DE,Germany,DACH,2008-01-01
+113,C0113,Daljar Outdoor,Independent,Direct,DE,Germany,DACH,2023-09-01
+114,C0114,Marvik Trail Shop,Independent,Direct,DE,Germany,DACH,2014-09-01
+115,C0115,Lunmo Outdoor,Independent,Direct,DE,Germany,DACH,2015-11-01
+116,C0116,Corby Trail Shop,Independent,Direct,DE,Germany,DACH,2018-09-01
+117,C0117,Lunra Sport Group,Chain,Direct,DE,Germany,DACH,2015-01-01
+118,C0118,Vardor Bergsport,Independent,Direct,DE,Germany,DACH,2021-02-01
+119,C0119,Cormo Online,Online,Direct,DE,Germany,DACH,2022-12-01
+120,C0120,Wenfell Online,Online,Direct,DE,Germany,DACH,2009-01-01
+121,C0121,Allind Outdoor,Independent,Direct,DE,Germany,DACH,2013-08-01
+122,C0122,Ulwald Outdoor,Independent,Direct,DE,Germany,DACH,2016-02-01
+123,C0123,Dalnes Trail Shop,Independent,Direct,DE,Germany,DACH,2023-10-02
+124,C0124,Wenbek Sport Group,Chain,Direct,DE,Germany,DACH,2014-07-01
+125,C0125,Ulgard Sport Group,Chain,Direct,DE,Germany,DACH,2013-07-01
+126,C0126,Iskmo Outdoor,Independent,Direct,DE,Germany,DACH,2023-11-01
+127,C0127,Halbek Online,Online,Direct,DE,Germany,DACH,2016-07-01
+128,C0128,Mare Outdoor,Independent,Direct,DE,Germany,DACH,2018-06-01
+129,C0129,Alkast Outdoor,Independent,Direct,DE,Germany,DACH,2014-06-01
+130,C0130,Ormlind Bergsport,Independent,Direct,DE,Germany,DACH,2015-01-01
+131,C0131,Silvik Outdoor,Independent,Direct,DE,Germany,DACH,2016-04-01
+132,C0132,Eldsund Sport Group,Chain,Direct,DE,Germany,DACH,2023-11-01
+133,C0133,Iskjar Outdoor,Independent,Direct,DE,Germany,DACH,2018-07-01
+134,C0134,Cortind Online,Online,Direct,DE,Germany,DACH,2013-12-01
+135,C0135,Eldby Trail Shop,Independent,Direct,DE,Germany,DACH,2023-12-01
+136,C0136,Haldor Trail Shop,Independent,Direct,DE,Germany,DACH,2022-06-01
+137,C0137,Faljar Online,Online,Direct,DE,Germany,DACH,2012-11-01
+138,C0138,Nordor Sport Group,Chain,Direct,DE,Germany,DACH,2015-11-01
+139,C0139,Jorholm Outdoor,Independent,Direct,DE,Germany,DACH,2012-08-01
+140,C0140,Branjar Online,Online,Direct,DE,Germany,DACH,2016-11-01
+141,C0141,Jorfell Bergsport,Independent,Direct,CH,Switzerland,DACH,2008-04-01
+142,C0142,Branren Outdoor,Independent,Direct,CH,Switzerland,DACH,2009-08-01
+143,C0143,Kelby Outdoor,Independent,Direct,CH,Switzerland,DACH,2024-01-01
+144,C0144,Silby Trail Shop,Independent,Direct,CH,Switzerland,DACH,2024-01-01
+145,C0145,Ale Bergsport,Independent,Direct,CH,Switzerland,DACH,2018-10-01
+146,C0146,Grime Online,Online,Direct,CH,Switzerland,DACH,2020-11-01
+147,C0147,Pele Bergsport,Independent,Direct,CH,Switzerland,DACH,2008-06-01
+148,C0148,Ormkast Online,Online,Distributor,CH,Switzerland,DACH,2009-03-01
+149,C0149,Halsund Online,Online,Direct,CH,Switzerland,DACH,2019-04-01
+150,C0150,Varka Online,Online,Direct,CH,Switzerland,DACH,2017-10-01
+151,C0151,Dale Bergsport,Independent,Direct,CH,Switzerland,DACH,2019-04-01
+152,C0152,Dalvik Outdoor,Independent,Direct,CH,Switzerland,DACH,2008-01-01
+153,C0153,Zelvik Bergsport,Independent,Direct,CH,Switzerland,DACH,2020-09-01
+154,C0154,Grimstad Bergsport,Independent,Direct,CH,Switzerland,DACH,2019-01-01
+155,C0155,Varfell Online,Online,Direct,CH,Switzerland,DACH,2016-06-01
+156,C0156,Marren Outdoor,Independent,Direct,CH,Switzerland,DACH,2020-03-01
+157,C0157,Keldor Sport Group,Chain,Distributor,CH,Switzerland,DACH,2012-02-01
+158,C0158,Wenren Bergsport,Independent,Direct,CH,Switzerland,DACH,2013-12-01
+159,C0159,Ormwald Outdoor,Independent,Direct,CH,Switzerland,DACH,2008-10-01
+160,C0160,Pelren Trail Shop,Independent,Direct,CH,Switzerland,DACH,2009-02-01
+161,C0161,Halkast Outdoor,Independent,Direct,NL,Netherlands,BNL,2014-01-01
+162,C0162,Lunvik Online,Online,Direct,NL,Netherlands,BNL,2014-12-01
+163,C0163,Wenvik Sport Group,Chain,Distributor,NL,Netherlands,BNL,2017-06-01
+164,C0164,Jorstad Trail Shop,Independent,Direct,NL,Netherlands,BNL,2010-08-01
+165,C0165,Falby Sport Group,Chain,Direct,NL,Netherlands,BNL,2008-11-01
+166,C0166,Ormra Outdoor,Independent,Distributor,NL,Netherlands,BNL,2014-07-01
+167,C0167,Eldkast Trail Shop,Independent,Direct,NL,Netherlands,BNL,2015-02-01
+168,C0168,Pellind Trail Shop,Independent,Distributor,NL,Netherlands,BNL,2015-02-01
+169,C0169,Zelbek Outdoor,Independent,Direct,NL,Netherlands,BNL,2015-11-01
+170,C0170,Brantind Trail Shop,Independent,Direct,NL,Netherlands,BNL,2022-12-01
+171,C0171,Corvik Outdoor,Independent,Distributor,NL,Netherlands,BNL,2019-02-01
+172,C0172,Norfell Trail Shop,Independent,Direct,NL,Netherlands,BNL,2019-05-01
+173,C0173,Branwald Trail Shop,Independent,Direct,NL,Netherlands,BNL,2016-04-01
+174,C0174,Peldor Online,Online,Distributor,NL,Netherlands,BNL,2008-08-01
+175,C0175,Fallo Trail Shop,Independent,Direct,NL,Netherlands,BNL,2009-05-01
+176,C0176,Zelka Trail Shop,Independent,Direct,NL,Netherlands,BNL,2009-05-01
+177,C0177,Ormbek Sport Group,Chain,Direct,NL,Netherlands,BNL,2022-09-01
+178,C0178,Norren Trail Shop,Independent,Direct,NL,Netherlands,BNL,2022-06-01
+179,C0179,Pelwald Outdoor,Independent,Direct,NL,Netherlands,BNL,2019-08-01
+180,C0180,Ystholm Trail Shop,Independent,Direct,NL,Netherlands,BNL,2012-04-01
+181,C0181,Wene Online,Online,Direct,NL,Netherlands,BNL,2015-12-01
+182,C0182,Halra Sport Group,Chain,Direct,NL,Netherlands,BNL,2024-02-01
+183,C0183,Rosjar Online,Online,Direct,NL,Netherlands,BNL,2016-04-01
+184,C0184,Varsund Trail Shop,Independent,Direct,NL,Netherlands,BNL,2015-04-01
+185,C0185,Lune Outdoor,Independent,Direct,NL,Netherlands,BNL,2014-07-01
+186,C0186,Alka Online,Online,Direct,NL,Netherlands,BNL,2024-03-01
+187,C0187,Zellind Outdoor,Independent,Direct,NL,Netherlands,BNL,2022-11-01
+188,C0188,Iskvik Trail Shop,Independent,Distributor,NL,Netherlands,BNL,2014-09-01
+189,C0189,Halnes Trail Shop,Independent,Direct,NL,Netherlands,BNL,2009-07-01
+190,C0190,Silwald Outdoor,Independent,Direct,NL,Netherlands,BNL,2009-07-01
+191,C0191,Corra Sport Group,Chain,Direct,BE,Belgium,BNL,2010-11-01
+192,C0192,Ulmo Online,Online,Distributor,BE,Belgium,BNL,2014-09-01
+193,C0193,Branlind Outdoor,Independent,Direct,BE,Belgium,BNL,2018-06-01
+194,C0194,Lunkast Trail Shop,Independent,Direct,BE,Belgium,BNL,2008-06-01
+195,C0195,Fallind Trail Shop,Independent,Direct,BE,Belgium,BNL,2020-09-01
+196,C0196,Rosvik Online,Online,Distributor,BE,Belgium,BNL,2018-05-01
+197,C0197,Keljar Trail Shop,Independent,Direct,BE,Belgium,BNL,2022-03-01
+198,C0198,Corholm Trail Shop,Independent,Direct,BE,Belgium,BNL,2024-03-01
+199,C0199,Jorlind Online,Online,Direct,BE,Belgium,BNL,2017-02-01
+200,C0200,Silren Trail Shop,Independent,Direct,BE,Belgium,BNL,2016-05-01
+201,C0201,Grimkast Trail Shop,Independent,Direct,BE,Belgium,BNL,2024-04-01
+202,C0202,Wenkast Online,Online,Direct,BE,Belgium,BNL,2019-06-01
+203,C0203,Lunka Online,Online,Direct,BE,Belgium,BNL,2015-10-01
+204,C0204,Branbek Outdoor,Independent,Direct,BE,Belgium,BNL,2017-01-01
+205,C0205,Alra Online,Online,Direct,BE,Belgium,BNL,2013-03-01
+206,C0206,Ormdal Outdoor,Independent,Direct,BE,Belgium,BNL,2018-09-01
+207,C0207,Silmo Trail Shop,Independent,Direct,BE,Belgium,BNL,2021-09-01
+208,C0208,Iskkast Outdoor,Independent,Direct,BE,Belgium,BNL,2009-07-01
+209,C0209,Branlo Outdoor,Independent,Direct,BE,Belgium,BNL,2024-05-01
+210,C0210,Margard Trail Shop,Independent,Direct,BE,Belgium,BNL,2017-03-01
+211,C0211,Wenjar Outdoor,Independent,Direct,BE,Belgium,BNL,2009-11-01
+212,C0212,Ystbek Online,Online,Direct,BE,Belgium,BNL,2021-02-01
+213,C0213,Zello Trail Shop,Independent,Distributor,BE,Belgium,BNL,2013-12-01
+214,C0214,Pelholm Sport Group,Chain,Distributor,BE,Belgium,BNL,2020-07-01
+215,C0215,Tamnes Outdoor,Independent,Direct,BE,Belgium,BNL,2021-11-01
+216,C0216,Zelren Outdoor,Independent,Direct,LU,Luxembourg,BNL,2016-05-01
+217,C0217,Siltind Trail Shop,Independent,Distributor,LU,Luxembourg,BNL,2016-06-01
+218,C0218,Ystvik Online,Online,Direct,LU,Luxembourg,BNL,2018-04-01
+219,C0219,Ormtind Online,Online,Distributor,LU,Luxembourg,BNL,2019-05-01
+220,C0220,Iskdal Online,Online,Direct,LU,Luxembourg,BNL,2012-07-01
+221,C0221,Halstad Sport Group,Chain,Distributor,SE,Sweden,NRD,2019-10-01
+222,C0222,Silsund Outdoor,Independent,Distributor,SE,Sweden,NRD,2015-12-01
+223,C0223,Kellind Trail Shop,Independent,Direct,SE,Sweden,NRD,2024-05-01
+224,C0224,Falvik Trail Shop,Independent,Distributor,SE,Sweden,NRD,2024-06-03
+225,C0225,Silra Trail Shop,Independent,Distributor,SE,Sweden,NRD,2015-12-01
+226,C0226,Kelka Trail Shop,Independent,Distributor,SE,Sweden,NRD,2024-07-01
+227,C0227,Silgard Trail Shop,Independent,Distributor,SE,Sweden,NRD,2014-03-01
+228,C0228,Lundal Online,Online,Distributor,SE,Sweden,NRD,2013-03-01
+229,C0229,Marlind Trail Shop,Independent,Distributor,SE,Sweden,NRD,2024-07-01
+230,C0230,Iskra Online,Online,Distributor,SE,Sweden,NRD,2017-06-01
+231,C0231,Grimgard Outdoor,Independent,Direct,SE,Sweden,NRD,2014-10-01
+232,C0232,Jorvik Online,Online,Distributor,SE,Sweden,NRD,2020-08-01
+233,C0233,Ormren Outdoor,Independent,Direct,SE,Sweden,NRD,2010-05-01
+234,C0234,Ystgard Outdoor,Independent,Distributor,SE,Sweden,NRD,2010-02-01
+235,C0235,Wennes Trail Shop,Independent,Distributor,SE,Sweden,NRD,2021-04-01
+236,C0236,Tamholm Outdoor,Independent,Distributor,SE,Sweden,NRD,2016-06-01
+237,C0237,Zelnes Trail Shop,Independent,Distributor,SE,Sweden,NRD,2018-08-01
+238,C0238,Grimlo Outdoor,Independent,Distributor,SE,Sweden,NRD,2019-02-01
+239,C0239,Kelnes Trail Shop,Independent,Distributor,SE,Sweden,NRD,2022-10-01
+240,C0240,Nordal Outdoor,Independent,Distributor,SE,Sweden,NRD,2014-06-01
+241,C0241,Varra Outdoor,Independent,Direct,SE,Sweden,NRD,2009-04-01
+242,C0242,Marbek Outdoor,Independent,Direct,SE,Sweden,NRD,2021-01-01
+243,C0243,Rosra Online,Online,Direct,NO,Norway,NRD,2022-03-01
+244,C0244,Lunwald Outdoor,Independent,Distributor,NO,Norway,NRD,2017-11-01
+245,C0245,Tamra Online,Online,Distributor,NO,Norway,NRD,2018-05-01
+246,C0246,Halby Outdoor,Independent,Distributor,NO,Norway,NRD,2011-03-01
+247,C0247,Tame Trail Shop,Independent,Distributor,NO,Norway,NRD,2017-05-01
+248,C0248,Norbek Outdoor,Independent,Distributor,NO,Norway,NRD,2016-01-01
+249,C0249,Roslo Online,Online,Distributor,NO,Norway,NRD,2009-05-01
+250,C0250,Kelkast Online,Online,Direct,NO,Norway,NRD,2014-04-01
+251,C0251,Pelmo Trail Shop,Independent,Distributor,NO,Norway,NRD,2024-08-01
+252,C0252,Iskdor Outdoor,Independent,Distributor,NO,Norway,NRD,2016-03-01
+253,C0253,Faltind Online,Online,Distributor,NO,Norway,NRD,2024-09-02
+254,C0254,Branvik Trail Shop,Independent,Direct,NO,Norway,NRD,2021-03-01
+255,C0255,Varvik Sport Group,Chain,Distributor,NO,Norway,NRD,2014-03-01
+256,C0256,Fale Sport Group,Chain,Distributor,NO,Norway,NRD,2009-02-01
+257,C0257,Wenby Trail Shop,Independent,Distributor,NO,Norway,NRD,2016-09-01
+258,C0258,Pelby Trail Shop,Independent,Direct,DK,Denmark,NRD,2024-09-02
+259,C0259,Jornes Outdoor,Independent,Direct,DK,Denmark,NRD,2017-01-01
+260,C0260,Wenlind Outdoor,Independent,Direct,DK,Denmark,NRD,2022-12-01
+261,C0261,Falra Sport Group,Chain,Distributor,DK,Denmark,NRD,2012-07-01
+262,C0262,Eldbek Online,Online,Direct,DK,Denmark,NRD,2016-11-01
+263,C0263,Grimfell Sport Group,Chain,Distributor,DK,Denmark,NRD,2009-05-01
+264,C0264,Tamvik Outdoor,Independent,Distributor,DK,Denmark,NRD,2015-02-01
+265,C0265,Pelnes Online,Online,Distributor,DK,Denmark,NRD,2021-10-01
+266,C0266,Isktind Online,Online,Distributor,DK,Denmark,NRD,2010-08-01
+267,C0267,Silnes Outdoor,Independent,Distributor,DK,Denmark,NRD,2014-03-01
+268,C0268,Alnes Trail Shop,Independent,Distributor,DK,Denmark,NRD,2024-10-01
+269,C0269,Ullind Outdoor,Independent,Distributor,DK,Denmark,NRD,2008-07-01
+270,C0270,Ystkast Online,Online,Distributor,DK,Denmark,NRD,2024-11-01
+271,C0271,Luntind Sport Group,Chain,Direct,FI,Finland,NRD,2012-03-01
+272,C0272,Lunfell Outdoor,Independent,Direct,FI,Finland,NRD,2016-04-01
+273,C0273,Wendal Trail Shop,Independent,Distributor,FI,Finland,NRD,2012-12-01
+274,C0274,Pelgard Outdoor,Independent,Direct,FI,Finland,NRD,2024-11-01
+275,C0275,Falgard Outdoor,Independent,Distributor,FI,Finland,NRD,2022-01-01
+276,C0276,Pelkast Online,Online,Distributor,FI,Finland,NRD,2010-06-01
+277,C0277,Silbek Trail Shop,Independent,Direct,FI,Finland,NRD,2016-10-01
+278,C0278,Lundor Online,Online,Direct,FI,Finland,NRD,2020-02-01
+279,C0279,Branstad Outdoor,Independent,Distributor,FI,Finland,NRD,2021-10-01
+280,C0280,Ystnes Online,Online,Direct,FI,Finland,NRD,2014-05-01
+281,C0281,Eldlo Online,Online,Direct,FR,France,FRA,2008-08-01
+282,C0282,Marra Outdoor,Independent,Direct,FR,France,FRA,2009-04-01
+283,C0283,Pelka Outdoor,Independent,Direct,FR,France,FRA,2024-12-02
+284,C0284,Daldal Trail Shop,Independent,Distributor,FR,France,FRA,2022-02-01
+285,C0285,Halholm Outdoor,Independent,Direct,FR,France,FRA,2017-07-01
+286,C0286,Grimra Sport Group,Chain,Direct,FR,France,FRA,2019-08-01
+287,C0287,Alstad Outdoor,Independent,Distributor,FR,France,FRA,2010-12-01
+288,C0288,Eldjar Sport Group,Chain,Distributor,FR,France,FRA,2019-08-01
+289,C0289,Aldor Online,Online,Direct,FR,France,FRA,2025-01-01
+290,C0290,Jorby Outdoor,Independent,Direct,FR,France,FRA,2018-10-01
+291,C0291,Silfell Trail Shop,Independent,Distributor,FR,France,FRA,2009-07-01
+292,C0292,Aljar Outdoor,Independent,Direct,FR,France,FRA,2015-05-01
+293,C0293,Ulstad Outdoor,Independent,Direct,FR,France,FRA,2015-02-01
+294,C0294,Jorgard Trail Shop,Independent,Direct,FR,France,FRA,2017-03-01
+295,C0295,Rosnes Online,Online,Distributor,FR,France,FRA,2016-05-01
+296,C0296,Ormvik Outdoor,Independent,Direct,FR,France,FRA,2014-07-01
+297,C0297,Jorbek Outdoor,Independent,Direct,FR,France,FRA,2019-10-01
+298,C0298,Varby Trail Shop,Independent,Direct,FR,France,FRA,2025-01-01
+299,C0299,Falren Outdoor,Independent,Direct,FR,France,FRA,2013-05-01
+300,C0300,Grimlind Trail Shop,Independent,Direct,FR,France,FRA,2014-10-01
+301,C0301,Roska Outdoor,Independent,Distributor,FR,France,FRA,2025-02-03
+302,C0302,Marmo Outdoor,Independent,Direct,FR,France,FRA,2012-09-01
+303,C0303,Varstad Online,Online,Direct,FR,France,FRA,2015-06-01
+304,C0304,Varholm Trail Shop,Independent,Direct,FR,France,FRA,2010-06-01
+305,C0305,Jordor Online,Online,Distributor,FR,France,FRA,2011-02-01
+306,C0306,Falsund Sport Group,Chain,Direct,FR,France,FRA,2012-03-01
+307,C0307,Iskwald Online,Online,Direct,FR,France,FRA,2010-09-01
+308,C0308,Ultind Outdoor,Independent,Direct,FR,France,FRA,2021-08-01
+309,C0309,Wenholm Outdoor,Independent,Direct,FR,France,FRA,2018-01-01
+310,C0310,Dallind Outdoor,Independent,Direct,FR,France,FRA,2019-12-01
+311,C0311,Tamlo Online,Online,Direct,FR,France,FRA,2017-12-01
+312,C0312,Ormsund Online,Online,Distributor,FR,France,FRA,2017-05-01
+313,C0313,Dalfell Trail Shop,Independent,Direct,FR,France,FRA,2018-09-01
+314,C0314,Wentind Outdoor,Independent,Direct,FR,France,FRA,2016-03-01
+315,C0315,Branby Online,Online,Direct,FR,France,FRA,2019-03-01
+316,C0316,Falwald Online,Online,Direct,FR,France,FRA,2017-12-01
+317,C0317,Marnes Sport Group,Chain,Distributor,FR,France,FRA,2022-01-01
+318,C0318,Halmo Sport Group,Chain,Direct,FR,France,FRA,2013-11-01
+319,C0319,Ulren Trail Shop,Independent,Distributor,FR,France,FRA,2012-03-01
+320,C0320,Grimvik Online,Online,Distributor,FR,France,FRA,2011-12-01
+321,C0321,Corwald Outdoor,Independent,Distributor,FR,France,FRA,2017-01-01
+322,C0322,Norstad Trail Shop,Independent,Direct,FR,France,FRA,2010-10-01
+323,C0323,Dalgard Online,Online,Distributor,FR,France,FRA,2019-01-01
+324,C0324,Silkast Trail Shop,Independent,Direct,FR,France,FRA,2022-07-01
+325,C0325,Falbek Trail Shop,Independent,Distributor,FR,France,FRA,2008-08-01
+326,C0326,Zelsund Outdoor,Independent,Direct,FR,France,FRA,2016-10-01
+327,C0327,Jortind Outdoor,Independent,Distributor,FR,France,FRA,2018-03-01
+328,C0328,Ulnes Sport Group,Chain,Distributor,FR,France,FRA,2008-06-01
+329,C0329,Jordal Online,Online,Direct,FR,France,FRA,2009-06-01
+330,C0330,Eldnes Trail Shop,Independent,Distributor,FR,France,FRA,2008-09-01
+331,C0331,Iskren Outdoor,Independent,Distributor,FR,France,FRA,2013-08-01
+332,C0332,Brandor Online,Online,Direct,FR,France,FRA,2019-12-01
+333,C0333,Faldor Online,Online,Direct,FR,France,FRA,2018-01-01
+334,C0334,Dalbek Outdoor,Independent,Direct,FR,France,FRA,2014-09-01
+335,C0335,Falnes Online,Online,Direct,FR,France,FRA,2010-10-01
+336,C0336,Kelsund Outdoor,Independent,Direct,FR,France,FRA,2013-08-01
+337,C0337,Uldal Trail Shop,Independent,Distributor,FR,France,FRA,2014-04-01
+338,C0338,Pelfell Outdoor,Independent,Direct,FR,France,FRA,2013-03-01
+339,C0339,Roswald Online,Online,Direct,FR,France,FRA,2018-08-01
+340,C0340,Uldor Outdoor,Independent,Distributor,FR,France,FRA,2008-03-01
+341,C0341,Eldtind Online,Online,Direct,FR,France,FRA,2009-01-01
+342,C0342,Dalstad Trail Shop,Independent,Direct,FR,France,FRA,2008-07-01
+343,C0343,Haltind Outdoor,Independent,Direct,FR,France,FRA,2016-10-01
+344,C0344,Grimren Sport Group,Chain,Distributor,FR,France,FRA,2020-07-01
+345,C0345,Sillo Sport Group,Chain,Direct,FR,France,FRA,2011-09-01
+346,C0346,Zelstad Outdoor,Independent,Direct,FR,France,FRA,2019-01-01
+347,C0347,Halren Trail Shop,Independent,Distributor,FR,France,FRA,2012-05-01
+348,C0348,Grimbek Trail Shop,Independent,Direct,FR,France,FRA,2010-12-01
+349,C0349,Zelwald Trail Shop,Independent,Direct,FR,France,FRA,2013-12-01
+350,C0350,Hallind Trail Shop,Independent,Direct,FR,France,FRA,2019-02-01
+351,C0351,Ystdor Outdoor,Independent,Direct,FR,France,FRA,2015-02-01
+352,C0352,Varwald Trail Shop,Independent,Direct,FR,France,FRA,2015-02-01
+353,C0353,Alvik Outdoor,Independent,Direct,ES,Spain,IBE,2022-10-01
+354,C0354,Tamren Sport Group,Chain,Distributor,ES,Spain,IBE,2018-01-01
+355,C0355,Varlo Outdoor,Independent,Distributor,ES,Spain,IBE,2012-02-01
+356,C0356,Eldholm Outdoor,Independent,Direct,ES,Spain,IBE,2022-08-01
+357,C0357,Silholm Trail Shop,Independent,Distributor,ES,Spain,IBE,2009-06-01
+358,C0358,Ulholm Trail Shop,Independent,Direct,ES,Spain,IBE,2020-04-01
+359,C0359,Alsund Trail Shop,Independent,Distributor,ES,Spain,IBE,2009-05-01
+360,C0360,Iskgard Outdoor,Independent,Distributor,ES,Spain,IBE,2025-03-03
+361,C0361,Sildor Outdoor,Independent,Distributor,ES,Spain,IBE,2010-07-01
+362,C0362,Vare Trail Shop,Independent,Direct,ES,Spain,IBE,2021-08-01
+363,C0363,Wenka Outdoor,Independent,Distributor,ES,Spain,IBE,2015-10-01
+364,C0364,Ormfell Trail Shop,Independent,Distributor,ES,Spain,IBE,2022-09-01
+365,C0365,Rostind Trail Shop,Independent,Distributor,ES,Spain,IBE,2025-03-03
+366,C0366,Dalkast Trail Shop,Independent,Distributor,ES,Spain,IBE,2011-04-01
+367,C0367,Jorsund Outdoor,Independent,Direct,ES,Spain,IBE,2021-03-01
+368,C0368,Siljar Outdoor,Independent,Distributor,ES,Spain,IBE,2019-09-01
+369,C0369,Norwald Trail Shop,Independent,Distributor,ES,Spain,IBE,2011-07-01
+370,C0370,Alfell Sport Group,Chain,Distributor,ES,Spain,IBE,2022-04-01
+371,C0371,Varmo Trail Shop,Independent,Distributor,ES,Spain,IBE,2018-12-01
+372,C0372,Elde Online,Online,Direct,ES,Spain,IBE,2015-11-01
+373,C0373,Dallo Online,Online,Direct,ES,Spain,IBE,2011-06-01
+374,C0374,Marwald Online,Online,Distributor,ES,Spain,IBE,2011-04-01
+375,C0375,Kelgard Outdoor,Independent,Distributor,ES,Spain,IBE,2010-11-01
+376,C0376,Iskby Online,Online,Distributor,ES,Spain,IBE,2017-02-01
+377,C0377,Silka Online,Online,Distributor,ES,Spain,IBE,2014-07-01
+378,C0378,Lungard Trail Shop,Independent,Direct,ES,Spain,IBE,2018-05-01
+379,C0379,Branfell Outdoor,Independent,Distributor,ES,Spain,IBE,2021-07-01
+380,C0380,Nortind Trail Shop,Independent,Direct,ES,Spain,IBE,2013-05-01
+381,C0381,Marka Online,Online,Distributor,ES,Spain,IBE,2018-03-01
+382,C0382,Aldal Outdoor,Independent,Distributor,ES,Spain,IBE,2009-10-01
+383,C0383,Mardor Trail Shop,Independent,Distributor,ES,Spain,IBE,2015-03-01
+384,C0384,Ystlo Sport Group,Chain,Distributor,ES,Spain,IBE,2021-11-01
+385,C0385,Norlind Outdoor,Independent,Distributor,ES,Spain,IBE,2016-11-01
+386,C0386,Marlo Sport Group,Chain,Distributor,ES,Spain,IBE,2020-03-01
+387,C0387,Corlo Online,Online,Direct,PT,Portugal,IBE,2017-06-01
+388,C0388,Marjar Trail Shop,Independent,Distributor,PT,Portugal,IBE,2025-04-01
+389,C0389,Ormstad Outdoor,Independent,Distributor,PT,Portugal,IBE,2011-02-01
+390,C0390,Dalka Online,Online,Distributor,PT,Portugal,IBE,2020-07-01
+391,C0391,Norsund Online,Online,Direct,PT,Portugal,IBE,2021-12-01
+392,C0392,Norlo Online,Online,Direct,PT,Portugal,IBE,2025-05-01
+393,C0393,Halfell Trail Shop,Independent,Distributor,PT,Portugal,IBE,2008-08-01
+394,C0394,Alwald Trail Shop,Independent,Distributor,PT,Portugal,IBE,2014-09-01
+395,C0395,Norkast Outdoor,Independent,Distributor,PT,Portugal,IBE,2025-05-01
+396,C0396,Cordal Outdoor,Independent,Distributor,PT,Portugal,IBE,2016-04-01
+397,C0397,Wenstad Online,Online,Distributor,PT,Portugal,IBE,2012-12-01
+398,C0398,Kelfell Outdoor,Independent,Distributor,PT,Portugal,IBE,2008-09-01
+399,C0399,Halvik Online,Online,Distributor,PT,Portugal,IBE,2025-06-02
+400,C0400,Varbek Outdoor,Independent,Distributor,PT,Portugal,IBE,2014-04-01

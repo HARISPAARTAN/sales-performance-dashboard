@@ -1,0 +1,5 @@
+ProductKey,SKU,ProductName,Category,CategorySort,Subcategory,SubcategorySort,Brand,ListPriceEUR,LaunchDate,DiscontinuedDate
+1,TEN-TRK-001,Alpha Trekking tent 2P,Tents,1,Trekking tents,1,Veltrano Trail,103.00,2018-01-01,
+2,TEN-TRK-002,Beta Trekking tent 3P,Tents,1,Trekking tents,1,Veltrano Summit,103.00,2018-01-01,
+3,APP-JKT-001,Gamma Jacket Wind,Apparel,4,Jackets,10,Veltrano Trail,51.50,2019-01-01,
+4,APP-JKT-002,Delta Jacket Hardshell,Apparel,4,Jackets,10,Veltrano Camp,25.75,2019-01-01,
