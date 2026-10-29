@@ -58,7 +58,7 @@ def _solid(hexcode: str) -> dict:
 
 def _number(value: float) -> str:
     """A decimal literal as PBIR writes it: 1 -> "1D", 0.9 -> "0.9D"."""
-    return f"{value:g}D"
+    return f"{value:.15g}D"
 
 
 def write_json(path: Path, data: dict) -> None:

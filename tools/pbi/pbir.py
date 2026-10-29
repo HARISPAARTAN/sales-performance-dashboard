@@ -193,7 +193,7 @@ def _comparison_filter(name: str, spec: dict) -> dict:
     kind = spec.get("kind", "Column")
     if kind not in ("Column", "Measure"):
         raise ValueError(f"a comparison filter is on a Column or a Measure, not {kind!r}")
-    value = f"{int(spec['value'])}L" if kind == "Column" else f"{float(spec['value']):g}D"
+    value = f"{int(spec['value'])}L" if kind == "Column" else f"{float(spec['value']):.15g}D"
     left = {kind: {"Expression": {"SourceRef": {"Source": "f"}}, "Property": prop}}
     condition = {"Comparison": {"ComparisonKind": COMPARISONS[spec["op"]], "Left": left, "Right": {"Literal": {"Value": value}}}}
     return {
