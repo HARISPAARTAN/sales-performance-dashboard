@@ -60,7 +60,7 @@ The cubes hold integer cents ([ADR 0005](adr/0005-replica-cubes.md)):
 
 `replica.json` holds about 1.0 MB (budget 1.3 MB), so the fallback of the spec (dropping the region from `P`) is not needed. The page loads at most 3 MB in total, ECharts included (`tools/check_page_weight.py`).
 
-What the replica leaves out: row-level security and the security table; the calculation group and the field parameter as model objects (their logic lives in `model.js` and is tested); bookmarks (the Reset button does their job); the Info page (the About dialog); the sales-rep chart; visual header menus, export and focus mode. The report is dark only; the replica also follows the light theme of the portfolio.
+What the replica leaves out: row-level security and the security table; the calculation group and the field parameter as model objects (their logic lives in `model.js` and is tested); bookmarks (the Reset button does their job); the Info page (the About dialog); the segment and sales-rep charts; the margin and discount chart of Trends; the category filter on Customers; visual header menus, export and focus mode. The report is dark only; the replica also follows the light theme of the portfolio.
 
 ## CI
 

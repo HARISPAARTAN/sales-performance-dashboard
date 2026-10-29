@@ -4,7 +4,7 @@
 [![Pages](https://github.com/HARISPAARTAN/sales-performance-dashboard/actions/workflows/pages.yml/badge.svg)](https://github.com/HARISPAARTAN/sales-performance-dashboard/actions/workflows/pages.yml)
 [![Release](https://img.shields.io/github/v/release/HARISPAARTAN/sales-performance-dashboard?sort=semver)](https://github.com/HARISPAARTAN/sales-performance-dashboard/releases)
 
-Power-BI-Vertriebsdashboard für einen fiktiven Outdoor-Großhändler: ein Sternschema in TMDL mit einer Berechnungsgruppe für Zeitvergleiche, einem Feldparameter und dynamischer Sicherheit auf Zeilenebene, jede Kennzahl im Kopf der Seiten gegen eine unabhängige Python-Berechnung abgeglichen, dazu eine HTML-Nachbildung als Live-Demo.
+Power-BI-Vertriebsdashboard für einen fiktiven Outdoor-Großhändler: ein Sternschema in TMDL mit einer Berechnungsgruppe für Zeitvergleiche, einem Feldparameter und dynamischer Sicherheit auf Zeilenebene, sechzehn Prüfwerte gegen eine unabhängige Python-Berechnung abgeglichen, dazu eine HTML-Nachbildung als Live-Demo.
 
 English: [README.md](README.md)
 
@@ -24,11 +24,11 @@ Rebuilt from memory as a demo. The original client's name and data are not used.
 
 [harispaartan.github.io/sales-performance-dashboard](https://harispaartan.github.io/sales-performance-dashboard/)
 
-Die Nachbildung ist eine statische Seite mit den sechs Berichtsseiten als Reitern (Overview, Trends, Products, Regions, Customers, Targets), denselben Filtern (Jahr, Monate, Region, Kategorie, Kreuzfilter per Klick auf einen Balken) und denselben Regeln wie der Bericht, gezeichnet mit ECharts aus ganzzahligen Würfeln, die die Python-Referenz erzeugt. Sie läuft im Browser ohne Server und sendet keine Daten; die Filter bleiben nur in diesem Browser gespeichert. Nicht enthalten sind die Sicherheit auf Zeilenebene, die Seite Info (der Dialog About ersetzt sie) und das Diagramm nach Vertriebsmitarbeitenden.
+Die Nachbildung ist eine statische Seite mit den sechs Berichtsseiten als Reitern (Overview, Trends, Products, Regions, Customers, Targets), denselben Filtern (Jahr, Monate, Region, Kategorie, Kreuzfilter per Klick auf einen Balken) und denselben Regeln wie der Bericht, gezeichnet mit ECharts aus ganzzahligen Würfeln, die die Python-Referenz erzeugt. Sie läuft im Browser ohne Server und sendet keine Daten; die Filter bleiben nur in diesem Browser gespeichert. Nicht enthalten sind die Sicherheit auf Zeilenebene, die Seite Info (der Dialog About ersetzt sie), die Diagramme nach Segment und nach Vertriebsmitarbeitenden, das Diagramm zu Marge und Rabatt auf Trends und der Kategoriefilter auf Customers.
 
 ## Was es kann
 
-Acht Berichtsseiten auf einer Fläche von 1280 × 720 im Design Veltrano Dark: eine Kopfzeile mit dem Datenstand, eine Slicer-Zeile (Year, Months, Region, Category, Reset), die über die Seiten synchronisiert ist, eine Reihe Kennzahlkacheln mit der Veränderung zum Vorjahr und darunter die Diagramme.
+Acht Berichtsseiten (sieben auf einer Fläche von 1280 × 720, die Tooltip-Seite auf 320 × 240) im Design Veltrano Dark: eine Kopfzeile mit dem Datenstand, eine Slicer-Zeile (Year, Months, Region, Category, Reset), die über die Seiten synchronisiert ist, eine Reihe Kennzahlkacheln mit der Veränderung zum Vorjahr und darunter die Diagramme.
 
 - **Overview**: Umsatz, Bruttomarge in %, Aufträge, durchschnittlicher Auftragswert und Rabatt in %; der Monatsverlauf gegenüber dem Vorjahr; Umsatz und Marge je Monat; Umsatz nach einer wählbaren Dimension (Analyse by: Kategorie, Region, Segment oder Kanal).
 - **Trends**: seit Jahresbeginn, Vorjahr bis zum selben Monat, rollierende 12 Monate und Stückzahlen; Stückzahlen nach Kategorie; eine Matrix mit allen sieben Zeitberechnungen je Monat.
@@ -44,7 +44,7 @@ Regionalleitungen sehen nur ihre Regionen: Die Rolle `Regional manager` filtert 
 
 ![Zwei Zweige aus denselben Dateien: Power Query, das TMDL-Modell und der PBIR-Bericht auf der einen Seite, die pandas-Referenz, die Daten der Nachbildung und die HTML-Nachbildung auf der anderen; sie treffen sich in der Abgleichstabelle](docs/architecture.svg)
 
-Der Generator mit festem Startwert schreibt die Dateien des Kunden: drei Jahresarbeitsmappen mit Auftragspositionen und sechs CSV-Dateien. Power Query im Power-BI-Projekt kombiniert die Arbeitsmappen, überspringt die Titelzeilen und typisiert jede Spalte mit der Kultur en-US; Modell und Bericht liegen als Text vor (TMDL und PBIR). Unabhängig davon berechnet `tools/reference.py` jede Kennzahl mit pandas in ganzen Cent. Beide treffen sich im [Abgleich](docs/reconciliation.md): Sechzehn Kennzahlen aus Python und aus Power BI Desktop müssen übereinstimmen. Dieselbe Referenz erzeugt die Daten der Nachbildung. Mehr in [docs/architecture.md](docs/architecture.md).
+Der Generator mit festem Startwert schreibt die Dateien des Kundenunternehmens: drei Jahresarbeitsmappen mit Auftragspositionen und sechs CSV-Dateien. Power Query im Power-BI-Projekt kombiniert die Arbeitsmappen, überspringt die Titelzeilen und typisiert jede Spalte mit der Kultur en-US; Modell und Bericht liegen als Text vor (TMDL und PBIR). Unabhängig davon berechnet `tools/reference.py` jede Kennzahl mit pandas in ganzen Cent. Beide treffen sich im [Abgleich](docs/reconciliation.md): Sechzehn Kennzahlen aus Python und aus Power BI Desktop müssen übereinstimmen. Dieselbe Referenz erzeugt die Daten der Nachbildung. Mehr in [docs/architecture.md](docs/architecture.md).
 
 ## Datenmodell
 
@@ -95,13 +95,13 @@ Dieser Nachbau ergänzt:
 
 - einen schriftlichen Auftrag mit Nutzenden, Umfang und Abnahmekriterien sowie ein dokumentiertes Datenmodell;
 - Modell und Bericht als prüfbaren Text (TMDL und PBIR) mit Offline-Lint-Tests und Schemaprüfungen;
-- den Abgleich jeder Kennzahl im Kopf der Seiten gegen eine unabhängige pandas-Berechnung, auch des Umsatzes unter der Rolle für zwei Regionalleitungen;
+- den Abgleich von sechzehn Prüfwerten gegen eine unabhängige pandas-Berechnung, auch des Umsatzes unter der Rolle für zwei Regionalleitungen;
 - geprüfte Sicherheit auf Zeilenebene und ein Skript für die rollenfreie Kopie, die Publish to web braucht;
 - Übergabenotizen zum Aktualisieren, zum Export eines neuen Jahres, zu Zielen und zu neuen Regionalleitungen;
 - CI mit `uv sync --locked` und festgelegten Actions sowie eine Live-Nachbildung mit getestetem Filtercode.
 
 ## Lizenz und Hinweis zu den Daten
 
-MIT, siehe [LICENSE](LICENSE). Alle Zahlen, Kundenkonten, Produkte und Personen in diesem Repository erfindet `tools/make_data.py`. Die Visual-Vorlagen in `tools/pbi/templates/` stammen aus microsoft/fabric-toolbox und die Schemas in `tools/pbi/schemas/` aus microsoft/json-schemas, beide MIT mit erhaltenen Lizenzen; ECharts 5.6.0 steht unter Apache-2.0 (`web/vendor/LICENSE-echarts.txt`); die Schriften in `web/kit/fonts/` stehen unter der SIL Open Font License.
+MIT, siehe [LICENSE](LICENSE). Alle Zahlen, Kundenkonten, Produkte und Personen in den Daten erfindet `tools/make_data.py`. Die Visual-Vorlagen in `tools/pbi/templates/` stammen aus microsoft/fabric-toolbox und die Schemas in `tools/pbi/schemas/` aus microsoft/json-schemas, beide MIT mit erhaltenen Lizenzen; ECharts 5.6.0 steht unter Apache-2.0 (`web/vendor/LICENSE-echarts.txt`); die Schriften in `web/kit/fonts/` stehen unter der SIL Open Font License.
 
 Rebuilt from memory as a demo. The original client's name and data are not used.

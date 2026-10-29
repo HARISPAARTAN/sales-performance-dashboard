@@ -86,7 +86,7 @@ Parameters: `DataFolder` (text, default `E:\GITGUB\sales-performance-dashboard\d
 
 ### Generator tuning
 
-The spec lets the plan tune rates and quantity means, never the bands. Two values differ from the first draft of the rules:
+The generator rules allow tuning the rates and quantity means, never the bands. Two values differ from the first draft of the rules:
 
 | Constant in `tools/make_data.py` | Draft | Used | Why |
 |---|---|---|---|

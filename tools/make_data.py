@@ -7,7 +7,7 @@ Seed 41 drives numpy.random.default_rng and NAME_SEED drives Faker (the 16 peopl
 files; NAME_SEED changes names and e-mail addresses only, never a number (docs/data-model.md, "Generator tuning").
 Workbooks carry the fixed time 2025-10-01 06:00 in their properties and zip entries. --check regenerates into a
 temporary folder and compares the CSV files byte for byte and the workbooks by sheet names and cell values; it
-exits 1 on the first difference.
+prints every difference and exits 1.
 """
 
 from __future__ import annotations

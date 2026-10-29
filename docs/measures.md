@@ -8,7 +8,7 @@ folder and a format string. The DAX below is the TMDL's, character for character
 VAR v = ABS(SELECTEDMEASURE()) RETURN IF(v >= 1E6, "€ #,0.00,,"" m""", IF(v >= 1E4, "€ #,0.0,"" k""", "€ #,0"))
 ```
 
-which shows `€ 12.20 m`, `€ 512.3 k` or `€ 2,308`. Rules that every measure follows (spec section 7):
+which shows `€ 12.20 m`, `€ 512.3 k` or `€ 2,308`. Rules that every measure follows:
 
 - Comparisons use whole months and only months with sales (`DimDate[Is past]`), so the partial year 2025 compares
   January to September with January to September 2024.

@@ -4,7 +4,7 @@
 [![Pages](https://github.com/HARISPAARTAN/sales-performance-dashboard/actions/workflows/pages.yml/badge.svg)](https://github.com/HARISPAARTAN/sales-performance-dashboard/actions/workflows/pages.yml)
 [![Release](https://img.shields.io/github/v/release/HARISPAARTAN/sales-performance-dashboard?sort=semver)](https://github.com/HARISPAARTAN/sales-performance-dashboard/releases)
 
-Power BI sales dashboard for a fictional outdoor-equipment wholesaler: a star schema in TMDL with a time-intelligence calculation group, a field parameter and dynamic row-level security, every headline number reconciled against an independent Python computation, and a live HTML replica.
+Power BI sales dashboard for a fictional outdoor-equipment wholesaler: a star schema in TMDL with a time-intelligence calculation group, a field parameter and dynamic row-level security, the sixteen headline checks reconciled against an independent Python computation, and a live HTML replica.
 
 Deutsch: [README.de.md](README.de.md)
 
@@ -24,11 +24,11 @@ Rebuilt from memory as a demo. The original client's name and data are not used.
 
 [harispaartan.github.io/sales-performance-dashboard](https://harispaartan.github.io/sales-performance-dashboard/)
 
-The replica is a static page with the six report pages as tabs (Overview, Trends, Products, Regions, Customers, Targets), the same filters (year, months, region, category, cross-filter by a click on a bar) and the same rules as the report, drawn with ECharts from integer cubes that the Python reference builds. It runs in the browser without a server and sends no data anywhere; your filters stay in this browser only. It leaves out row-level security, the Info page (the About dialog replaces it) and the sales-rep chart.
+The replica is a static page with the six report pages as tabs (Overview, Trends, Products, Regions, Customers, Targets), the same filters (year, months, region, category, cross-filter by a click on a bar) and the same rules as the report, drawn with ECharts from integer cubes that the Python reference builds. It runs in the browser without a server and sends no data anywhere; your filters stay in this browser only. It leaves out row-level security, the Info page (the About dialog replaces it), the segment and sales-rep charts, the margin and discount chart of Trends, and the category filter on Customers.
 
 ## What it does
 
-Eight report pages on a 1280 × 720 canvas with the theme Veltrano Dark: a header with the data date, a slicer row (Year, Months, Region, Category, Reset) synced across the pages, a row of KPI tiles with the change against the previous year, and the charts below.
+Eight report pages (seven on a 1280 × 720 canvas, the product tooltip on 320 × 240) with the theme Veltrano Dark: a header with the data date, a slicer row (Year, Months, Region, Category, Reset) synced across the pages, a row of KPI tiles with the change against the previous year, and the charts below.
 
 - **Overview**: revenue, gross margin %, orders, average order value and discount %; the monthly trend against the previous year; revenue and margin by month; revenue by a dimension you choose (Analyse by: category, region, segment or channel).
 - **Trends**: year to date, previous year to date, rolling 12 months and units; units by category; a matrix with all seven time calculations by month.
@@ -93,13 +93,13 @@ This rebuild adds:
 
 - a written brief with users, scope and acceptance criteria, and a documented data model;
 - the model and the report as reviewable text (TMDL and PBIR) with offline lint tests and schema checks;
-- every headline number reconciled against an independent pandas computation, including revenue under the role for two managers;
+- sixteen headline checks reconciled against an independent pandas computation, including revenue under the role for two managers;
 - row-level security that is checked, and a script for the role-free copy that Publish to web needs;
 - handover notes for refreshing, a new year's export, targets and new managers;
 - CI with `uv sync --locked` and pinned actions, and a live replica with tested filter code.
 
 ## Licence and data note
 
-MIT, see [LICENSE](LICENSE). Every number, customer, product and person in this repository is invented by `tools/make_data.py`. The visual templates in `tools/pbi/templates/` come from microsoft/fabric-toolbox and the schemas in `tools/pbi/schemas/` from microsoft/json-schemas, both MIT with their licences kept; ECharts 5.6.0 is Apache-2.0 (`web/vendor/LICENSE-echarts.txt`); the fonts in `web/kit/fonts/` are under the SIL Open Font License.
+MIT, see [LICENSE](LICENSE). Every number, customer, product and person in the data is invented by `tools/make_data.py`. The visual templates in `tools/pbi/templates/` come from microsoft/fabric-toolbox and the schemas in `tools/pbi/schemas/` from microsoft/json-schemas, both MIT with their licences kept; ECharts 5.6.0 is Apache-2.0 (`web/vendor/LICENSE-echarts.txt`); the fonts in `web/kit/fonts/` are under the SIL Open Font License.
 
 Rebuilt from memory as a demo. The original client's name and data are not used.

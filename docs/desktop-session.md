@@ -1,6 +1,6 @@
 # Power BI Desktop session
 
-The one validation session in Power BI Desktop, about 30 minutes. The owner works in Desktop; the assistant only reads the screen (screen captures with `tools/checks/capture_screen.ps1`) and never clicks or types in Desktop. Any credentials dialog is the owner's alone; this project reads local files only, so none is expected.
+The one validation session in Power BI Desktop, as a checklist. The person in Desktop does all the clicking and typing; the reviewer reads the screen captures (`tools/checks/capture_screen.ps1`). Any credentials dialog is answered by the person in Desktop; this project reads local files only, so none is expected.
 
 ## Before the session
 
@@ -17,18 +17,18 @@ The one validation session in Power BI Desktop, about 30 minutes. The owner work
 ## Steps
 
 1. Close all Desktop windows. Open `E:\GITGUB\sales-performance-dashboard\pbip\SalesPerformance.pbip`. If Desktop asks for the preview features `Power BI Project (.pbip) save option` and `Store semantic model using TMDL format`: File, Options and settings, Options, Preview features, tick both, OK, restart Desktop and open the project again.
-2. An error dialog (for example "Unable to open document", "TMDL Format Error" or a PBIR schema error with a file name): copy its text unchanged to the assistant and close Desktop without saving. The error loop below applies.
-3. Home, Transform data, Edit parameters: `DataFolder` must name the clone's `data\` folder with a trailing backslash (`E:\GITGUB\sales-performance-dashboard\data\`). OK, Apply changes, then Home, Refresh. No credentials are involved; if a privacy-level dialog appears, set both sources to Organizational. Every table loads; a table that fails: its error text to the assistant.
+2. An error dialog (for example "Unable to open document", "TMDL Format Error" or a PBIR schema error with a file name): copy its text unchanged to the reviewer and close Desktop without saving. The error loop below applies.
+3. Home, Transform data, Edit parameters: `DataFolder` must name the clone's `data\` folder with a trailing backslash (`E:\GITGUB\sales-performance-dashboard\data\`). OK, Apply changes, then Home, Refresh. No credentials are involved; if a privacy-level dialog appears, set both sources to Organizational. Every table loads; for a table that fails, copy its error text to the reviewer.
 4. Model view: seven relationships are drawn (`FactSales` to the five dimensions, `FactTargets` to `DimDate` and `DimRegion`); `DimDate`, Table tools: Mark as date table is set on `Date`; the calculation group `Time intelligence` and the field parameter `Analyse by` are listed in the Data pane.
-5. DAX query view (fourth icon on the left), tab `Reconciliation`, Run. If the tab is missing, open `pbip\SalesPerformance.SemanticModel\DAXQueries\Reconciliation.dax` in Notepad, copy everything, paste it into a new query tab and Run. Say "Desktop is open"; the assistant captures the result grid (14 rows, R01 to R14) and fills the Desktop column of `docs/reconciliation.md`. A mismatch is fixed in the DAX first and run again; screenshots come after.
-6. Report view, the default state of every page (Reset first if a slicer moved). On request, open Overview, Trends, Products (the pointer resting on a Pareto bar, so the product tooltip shows), Regions, Customers, Targets and Info, then the model view; the assistant captures each.
+5. DAX query view (fourth icon on the left), tab `Reconciliation`, Run. If the tab is missing, open `pbip\SalesPerformance.SemanticModel\DAXQueries\Reconciliation.dax` in Notepad, copy everything, paste it into a new query tab and Run. Capture the result grid (14 rows, R01 to R14) and enter the values in the Desktop column of `docs/reconciliation.md`. Fix a mismatch in the DAX first and run the query again; take the screenshots afterwards.
+6. Report view, the default state of every page (Reset first if a slicer moved). Open Overview, Trends, Products (the pointer resting on a Pareto bar, so the product tooltip shows), Regions, Customers, Targets and Info, then the model view; capture each.
 7. Interactions, each captured: on Overview, Analyse by set to Region; on Products, drill down on the category bar (the drill buttons in the visual header, then a click on Tents); on Regions, a click on a region bar; Ctrl+click on Reset on each of these pages.
-8. Row-level security: Modeling, View as, Other user = the Nordics manager's address from `data/security.csv` (the row with `NRD`), tick `Regional manager`, OK. Set Year to 2024 on Overview; the assistant reads the Revenue card (R15). Still viewing as the Nordics manager, open Targets and say whether the target tiles show values or are blank (this checks that the role filters do not make `ISFILTERED` in `Target` true). Repeat with the West manager (the address with the rows `BNL` and `FRA`; R16). Stop viewing.
-9. File, Save; close Desktop. The assistant reviews the diff, runs the offline tests again and commits the files, the screenshots and the table.
+8. Row-level security: Modeling, View as, Other user = the Nordics manager's address from `data/security.csv` (the row with `NRD`), tick `Regional manager`, OK. Set Year to 2024 on Overview and read the Revenue card (R15). Still viewing as the Nordics manager, open Targets and note whether the target tiles show values or are blank (this checks that the role filters do not make `ISFILTERED` in `Target` true). Repeat with the West manager (the address with the rows `BNL` and `FRA`; R16). Stop viewing.
+9. File, Save; close Desktop. Then follow "After the session".
 
 ## What to check on the pages
 
-Expected tiles on Overview in the default state (Year 2025): Revenue `€ 10.26 m` with `+6.6 %`, Gross margin % `34.7 %` with `-0.4 pp`, Orders `4,302` with `+2.2 %`, Average order value `€ 2,384` with `+4.3 %`, Discount % `11.6 %` with `+0.0 pp`. No visual may show "Can't display the visual" or a red error icon; otherwise "See details" and the text to the assistant.
+Expected tiles on Overview in the default state (Year 2025): Revenue `€ 10.26 m` with `+6.6 %`, Gross margin % `34.7 %` with `-0.4 pp`, Orders `4,302` with `+2.2 %`, Average order value `€ 2,384` with `+4.3 %`, Discount % `11.6 %` with `+0.0 pp`. No visual may show "Can't display the visual" or a red error icon; otherwise choose "See details" and copy the text to the reviewer.
 
 Some formatting objects are written from the published schemas but only Desktop shows whether it applies them. Each has a fallback in Desktop; a fallback used is noted for the commit message.
 
@@ -40,6 +40,7 @@ Some formatting objects are written from the published schemas but only Desktop 
 | Attainment bars (Targets) | ok colour at 100 % and above, warning colour below, a constant line at 100 % | Format, Bars, Color, fx, Rules; Analytics pane, Constant line, value 1 |
 | Attainment matrix (Targets) | background from warning (90 %) over the surface (100 %) to ok (110 %) | Format, Cell elements, Background color, fx, Gradient with a middle colour |
 | KPI tiles | the value card above the `vs PY` card, nothing cut off | resize the two cards inside the tile |
+| Trends matrix columns | in the order Current, PY, YoY, YoY %, YTD, PYTD, R12 (the legends of the Time calculation series follow the same order, not the alphabet) | Model view, Time intelligence, calculation group editor: put the items in this order (Ordinal 0 to 6) |
 | Category bar (Products) | drill buttons in the header; drilling down shows subcategories, the breadcrumb back works | Format, Visual header, Drill icons on |
 | Analyse by slicer | tiles, single select, Category selected by default | Format, Slicer settings, Style Tile, Single select on |
 | Slicer row | Year lists 2023 to 2025 only, 2025 selected; Months is a slider from 1 to 12; Targets has the note instead of Category | Year: Filters pane, Revenue is not blank |
@@ -47,17 +48,18 @@ Some formatting objects are written from the published schemas but only Desktop 
 | Reset buttons | Ctrl+click restores Year 2025, clears the other slicers, Analyse by Category, the drill at the top | set the slicers, Bookmarks pane, the page's bookmark, Update |
 | Cross-filter | a click on a region bar filters the other visuals (not highlight) | Format, Edit interactions, Filter |
 | Product tooltip | a pointer on a Pareto bar or a table row shows the tooltip page with the product's name, four cards and a monthly line | Format, Tooltips, Type Report page, Page Product tooltip |
+| Sales rep tooltip (Customers) | a pointer on a bar of "Revenue by sales rep" shows the revenue and the sales rep's home region (the tooltip field is the implicit aggregation Min of Home region) | remove the tooltip field (Home region) from the Tooltips well |
 
 ## Error loop
 
 Applies until the first save in Desktop, while `build_report.py` is still the source.
 
-1. The owner passes on Desktop's error text unchanged.
-2. The assistant finds the file and the line and fixes the cause: `tools/pbi/pages.json` or `tools/pbi/build_report.py` for report files, then generates them again; the TMDL files directly for the model. Generated report files are never edited by hand. Once Desktop has saved the report, the saved PBIR file is fixed directly instead.
-3. The assistant runs `uv run pytest tests/pbi -q` and the TOM test, and adds a regression check to the matching lint test when the kind of error is new.
-4. The owner opens the project again (or chooses "Apply external changes" in Desktop's notification bar) and continues where it failed. After three rounds without progress on the same error, the session stops and the error texts are reported.
+1. The person in Desktop passes on Desktop's error text unchanged.
+2. The reviewer finds the file and the line and fixes the cause: `tools/pbi/pages.json` or `tools/pbi/build_report.py` for report files, then generates them again; the TMDL files directly for the model. Generated report files are never edited by hand. Once Desktop has saved the report, the saved PBIR file is fixed directly instead.
+3. The reviewer runs `uv run pytest tests/pbi -q` and the TOM test, and adds a regression check to the matching lint test when the kind of error is new.
+4. The person in Desktop opens the project again (or chooses "Apply external changes" in Desktop's notification bar) and continues where it failed. After three rounds without progress on the same error, the session stops and the error texts are reported.
 
-## After the session (assistant)
+## After the session
 
 1. `git status`: no `.pbi/` file may be staged (`localSettings.json`, `cache.abf`, `editorSettings.json` and `unappliedChanges.json` are git-ignored); another one that appears belongs in `.gitignore`, not in the commit. New `.platform` files from Desktop are committed.
 2. Review `git diff pbip`: only formatting and Desktop metadata may change (line endings, property order, `lineageTag`s, the linguistic metadata in `cultures/en-US.tmdl`, `diagramLayout.json`, the theme files as formatted JSON, newer `$schema` versions). Any change of content (a renamed object, a removed visual, changed DAX, a changed data type) is a finding to explain in the commit message.
