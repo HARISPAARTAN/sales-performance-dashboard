@@ -33,7 +33,7 @@ from openpyxl.styles import Font
 
 ROOT = Path(__file__).resolve().parents[1]
 SEED = 41
-NAME_SEED = 41  # raised only if a generated person name collides with the owner's never-committed banned list
+NAME_SEED = 42  # raised only if a generated person name collides with the owner's never-committed banned list
 TARGET_SEEDS = tuple(range(1041, 1061))
 EXPORT_TIME = dt.datetime(2025, 10, 1, 6, 0)
 FIRST_DAY = dt.date(2023, 1, 2)
