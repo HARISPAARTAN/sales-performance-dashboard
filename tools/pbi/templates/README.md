@@ -1,0 +1,45 @@
+# Visual templates
+
+Origin: https://github.com/microsoft/fabric-toolbox at commit `29264d36e5fdf483498faf97013ecf4dd0bd8a10`
+(main, 2026-10-09). Three report folders were used (paths below `monitoring/`):
+
+- `fabric-unified-admin-monitoring/src/FUAM_Core_Report.Report/definition/pages/` (FUAM)
+- `fabric-cost-analysis/src/FCA_Core_Report.Report/definition/pages/` (FCA)
+- `query-capacity-correlation/Template/Query Capacity Correlation.Report/` (QCC)
+
+The templates were captured in the energiewende-monitor repository (`tools/pbi/capture_templates.py` there) and
+copied unchanged. Source of each template:
+
+| Template | Source |
+| --- | --- |
+| `card` | FCA `df46552c6a3e07628f04/visuals/868e1c7e98e906177c84` |
+| `lineChart` | QCC `definition/pages/dec6ca10089791a9a8a4/visuals/b3019a58595c63487980` |
+| `stackedAreaChart` | FUAM `688e721a1b14ddc8d3bf/visuals/c3a103baf973b1389307` |
+| `columnChart` | FUAM `b5d594eb912b41d58e08/visuals/b578a3168b812e4f8693` |
+| `clusteredBarChart` | FUAM `8d39b414abb490008ab4/visuals/3a2389c850b5dd6638de` |
+| `clusteredColumnChart` | FCA `ce90cb875cce385c58bf/visuals/6caac5df45468d874b6d` |
+| `pivotTable` | FUAM `5e229a1d829e52ca29a0/visuals/a2f6b34ec53adbd98095` |
+| `tableEx` | FCA `9e15d3671d9a3010bd29/visuals/fc0a449316d8eba4da1d` |
+| `slicer` | FCA `85ebcf71ac1b1f9c1ef2/visuals/baacb70ed1417be32b31` |
+| `scatterChart` | QCC `definition/pages/60a8309d95b9f8104e53/visuals/24bf8d23ffd9064054ee` |
+| `textbox` | FCA `df46552c6a3e07628f04/visuals/05a172cf755d9e5899f4` |
+| `gauge` | FCA `85ebcf71ac1b1f9c1ef2/visuals/0b978f632c4d409c5dde` |
+| `actionButton` | FCA `b73ca32b395d659400ae/visuals/9811c0cd492f3a80c8e7` |
+
+`lineClusteredColumnComboChart.json` is derived from `clusteredColumnChart.json` in this repository: the visual type
+changed, the secondary value axis shown with aligned zeros, data labels off, lines 2 px without markers, and the
+`dataPoint` object removed. Its data roles are `Category`, `Series`, `Y` (columns), `Y2` (lines) and `Tooltips`.
+
+The base theme `basetheme/Fluent2-CY26SU08.json` comes from the QCC report
+(`StaticResources/SharedResources/BaseThemes/`). `bookmark.json` is built from the pinned bookmark schema.
+
+Licence: MIT, Copyright (c) Microsoft Corporation. See `LICENSE-fabric-toolbox.txt` in this folder; the copyright
+notice is kept.
+
+Removed from each sample: query state, filters (`filterConfig`), formatting objects scoped to series (data and metadata
+selectors; the visual-state selectors `default` and `hover` of the button stay), objects bound to fields of the source
+model (the gauge's conditional `dataPoint` colours), the title, and everything that points into the source report:
+the canvas tooltip page and its header button (`visualHeaderTooltip`, `showTooltipButton`) and the page a button opens
+(`navigationSection`). `test_templates_are_data_free` checks this for every template.
+
+Internal visual type names: `columnChart` is the stacked column chart, `pivotTable` is the matrix visual.
