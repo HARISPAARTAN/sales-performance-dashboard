@@ -74,6 +74,7 @@ def test_tom_reads_the_measures_and_the_calculation_group(serializer):
     assert all(str(m.Description) for m in measures)
     group = tables["Time intelligence"].CalculationGroup
     items = sorted(group.CalculationItems, key=lambda i: i.Ordinal)
+    assert [i.Ordinal for i in items] == list(range(7))  # the file order, not equal ordinals
     assert [i.Name for i in items] == ["Current", "PY", "YoY", "YoY %", "YTD", "PYTD", "R12"]
     assert group.Precedence == 10
     roles = {r.Name: r for r in db.Model.Roles}
