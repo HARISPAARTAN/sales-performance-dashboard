@@ -1,0 +1,20 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "annotations": [
+    {
+      "name": "spd:generated",
+      "value": "tools/pbi/pages.json"
+    }
+  ],
+  "displayName": "Product tooltip",
+  "displayOption": "FitToPage",
+  "height": 240,
+  "name": "product-tooltip",
+  "pageBinding": {
+    "name": "d9b253d63dc755b6a34e",
+    "type": "Tooltip"
+  },
+  "type": "Tooltip",
+  "visibility": "HiddenInViewMode",
+  "width": 320
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "annotations": [
+    {
+      "name": "spd:generated",
+      "value": "tools/pbi/pages.json"
+    }
+  ],
+  "displayName": "Targets",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "name": "targets",
+  "width": 1280
+}

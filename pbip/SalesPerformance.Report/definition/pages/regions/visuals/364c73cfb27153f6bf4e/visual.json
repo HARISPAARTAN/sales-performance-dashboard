@@ -1,0 +1,192 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "364c73cfb27153f6bf4e",
+  "position": {
+    "height": 244,
+    "tabOrder": 18,
+    "width": 616,
+    "x": 16,
+    "y": 460,
+    "z": 18
+  },
+  "visual": {
+    "drillFilterOtherVisuals": true,
+    "expansionStates": [
+      {
+        "levels": [
+          {
+            "isCollapsed": false,
+            "isPinned": true,
+            "queryRefs": [
+              "DimRegion.Region"
+            ]
+          },
+          {
+            "isPinned": true,
+            "queryRefs": [
+              "DimCustomer.Country"
+            ]
+          }
+        ],
+        "roles": [
+          "Rows"
+        ],
+        "root": {
+          "isToggled": true
+        }
+      }
+    ],
+    "objects": {},
+    "query": {
+      "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "active": true,
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimRegion"
+                    }
+                  },
+                  "Property": "Region"
+                }
+              },
+              "nativeQueryRef": "Region",
+              "queryRef": "DimRegion.Region"
+            },
+            {
+              "active": true,
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimCustomer"
+                    }
+                  },
+                  "Property": "Country"
+                }
+              },
+              "nativeQueryRef": "Country",
+              "queryRef": "DimCustomer.Country"
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Revenue"
+                }
+              },
+              "nativeQueryRef": "Revenue",
+              "queryRef": "_Measures.Revenue"
+            },
+            {
+              "displayName": "Margin %",
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Gross margin %"
+                }
+              },
+              "nativeQueryRef": "Gross margin %",
+              "queryRef": "_Measures.Gross margin %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Discount %"
+                }
+              },
+              "nativeQueryRef": "Discount %",
+              "queryRef": "_Measures.Discount %"
+            },
+            {
+              "displayName": "Customers",
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Active customers"
+                }
+              },
+              "nativeQueryRef": "Active customers",
+              "queryRef": "_Measures.Active customers"
+            },
+            {
+              "displayName": "AOV",
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Average order value"
+                }
+              },
+              "nativeQueryRef": "Average order value",
+              "queryRef": "_Measures.Average order value"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Matrix: Regions and countries'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Regions and countries'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualType": "pivotTable"
+  }
+}

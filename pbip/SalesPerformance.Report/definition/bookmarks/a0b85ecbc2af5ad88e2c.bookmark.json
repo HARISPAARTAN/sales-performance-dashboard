@@ -1,0 +1,143 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Reset Products",
+  "explorationState": {
+    "activeSection": "products",
+    "objects": {},
+    "sections": {
+      "products": {
+        "visualContainers": {
+          "0fdeda7cd88c596bb7d8": {
+            "singleVisual": {
+              "activeProjections": {
+                "Category": [
+                  {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "DimProduct"
+                            }
+                          },
+                          "Hierarchy": "Products"
+                        }
+                      },
+                      "Level": "Category"
+                    }
+                  }
+                ]
+              },
+              "visualType": "clusteredBarChart"
+            }
+          },
+          "22071119f6dc578281d8": {
+            "singleVisual": {
+              "objects": {
+                "remove": [
+                  {
+                    "object": "general",
+                    "property": "filter"
+                  }
+                ]
+              },
+              "visualType": "slicer"
+            }
+          },
+          "6e4958d4ab3d59839e2e": {
+            "singleVisual": {
+              "objects": {
+                "remove": [
+                  {
+                    "object": "general",
+                    "property": "filter"
+                  }
+                ]
+              },
+              "visualType": "slicer"
+            }
+          },
+          "78bd1c2f6cba50fa8cc6": {
+            "singleVisual": {
+              "objects": {
+                "merge": {
+                  "general": [
+                    {
+                      "properties": {
+                        "filter": {
+                          "From": [
+                            {
+                              "Entity": "DimDate",
+                              "Name": "s",
+                              "Type": 0
+                            }
+                          ],
+                          "Version": 2,
+                          "Where": [
+                            {
+                              "Condition": {
+                                "In": {
+                                  "Expressions": [
+                                    {
+                                      "Column": {
+                                        "Expression": {
+                                          "SourceRef": {
+                                            "Source": "s"
+                                          }
+                                        },
+                                        "Property": "Year"
+                                      }
+                                    }
+                                  ],
+                                  "Values": [
+                                    [
+                                      {
+                                        "Literal": {
+                                          "Value": "2025L"
+                                        }
+                                      }
+                                    ]
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "visualType": "slicer"
+            }
+          },
+          "ec3fc1f69f1d5ade9178": {
+            "singleVisual": {
+              "objects": {
+                "remove": [
+                  {
+                    "object": "general",
+                    "property": "filter"
+                  }
+                ]
+              },
+              "visualType": "slicer"
+            }
+          }
+        }
+      }
+    },
+    "version": "1.3"
+  },
+  "name": "a0b85ecbc2af5ad88e2c",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "0fdeda7cd88c596bb7d8",
+      "22071119f6dc578281d8",
+      "6e4958d4ab3d59839e2e",
+      "78bd1c2f6cba50fa8cc6",
+      "ec3fc1f69f1d5ade9178"
+    ]
+  }
+}

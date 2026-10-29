@@ -1,0 +1,86 @@
+{
+  "canvas": {"width": 1280, "height": 720},
+  "header": {
+    "title": {"text": "Veltrano Outdoor · {page}", "x": 16, "y": 4, "w": 640, "h": 44, "size": 14},
+    "visuals": [
+      {"type": "textbox", "x": 668, "y": 4, "w": 372, "h": 44, "alt": "Demo note", "paragraphs": [{"text": "Demo with invented data for a fictional company", "size": 10, "colour": "muted"}]},
+      {"type": "card", "x": 1052, "y": 4, "w": 212, "h": 44, "title": "Data until", "title_hidden": true, "bare": true, "label_size": 10, "label_colour": "muted", "roles": {"Values": [["_Measures", "Data until", "Measure"]]}}
+    ]
+  },
+  "slicer_row": {"y": 56, "h": 48},
+  "slicers": {
+    "Year": {"x": 16, "w": 200, "field": ["DimDate", "Year"], "mode": "Dropdown", "default": [2025], "only_with": ["_Measures", "Revenue"]},
+    "Months": {"x": 228, "w": 300, "field": ["DimDate", "Month"], "mode": "Between"},
+    "Region": {"x": 540, "w": 200, "field": ["DimRegion", "Region"], "mode": "Dropdown"},
+    "Category": {"x": 752, "w": 200, "field": ["DimProduct", "Category"], "mode": "Dropdown"}
+  },
+  "reset": {"x": 1164, "w": 100, "label": "Reset", "group": "Reset filters"},
+  "tiles": {"x": 16, "w": 1248, "gutter": 12, "y": 116, "h": 84, "value_h": 48, "measures": "_Measures", "calculation": ["Time intelligence", "Time calculation"], "delta_label": "vs PY"},
+  "pages": [
+    {"id": "overview", "displayName": "Overview", "slicers": ["Year", "Months", "Region", "Category"],
+     "tiles": [{"measure": "Revenue", "delta": "YoY %"}, {"measure": "Gross margin %", "delta": "YoY"}, {"measure": "Orders", "delta": "YoY %"}, {"measure": "Average order value", "delta": "YoY %"}, {"measure": "Discount %", "delta": "YoY"}],
+     "visuals": [
+      {"type": "lineChart", "x": 16, "y": 212, "w": 760, "h": 236, "title": "Revenue by month, current vs previous year", "sort": {"field": ["DimDate", "Month start", "Column"], "direction": "Ascending"}, "filters": [{"field": ["Time intelligence", "Time calculation"], "in": ["Current", "PY"]}], "series": {"field": ["Time intelligence", "Time calculation"], "colours": {"Current": "accent", "PY": "muted"}, "dashed": ["PY"]}, "roles": {"Category": [["DimDate", "Month start", "Column"]], "Series": [["Time intelligence", "Time calculation", "Column"]], "Y": [["_Measures", "Revenue", "Measure"]]}},
+      {"type": "lineClusteredColumnComboChart", "x": 16, "y": 460, "w": 760, "h": 244, "title": "Revenue and gross margin % by month", "sort": {"field": ["DimDate", "Month start", "Column"], "direction": "Ascending"}, "secondary_axis": {}, "roles": {"Category": [["DimDate", "Month start", "Column"]], "Y": [["_Measures", "Revenue", "Measure"]], "Y2": [["_Measures", "Gross margin %", "Measure"]]}},
+      {"type": "slicer", "x": 788, "y": 212, "w": 476, "h": 56, "title": "Analyse by", "reset": "remove", "tiles": true, "single": true, "roles": {"Values": [["Analyse by", "Analyse by", "Column"]]}},
+      {"type": "clusteredBarChart", "x": 788, "y": 280, "w": 476, "h": 424, "title": "Revenue by selected dimension", "sort": {"field": ["_Measures", "Revenue", "Measure"], "direction": "Descending"}, "field_parameters": {"Category": {"parameter": ["Analyse by", "Analyse by"], "default": ["DimProduct", "Category", "Column"]}}, "roles": {"Y": [["_Measures", "Revenue", "Measure"]], "Tooltips": [["_Measures", "Gross margin %", "Measure"]]}}
+     ]},
+    {"id": "trends", "displayName": "Trends", "slicers": ["Year", "Months", "Region", "Category"],
+     "tiles": [{"measure": "Revenue", "item": "YTD", "label": "Revenue YTD", "delta": "YoY %"}, {"measure": "Revenue", "item": "PYTD", "label": "Revenue PYTD"}, {"measure": "Revenue", "item": "R12", "label": "Revenue R12"}, {"measure": "Units", "delta": "YoY %"}],
+     "visuals": [
+      {"type": "lineChart", "x": 16, "y": 212, "w": 616, "h": 236, "title": "Revenue: current, PY and rolling 12 months", "sort": {"field": ["DimDate", "Month start", "Column"], "direction": "Ascending"}, "filters": [{"field": ["Time intelligence", "Time calculation"], "in": ["Current", "PY", "R12"]}], "series": {"field": ["Time intelligence", "Time calculation"], "colours": {"Current": "accent", "PY": "muted", "R12": "chart-2"}, "dashed": ["PY"]}, "roles": {"Category": [["DimDate", "Month start", "Column"]], "Series": [["Time intelligence", "Time calculation", "Column"]], "Y": [["_Measures", "Revenue", "Measure"]]}},
+      {"type": "columnChart", "x": 644, "y": 212, "w": 620, "h": 236, "title": "Units by month and category", "sort": {"field": ["DimDate", "Month start", "Column"], "direction": "Ascending"}, "roles": {"Category": [["DimDate", "Month start", "Column"]], "Series": [["DimProduct", "Category", "Column"]], "Y": [["_Measures", "Units", "Measure"]]}},
+      {"type": "pivotTable", "x": 16, "y": 460, "w": 616, "h": 244, "title": "Revenue time intelligence", "expand": "Rows", "roles": {"Rows": [["DimDate", "Calendar/Year", "Level"], ["DimDate", "Calendar/Quarter", "Level"], ["DimDate", "Calendar/Month name", "Level"]], "Columns": [["Time intelligence", "Time calculation", "Column"]], "Values": [["_Measures", "Revenue", "Measure"]]}},
+      {"type": "lineChart", "x": 644, "y": 460, "w": 620, "h": 244, "title": "Gross margin % and discount % by month", "sort": {"field": ["DimDate", "Month start", "Column"], "direction": "Ascending"}, "roles": {"Category": [["DimDate", "Month start", "Column"]], "Y": [["_Measures", "Gross margin %", "Measure"], ["_Measures", "Discount %", "Measure"]]}}
+     ]},
+    {"id": "products", "displayName": "Products", "slicers": ["Year", "Months", "Region", "Category"],
+     "tiles": [{"measure": "Revenue", "delta": "YoY %"}, {"measure": "Units", "delta": "YoY %"}, {"measure": "Gross margin %", "delta": "YoY"}, {"measure": "Products for 80 %"}],
+     "visuals": [
+      {"type": "lineClusteredColumnComboChart", "x": 16, "y": 212, "w": 760, "h": 236, "title": "Pareto: top 40 products", "sort": {"field": ["_Measures", "Revenue", "Measure"], "direction": "Descending"}, "top_n": {"field": ["DimProduct", "Product"], "by": ["_Measures", "Revenue", "Measure"], "n": 40}, "secondary_axis": {"start": 0, "end": 1}, "tooltip_page": "product-tooltip", "roles": {"Category": [["DimProduct", "Product", "Column"]], "Y": [["_Measures", "Revenue", "Measure"]], "Y2": [["_Measures", "Pareto cumulative %", "Measure"]]}},
+      {"type": "tableEx", "x": 16, "y": 460, "w": 760, "h": 244, "title": "Products", "sort": {"field": ["_Measures", "Revenue", "Measure"], "direction": "Descending"}, "data_bars": {"field": ["_Measures", "Revenue", "Measure"], "colour": "accent"}, "tooltip_page": "product-tooltip", "roles": {"Values": [["_Measures", "Product rank", "Measure", "Rank"], ["DimProduct", "SKU", "Column"], ["DimProduct", "Product", "Column"], ["DimProduct", "Category", "Column"], ["_Measures", "Revenue", "Measure"], ["_Measures", "Gross margin %", "Measure", "Margin %"], ["_Measures", "Units", "Measure"], ["_Measures", "Pareto cumulative %", "Measure", "Cumulative %"], ["_Measures", "Pareto class", "Measure", "Class"]]}},
+      {"type": "clusteredBarChart", "x": 788, "y": 212, "w": 476, "h": 492, "title": "Revenue by category", "reset": "drill", "drill": true, "sort": {"field": ["_Measures", "Revenue", "Measure"], "direction": "Descending"}, "roles": {"Category": [["DimProduct", "Products/Category", "Level"], ["DimProduct", "Products/Subcategory", "Level"]], "Y": [["_Measures", "Revenue", "Measure"]], "Tooltips": [["_Measures", "Gross margin %", "Measure"]]}}
+     ]},
+    {"id": "regions", "displayName": "Regions", "slicers": ["Year", "Months", "Region", "Category"],
+     "tiles": [{"measure": "Revenue", "delta": "YoY %"}, {"measure": "Gross margin %", "delta": "YoY"}, {"measure": "Active customers", "delta": "YoY %"}, {"measure": "Average order value", "delta": "YoY %"}],
+     "visuals": [
+      {"type": "clusteredBarChart", "x": 16, "y": 212, "w": 616, "h": 236, "title": "Revenue by region, current vs PY", "sort": {"field": ["DimRegion", "Region", "Column"], "direction": "Ascending"}, "filters": [{"field": ["Time intelligence", "Time calculation"], "in": ["Current", "PY"]}], "series": {"field": ["Time intelligence", "Time calculation"], "colours": {"Current": "accent", "PY": "muted"}}, "roles": {"Category": [["DimRegion", "Region", "Column"]], "Series": [["Time intelligence", "Time calculation", "Column"]], "Y": [["_Measures", "Revenue", "Measure"]]}},
+      {"type": "columnChart", "x": 644, "y": 212, "w": 620, "h": 236, "title": "Revenue by month and region", "sort": {"field": ["DimDate", "Month start", "Column"], "direction": "Ascending"}, "roles": {"Category": [["DimDate", "Month start", "Column"]], "Series": [["DimRegion", "Region", "Column"]], "Y": [["_Measures", "Revenue", "Measure"]]}},
+      {"type": "pivotTable", "x": 16, "y": 460, "w": 616, "h": 244, "title": "Regions and countries", "expand": "Rows", "roles": {"Rows": [["DimRegion", "Region", "Column"], ["DimCustomer", "Country", "Column"]], "Values": [["_Measures", "Revenue", "Measure"], ["_Measures", "Gross margin %", "Measure", "Margin %"], ["_Measures", "Discount %", "Measure"], ["_Measures", "Active customers", "Measure", "Customers"], ["_Measures", "Average order value", "Measure", "AOV"]]}},
+      {"type": "scatterChart", "x": 644, "y": 460, "w": 620, "h": 244, "title": "Discount % vs gross margin % by country", "roles": {"Category": [["DimCustomer", "Country", "Column"]], "Series": [["DimRegion", "Region", "Column"]], "X": [["_Measures", "Discount %", "Measure"]], "Y": [["_Measures", "Gross margin %", "Measure"]], "Size": [["_Measures", "Revenue", "Measure"]]}}
+     ]},
+    {"id": "customers", "displayName": "Customers", "slicers": ["Year", "Months", "Region", "Category"],
+     "tiles": [{"measure": "Active customers", "delta": "YoY %"}, {"measure": "Revenue", "delta": "YoY %"}, {"measure": "Orders", "delta": "YoY %"}, {"measure": "Average order value", "delta": "YoY %"}],
+     "visuals": [
+      {"type": "clusteredBarChart", "x": 16, "y": 212, "w": 476, "h": 236, "title": "Revenue by segment", "sort": {"field": ["_Measures", "Revenue", "Measure"], "direction": "Descending"}, "roles": {"Category": [["DimCustomer", "Segment", "Column"]], "Y": [["_Measures", "Revenue", "Measure"]], "Tooltips": [["_Measures", "Gross margin %", "Measure"]]}},
+      {"type": "clusteredBarChart", "x": 16, "y": 460, "w": 476, "h": 244, "title": "Revenue by sales rep", "sort": {"field": ["_Measures", "Revenue", "Measure"], "direction": "Descending"}, "roles": {"Category": [["DimSalesRep", "Sales rep", "Column"]], "Y": [["_Measures", "Revenue", "Measure"]], "Tooltips": [["DimSalesRep", "Home region", "Min", "Home region"]]}},
+      {"type": "tableEx", "x": 504, "y": 212, "w": 760, "h": 492, "title": "Customers", "sort": {"field": ["_Measures", "Revenue", "Measure"], "direction": "Descending"}, "roles": {"Values": [["DimCustomer", "Customer code", "Column", "Code"], ["DimCustomer", "Customer", "Column"], ["DimCustomer", "Segment", "Column"], ["DimCustomer", "Channel", "Column"], ["DimCustomer", "Country", "Column"], ["DimSalesRep", "Sales rep", "Column"], ["_Measures", "Revenue", "Measure"], ["_Measures", "Gross margin %", "Measure", "Margin %"], ["_Measures", "Orders", "Measure"], ["_Measures", "Average order value", "Measure", "AOV"], ["_Measures", "Discount %", "Measure"]]}}
+     ]},
+    {"id": "targets", "displayName": "Targets", "slicers": ["Year", "Months", "Region"],
+     "slicer_note": {"x": 752, "w": 400, "text": "Targets are set per region and month; the category filter does not apply here."},
+     "tiles": [{"measure": "Target to date"}, {"measure": "Revenue", "delta": "YoY %"}, {"measure": "Target attainment %"}, {"measure": "Target gap"}, {"measure": "Target", "label": "Target (full period)"}],
+     "visuals": [
+      {"type": "lineClusteredColumnComboChart", "x": 16, "y": 212, "w": 760, "h": 236, "title": "Revenue vs target by month", "sort": {"field": ["DimDate", "Month start", "Column"], "direction": "Ascending"}, "secondary_axis": false, "roles": {"Category": [["DimDate", "Month start", "Column"]], "Y": [["_Measures", "Revenue", "Measure"]], "Y2": [["_Measures", "Target", "Measure"]]}},
+      {"type": "clusteredBarChart", "x": 788, "y": 212, "w": 476, "h": 236, "title": "Target attainment % by region", "sort": {"field": ["DimRegion", "Region", "Column"], "direction": "Ascending"}, "rule": {"measure": ["_Measures", "Target attainment %"], "at_least": 1, "pass": "ok", "fail": "warn"}, "constant_line": {"value": 1, "colour": "muted"}, "roles": {"Category": [["DimRegion", "Region", "Column"]], "Y": [["_Measures", "Target attainment %", "Measure"]]}},
+      {"type": "pivotTable", "x": 16, "y": 460, "w": 1248, "h": 244, "title": "Attainment by region and month", "gradient": {"field": ["_Measures", "Target attainment %", "Measure"], "min": [0.9, "warn"], "mid": [1, "surface"], "max": [1.1, "ok"]}, "roles": {"Rows": [["DimRegion", "Region", "Column"]], "Columns": [["DimDate", "Year-month", "Column"]], "Values": [["_Measures", "Target attainment %", "Measure", "Attainment %"]]}}
+     ]},
+    {"id": "info", "displayName": "Info", "slicers": [], "tiles": [],
+     "visuals": [
+      {"type": "textbox", "x": 16, "y": 56, "w": 616, "h": 204, "card": true, "alt": "About", "paragraphs": [{"text": "About", "size": 13, "bold": true}, "Veltrano Outdoor is a fictional outdoor-equipment wholesaler in Innsbruck, Austria. It sells tents, sleeping gear, backpacks, apparel, footwear and cooking gear to retailers and other customers in 13 European countries.", "This report shows its sales from January 2023 to September 2025: revenue, margin, discounts, products, regions, customers and targets.", {"text": "Demo with invented data for a fictional company", "colour": "muted"}]},
+      {"type": "textbox", "x": 648, "y": 56, "w": 616, "h": 204, "card": true, "alt": "Sources", "paragraphs": [{"text": "Sources", "size": 13, "bold": true}, "Order lines: data/sales_orders/sales_orders_2023.xlsx, _2024.xlsx and _2025.xlsx (sheet Orders, from row 3).", "Master data: data/products.csv, customers.csv, regions.csv, sales_reps.csv; targets: data/targets.csv; row-level security: data/security.csv.", "All files are generated by tools/make_data.py with seed 41."]},
+      {"type": "textbox", "x": 16, "y": 272, "w": 616, "h": 204, "card": true, "alt": "Model", "paragraphs": [{"text": "Model", "size": 13, "bold": true}, "Star schema: FactSales (order lines) and FactTargets (region and month) with DimDate, DimProduct, DimCustomer, DimRegion and DimSalesRep.", "Calculation group Time intelligence: Current, PY, YoY, YoY %, YTD, PYTD, R12. Field parameter Analyse by: Category, Region, Segment, Channel.", "Role Regional manager: a manager sees the regions listed for their e-mail address in the Security table."]},
+      {"type": "textbox", "x": 648, "y": 272, "w": 616, "h": 120, "card": true, "alt": "Period", "paragraphs": [{"text": "Period", "size": 13, "bold": true}, "Orders from 2 January 2023 to 30 September 2025; targets to December 2025. Comparisons use whole months with sales."]},
+      {"type": "card", "x": 648, "y": 404, "w": 302, "h": 72, "title": "Data until", "label_size": 14, "roles": {"Values": [["_Measures", "Data until", "Measure"]]}},
+      {"type": "card", "x": 962, "y": 404, "w": 302, "h": 72, "title": "Order lines", "label_size": 14, "roles": {"Values": [["_Measures", "Order lines", "Measure"]]}},
+      {"type": "textbox", "x": 16, "y": 488, "w": 1248, "h": 104, "card": true, "alt": "Repository", "paragraphs": [{"text": "Repository", "size": 13, "bold": true}, "github.com/HARISPAARTAN/sales-performance-dashboard", {"text": "Rebuilt from memory as a demo. The original client's name and data are not used.", "colour": "muted"}]}
+     ]},
+    {"id": "product-tooltip", "displayName": "Product tooltip", "type": "Tooltip", "width": 320, "height": 240, "header": false, "slicers": [], "tiles": [],
+     "visuals": [
+      {"type": "card", "x": 8, "y": 8, "w": 304, "h": 40, "title": "Selected product", "title_hidden": true, "label_size": 12, "roles": {"Values": [["_Measures", "Selected product", "Measure"]]}},
+      {"type": "card", "x": 8, "y": 56, "w": 148, "h": 52, "title": "Revenue", "label_size": 12, "roles": {"Values": [["_Measures", "Revenue", "Measure"]]}},
+      {"type": "card", "x": 164, "y": 56, "w": 148, "h": 52, "title": "Gross margin %", "label_size": 12, "roles": {"Values": [["_Measures", "Gross margin %", "Measure"]]}},
+      {"type": "card", "x": 8, "y": 116, "w": 148, "h": 52, "title": "Units", "label_size": 12, "roles": {"Values": [["_Measures", "Units", "Measure"]]}},
+      {"type": "card", "x": 164, "y": 116, "w": 148, "h": 52, "title": "Product rank", "label_size": 12, "roles": {"Values": [["_Measures", "Product rank", "Measure"]]}},
+      {"type": "lineChart", "x": 8, "y": 176, "w": 304, "h": 56, "title": "Revenue by month", "title_hidden": true, "axes": false, "sort": {"field": ["DimDate", "Month start", "Column"], "direction": "Ascending"}, "roles": {"Category": [["DimDate", "Month start", "Column"]], "Y": [["_Measures", "Revenue", "Measure"]]}}
+     ]}
+  ]
+}

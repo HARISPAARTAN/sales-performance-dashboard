@@ -1,0 +1,186 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "34bd9a25267c56ec9988",
+  "position": {
+    "height": 244,
+    "tabOrder": 16,
+    "width": 616,
+    "x": 16,
+    "y": 460,
+    "z": 16
+  },
+  "visual": {
+    "drillFilterOtherVisuals": true,
+    "expansionStates": [
+      {
+        "levels": [
+          {
+            "isCollapsed": false,
+            "isPinned": true,
+            "queryRefs": [
+              "DimDate.Calendar.Year"
+            ]
+          },
+          {
+            "isCollapsed": false,
+            "isPinned": true,
+            "queryRefs": [
+              "DimDate.Calendar.Quarter"
+            ]
+          },
+          {
+            "isPinned": true,
+            "queryRefs": [
+              "DimDate.Calendar.Month name"
+            ]
+          }
+        ],
+        "roles": [
+          "Rows"
+        ],
+        "root": {
+          "isToggled": true
+        }
+      }
+    ],
+    "objects": {},
+    "query": {
+      "queryState": {
+        "Columns": {
+          "projections": [
+            {
+              "active": true,
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Time intelligence"
+                    }
+                  },
+                  "Property": "Time calculation"
+                }
+              },
+              "nativeQueryRef": "Time calculation",
+              "queryRef": "Time intelligence.Time calculation"
+            }
+          ]
+        },
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "HierarchyLevel": {
+                  "Expression": {
+                    "Hierarchy": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DimDate"
+                        }
+                      },
+                      "Hierarchy": "Calendar"
+                    }
+                  },
+                  "Level": "Year"
+                }
+              },
+              "nativeQueryRef": "Year",
+              "queryRef": "DimDate.Calendar.Year"
+            },
+            {
+              "field": {
+                "HierarchyLevel": {
+                  "Expression": {
+                    "Hierarchy": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DimDate"
+                        }
+                      },
+                      "Hierarchy": "Calendar"
+                    }
+                  },
+                  "Level": "Quarter"
+                }
+              },
+              "nativeQueryRef": "Quarter",
+              "queryRef": "DimDate.Calendar.Quarter"
+            },
+            {
+              "field": {
+                "HierarchyLevel": {
+                  "Expression": {
+                    "Hierarchy": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DimDate"
+                        }
+                      },
+                      "Hierarchy": "Calendar"
+                    }
+                  },
+                  "Level": "Month name"
+                }
+              },
+              "nativeQueryRef": "Month name",
+              "queryRef": "DimDate.Calendar.Month name"
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Revenue"
+                }
+              },
+              "nativeQueryRef": "Revenue",
+              "queryRef": "_Measures.Revenue"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Matrix: Revenue time intelligence'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Revenue time intelligence'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualType": "pivotTable"
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Reset Customers",
+  "explorationState": {
+    "activeSection": "customers",
+    "objects": {},
+    "sections": {
+      "customers": {
+        "visualContainers": {
+          "0b2364bc251b5153b26c": {
+            "singleVisual": {
+              "objects": {
+                "remove": [
+                  {
+                    "object": "general",
+                    "property": "filter"
+                  }
+                ]
+              },
+              "visualType": "slicer"
+            }
+          },
+          "5ed3e87f80a2513780b7": {
+            "singleVisual": {
+              "objects": {
+                "remove": [
+                  {
+                    "object": "general",
+                    "property": "filter"
+                  }
+                ]
+              },
+              "visualType": "slicer"
+            }
+          },
+          "a2de5dfd505954b382f3": {
+            "singleVisual": {
+              "objects": {
+                "remove": [
+                  {
+                    "object": "general",
+                    "property": "filter"
+                  }
+                ]
+              },
+              "visualType": "slicer"
+            }
+          },
+          "ea73b8b848e75b638eee": {
+            "singleVisual": {
+              "objects": {
+                "merge": {
+                  "general": [
+                    {
+                      "properties": {
+                        "filter": {
+                          "From": [
+                            {
+                              "Entity": "DimDate",
+                              "Name": "s",
+                              "Type": 0
+                            }
+                          ],
+                          "Version": 2,
+                          "Where": [
+                            {
+                              "Condition": {
+                                "In": {
+                                  "Expressions": [
+                                    {
+                                      "Column": {
+                                        "Expression": {
+                                          "SourceRef": {
+                                            "Source": "s"
+                                          }
+                                        },
+                                        "Property": "Year"
+                                      }
+                                    }
+                                  ],
+                                  "Values": [
+                                    [
+                                      {
+                                        "Literal": {
+                                          "Value": "2025L"
+                                        }
+                                      }
+                                    ]
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "visualType": "slicer"
+            }
+          }
+        }
+      }
+    },
+    "version": "1.3"
+  },
+  "name": "be64b0f9f33b5cc09407",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "0b2364bc251b5153b26c",
+      "5ed3e87f80a2513780b7",
+      "a2de5dfd505954b382f3",
+      "ea73b8b848e75b638eee"
+    ]
+  }
+}

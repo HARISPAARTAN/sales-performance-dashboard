@@ -1,0 +1,56 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.3.0/schema.json",
+  "resourcePackages": [
+    {
+      "items": [
+        {
+          "name": "Fluent2-CY26SU08",
+          "path": "BaseThemes/Fluent2-CY26SU08.json",
+          "type": "BaseTheme"
+        }
+      ],
+      "name": "SharedResources",
+      "type": "SharedResources"
+    },
+    {
+      "items": [
+        {
+          "name": "veltrano-dark.json",
+          "path": "veltrano-dark.json",
+          "type": "CustomTheme"
+        }
+      ],
+      "name": "RegisteredResources",
+      "type": "RegisteredResources"
+    }
+  ],
+  "settings": {
+    "allowChangeFilterTypes": true,
+    "defaultDrillFilterOtherVisuals": true,
+    "defaultFilterActionIsDataFilter": true,
+    "exportDataMode": "AllowSummarized",
+    "useDefaultAggregateDisplayName": true,
+    "useEnhancedTooltips": true,
+    "useStylableVisualContainerHeader": true
+  },
+  "themeCollection": {
+    "baseTheme": {
+      "name": "Fluent2-CY26SU08",
+      "reportVersionAtImport": {
+        "page": "2.3.1",
+        "report": "3.4.0",
+        "visual": "2.12.0"
+      },
+      "type": "SharedResources"
+    },
+    "customTheme": {
+      "name": "veltrano-dark.json",
+      "reportVersionAtImport": {
+        "page": "2.3.1",
+        "report": "3.4.0",
+        "visual": "2.12.0"
+      },
+      "type": "RegisteredResources"
+    }
+  }
+}

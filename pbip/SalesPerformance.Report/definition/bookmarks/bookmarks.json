@@ -1,0 +1,17 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmarksMetadata/1.0.0/schema.json",
+  "items": [
+    {
+      "children": [
+        "4c33abcbb6b8508f9aaf",
+        "e747cffa8a7e5258bb80",
+        "a0b85ecbc2af5ad88e2c",
+        "07e58faac0705ade80e0",
+        "be64b0f9f33b5cc09407",
+        "03a639b816125abe93fc"
+      ],
+      "displayName": "Reset filters",
+      "name": "d23998340fc75fd1ade1"
+    }
+  ]
+}
