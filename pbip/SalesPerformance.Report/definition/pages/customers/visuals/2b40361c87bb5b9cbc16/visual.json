@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
   "name": "2b40361c87bb5b9cbc16",
   "position": {
-    "height": 48,
+    "height": 88,
     "tabOrder": 14,
-    "width": 303.0,
+    "width": 188,
     "x": 961.0,
-    "y": 116,
+    "y": 144,
     "z": 14
   },
   "visual": {
@@ -31,7 +31,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "20D"
+                  "Value": "16D"
                 }
               }
             },
@@ -75,7 +75,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Card: Average order value'"
+                  "Value": "'Card: Avg. order value'"
                 }
               }
             }
@@ -95,7 +95,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Average order value'"
+                  "Value": "'Avg. order value'"
                 }
               }
             }

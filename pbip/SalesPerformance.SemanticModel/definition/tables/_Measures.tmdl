@@ -7,28 +7,28 @@ table _Measures
 		displayFolder: Sales
 		lineageTag: 190ab146-a639-56cf-ace1-c2c9d00f955a
 
-		formatStringDefinition = VAR v = ABS(SELECTEDMEASURE()) RETURN IF(v >= 1E6, "€ #,0.00,,"" m""", IF(v >= 1E4, "€ #,0.0,"" k""", "€ #,0"))
+		formatStringDefinition = VAR v = ABS(SELECTEDMEASURE()) RETURN IF(v >= 1E6, "€ #,0,,.00"" m""", IF(v >= 1E4, "€ #,0,.0"" k""", "€ #,0"))
 
 	/// List value before discount, EUR: quantity x list price.
 	measure 'Gross sales' = SUM(FactSales[Gross amount])
 		displayFolder: Sales
 		lineageTag: 06389d1c-ff8e-5888-bfe3-f9cf8c93d780
 
-		formatStringDefinition = VAR v = ABS(SELECTEDMEASURE()) RETURN IF(v >= 1E6, "€ #,0.00,,"" m""", IF(v >= 1E4, "€ #,0.0,"" k""", "€ #,0"))
+		formatStringDefinition = VAR v = ABS(SELECTEDMEASURE()) RETURN IF(v >= 1E6, "€ #,0,,.00"" m""", IF(v >= 1E4, "€ #,0,.0"" k""", "€ #,0"))
 
 	/// Cost of goods sold, EUR: quantity x unit cost.
 	measure Cost = SUM(FactSales[Cost amount])
 		displayFolder: Sales
 		lineageTag: 507d6aeb-2a91-5e43-b424-626f04a126a5
 
-		formatStringDefinition = VAR v = ABS(SELECTEDMEASURE()) RETURN IF(v >= 1E6, "€ #,0.00,,"" m""", IF(v >= 1E4, "€ #,0.0,"" k""", "€ #,0"))
+		formatStringDefinition = VAR v = ABS(SELECTEDMEASURE()) RETURN IF(v >= 1E6, "€ #,0,,.00"" m""", IF(v >= 1E4, "€ #,0,.0"" k""", "€ #,0"))
 
 	/// Revenue minus cost, EUR.
 	measure 'Gross margin' = [Revenue] - [Cost]
 		displayFolder: Sales
 		lineageTag: b01dd2ec-3a0a-5377-af52-729c6854045f
 
-		formatStringDefinition = VAR v = ABS(SELECTEDMEASURE()) RETURN IF(v >= 1E6, "€ #,0.00,,"" m""", IF(v >= 1E4, "€ #,0.0,"" k""", "€ #,0"))
+		formatStringDefinition = VAR v = ABS(SELECTEDMEASURE()) RETURN IF(v >= 1E6, "€ #,0,,.00"" m""", IF(v >= 1E4, "€ #,0,.0"" k""", "€ #,0"))
 
 	/// Gross margin as a share of revenue.
 	measure 'Gross margin %' = DIVIDE([Gross margin], [Revenue])
@@ -76,14 +76,14 @@ table _Measures
 		displayFolder: Targets
 		lineageTag: 973e5f3c-71f9-559c-bd9c-23ab1f8147d0
 
-		formatStringDefinition = VAR v = ABS(SELECTEDMEASURE()) RETURN IF(v >= 1E6, "€ #,0.00,,"" m""", IF(v >= 1E4, "€ #,0.0,"" k""", "€ #,0"))
+		formatStringDefinition = VAR v = ABS(SELECTEDMEASURE()) RETURN IF(v >= 1E6, "€ #,0,,.00"" m""", IF(v >= 1E4, "€ #,0,.0"" k""", "€ #,0"))
 
 	/// Target of the months with sales data (Is past), EUR.
 	measure 'Target to date' = CALCULATE([Target], DimDate[Is past] = TRUE())
 		displayFolder: Targets
 		lineageTag: ec96c62d-8482-59c4-82e3-71ac9c1a6922
 
-		formatStringDefinition = VAR v = ABS(SELECTEDMEASURE()) RETURN IF(v >= 1E6, "€ #,0.00,,"" m""", IF(v >= 1E4, "€ #,0.0,"" k""", "€ #,0"))
+		formatStringDefinition = VAR v = ABS(SELECTEDMEASURE()) RETURN IF(v >= 1E6, "€ #,0,,.00"" m""", IF(v >= 1E4, "€ #,0,.0"" k""", "€ #,0"))
 
 	/// Revenue as a share of the target to date.
 	measure 'Target attainment %' = DIVIDE([Revenue], [Target to date])
@@ -96,7 +96,7 @@ table _Measures
 		displayFolder: Targets
 		lineageTag: 9ecfb6de-9ac7-53e8-9a5e-4c1419a68060
 
-		formatStringDefinition = VAR v = ABS(SELECTEDMEASURE()) RETURN IF(v >= 1E6, "€ #,0.00,,"" m""", IF(v >= 1E4, "€ #,0.0,"" k""", "€ #,0"))
+		formatStringDefinition = VAR v = ABS(SELECTEDMEASURE()) RETURN IF(v >= 1E6, "€ #,0,,.00"" m""", IF(v >= 1E4, "€ #,0,.0"" k""", "€ #,0"))
 
 	/// Revenue rank of one product among the products in the outer filters (ties share a rank, SKIP); blank unless one product is in context.
 	measure 'Product rank' =
@@ -106,7 +106,7 @@ table _Measures
 			        HASONEVALUE(DimProduct[Product]) && NOT ISBLANK(rev),
 			        CALCULATE(
 			            RANKX(VALUES(DimProduct[Product]), [Revenue], rev, DESC, SKIP),
-			            REMOVEFILTERS(DimProduct[Product], DimProduct[SKU]),
+			            ALLEXCEPT(DimProduct, DimProduct[Category]),
 			            ALLSELECTED(DimProduct[Category])
 			        )
 			    )
@@ -120,7 +120,7 @@ table _Measures
 			VAR products =
 			    CALCULATETABLE(
 			        ADDCOLUMNS(VALUES(DimProduct[Product]), "@rev", [Revenue]),
-			        REMOVEFILTERS(DimProduct[Product], DimProduct[SKU]),
+			        ALLEXCEPT(DimProduct, DimProduct[Category]),
 			        ALLSELECTED(DimProduct[Category])
 			    )
 			RETURN
@@ -142,7 +142,7 @@ table _Measures
 			VAR products =
 			    CALCULATETABLE(
 			        ADDCOLUMNS(VALUES(DimProduct[Product]), "@rev", [Revenue]),
-			        REMOVEFILTERS(DimProduct[Product], DimProduct[SKU]),
+			        ALLEXCEPT(DimProduct, DimProduct[Category]),
 			        ALLSELECTED(DimProduct[Category])
 			    )
 			VAR total = SUMX(products, [@rev])

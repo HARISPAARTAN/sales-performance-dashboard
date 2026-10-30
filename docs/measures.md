@@ -5,7 +5,7 @@ folder and a format string. The DAX below is the TMDL's, character for character
 `tests/test_docs.py` compares the two. Amounts are in EUR; "€ amount" is the dynamic format string
 
 ```dax
-VAR v = ABS(SELECTEDMEASURE()) RETURN IF(v >= 1E6, "€ #,0.00,,"" m""", IF(v >= 1E4, "€ #,0.0,"" k""", "€ #,0"))
+VAR v = ABS(SELECTEDMEASURE()) RETURN IF(v >= 1E6, "€ #,0,,.00"" m""", IF(v >= 1E4, "€ #,0,.0"" k""", "€ #,0"))
 ```
 
 which shows `€ 12.20 m`, `€ 512.3 k` or `€ 2,308`. Rules that every measure follows:
@@ -180,7 +180,7 @@ RETURN
         HASONEVALUE(DimProduct[Product]) && NOT ISBLANK(rev),
         CALCULATE(
             RANKX(VALUES(DimProduct[Product]), [Revenue], rev, DESC, SKIP),
-            REMOVEFILTERS(DimProduct[Product], DimProduct[SKU]),
+            ALLEXCEPT(DimProduct, DimProduct[Category]),
             ALLSELECTED(DimProduct[Category])
         )
     )
@@ -197,7 +197,7 @@ VAR rev = [Revenue]
 VAR products =
     CALCULATETABLE(
         ADDCOLUMNS(VALUES(DimProduct[Product]), "@rev", [Revenue]),
-        REMOVEFILTERS(DimProduct[Product], DimProduct[SKU]),
+        ALLEXCEPT(DimProduct, DimProduct[Category]),
         ALLSELECTED(DimProduct[Category])
     )
 RETURN
@@ -227,7 +227,7 @@ Folder `Products` · format `#,0`
 VAR products =
     CALCULATETABLE(
         ADDCOLUMNS(VALUES(DimProduct[Product]), "@rev", [Revenue]),
-        REMOVEFILTERS(DimProduct[Product], DimProduct[SKU]),
+        ALLEXCEPT(DimProduct, DimProduct[Category]),
         ALLSELECTED(DimProduct[Category])
     )
 VAR total = SUMX(products, [@rev])

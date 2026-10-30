@@ -16,16 +16,33 @@
     "file": "veltrano-dark.json",
     "tokens": "web/kit/tokens.css",
     "font": "Segoe UI",
-    "font_bold": "Segoe UI Semibold"
+    "font_bold": "Segoe UI Semibold",
+    "display_units": "none"
   },
   "diagram": [
-    ["DimDate", "DimProduct", "DimCustomer", "DimRegion", "DimSalesRep"],
-    ["FactSales", "FactTargets"],
-    ["_Measures", "Time intelligence", "Analyse by", "Security"]
+    [
+      "DimDate",
+      "DimProduct",
+      "DimCustomer",
+      "DimRegion",
+      "DimSalesRep"
+    ],
+    [
+      "FactSales",
+      "FactTargets"
+    ],
+    [
+      "_Measures",
+      "Time intelligence",
+      "Analyse by",
+      "Security"
+    ]
   ],
   "public_variant": {
     "suffix": " (public)",
-    "drop_tables": ["Security"],
+    "drop_tables": [
+      "Security"
+    ],
     "readme": [
       "Sales Performance Dashboard, public variant",
       "",

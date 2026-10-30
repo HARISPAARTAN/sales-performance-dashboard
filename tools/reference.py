@@ -246,7 +246,7 @@ def _distinct(frame: pd.DataFrame, column: str) -> int | None:
 
 
 def _product_base(model: Model, ctx: Context) -> pd.Series:
-    """Revenue per product over REMOVEFILTERS(DimProduct[Product], DimProduct[SKU]); category filters stay."""
+    """Revenue per product over ALLEXCEPT(DimProduct, DimProduct[Category]); the category selection stays."""
     frame = rows(model, ctx.where(product=None))
     return frame.groupby("Product")["net"].sum().sort_values(ascending=False)
 

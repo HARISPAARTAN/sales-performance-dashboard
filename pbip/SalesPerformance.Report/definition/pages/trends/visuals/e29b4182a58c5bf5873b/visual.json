@@ -59,11 +59,11 @@
   },
   "name": "e29b4182a58c5bf5873b",
   "position": {
-    "height": 84,
+    "height": 88,
     "tabOrder": 10,
     "width": 303.0,
     "x": 331.0,
-    "y": 116,
+    "y": 144,
     "z": 10
   },
   "visual": {
@@ -88,7 +88,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "20D"
+                  "Value": "16D"
                 }
               }
             },

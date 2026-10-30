@@ -106,7 +106,7 @@ RELATIONSHIPS = {
     ("FactTargets.RegionKey", "DimRegion.RegionKey"),
 }
 AMOUNT = (
-    'VAR v = ABS(SELECTEDMEASURE()) RETURN IF(v >= 1E6, "€ #,0.00,,"" m""", IF(v >= 1E4, "€ #,0.0,"" k""", "€ #,0"))'
+    'VAR v = ABS(SELECTEDMEASURE()) RETURN IF(v >= 1E6, "€ #,0,,.00"" m""", IF(v >= 1E4, "€ #,0,.0"" k""", "€ #,0"))'
 )
 # measure -> (display folder, format string, or AMOUNT for the dynamic EUR format, or None for a text result)
 MEASURES = {
@@ -243,7 +243,11 @@ def test_measure_definitions_of_section_7(model):
     assert m["Target"].startswith("IF(ISFILTERED(DimProduct) || ISFILTERED(DimCustomer) || ISFILTERED(DimSalesRep)")
     assert m["Target to date"] == "CALCULATE([Target], DimDate[Is past] = TRUE())"
     for name in ("Product rank", "Pareto cumulative %", "Products for 80 %"):
-        assert "REMOVEFILTERS(DimProduct[Product], DimProduct[SKU])" in m[name], name
+        # Desktop adds the sort-by column of every grouped column to a table row's filter (Category sort beside
+        # Category), so the product filters are lifted for the whole table, not column by column.
+        assert "ALLEXCEPT(DimProduct, DimProduct[Category])" in m[name], name
+        assert "ALLSELECTED(DimProduct[Category])" in m[name], name
+        assert "REMOVEFILTERS(DimProduct[" not in m[name], name
     assert "RANKX(VALUES(DimProduct[Product]), [Revenue], rev, DESC, SKIP)" in m["Product rank"]
     assert 'IF(c <= 0.8, "A", IF(c <= 0.95, "B", "C"))' in m["Pareto class"]
     assert m["Data until"] == '"Data until " & FORMAT([Last sales date], "d mmm yyyy", "en-US")'

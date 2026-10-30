@@ -59,11 +59,11 @@
   },
   "name": "799f2afe45ff587ab836",
   "position": {
-    "height": 36,
+    "height": 88,
     "tabOrder": 15,
-    "width": 303.0,
-    "x": 961.0,
-    "y": 164,
+    "width": 115.0,
+    "x": 1149.0,
+    "y": 144,
     "z": 15
   },
   "visual": {
@@ -133,7 +133,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Card: Average order value vs PY'"
+                  "Value": "'Card: Avg. order value vs PY'"
                 }
               }
             }
@@ -153,7 +153,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Average order value vs PY'"
+                  "Value": "'Avg. order value vs PY'"
                 }
               }
             }

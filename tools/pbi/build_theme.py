@@ -5,8 +5,10 @@
 
 Every colour of the theme is a kit token or a colour of the kit's categorical palette (--chart-1 to --chart-8), so
 the report and the replica share one palette. Power BI cannot embed web fonts; the theme uses the fonts in
-project.json (Segoe UI). Deterministic: sorted keys, two-space indent, UTF-8 without BOM, LF. --check compares the
-parsed JSON, because Power BI Desktop rewrites the theme file in its own layout when it saves the project.
+project.json (Segoe UI). With `"display_units": "none"` in the theme entry of project.json, data labels and value
+axes of every visual show values without display units, as dynamic format strings need. Deterministic: sorted keys,
+two-space indent, UTF-8 without BOM, LF. --check compares the parsed JSON, because Power BI Desktop rewrites the theme
+file in its own layout when it saves the project.
 """
 
 from __future__ import annotations
@@ -56,7 +58,7 @@ def build(tokens: dict[str, str]) -> dict:
     ]
     headers = [{"fontColor": _solid(t["muted"]), "backColor": _solid(t["surface"])}]
     total = [{"fontColor": _solid(t["text"]), "backColor": _solid(t["surface-2"])}]
-    return {
+    theme = {
         "name": PROJECT["theme"]["name"],
         "dataColors": [t[f"chart-{i}"] for i in range(1, 9)],
         "foreground": t["text"],
@@ -209,6 +211,11 @@ def build(tokens: dict[str, str]) -> dict:
             },
         },
     }
+    if PROJECT["theme"].get("display_units") == "none":
+        every = theme["visualStyles"]["*"]["*"]
+        every["labels"][0]["labelDisplayUnits"] = 1
+        every["valueAxis"][0]["labelDisplayUnits"] = 1
+    return theme
 
 
 def render(theme: dict) -> str:

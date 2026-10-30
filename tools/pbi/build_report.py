@@ -359,7 +359,7 @@ def _slicer_spec(name: str, slicer: dict, row: dict) -> dict:
 
 def tile_specs(page: dict, layout: dict) -> list[tuple[str, dict]]:
     """(key, card spec) for the KPI row: n tiles across the row width, each a value card and, with a `delta`, the card
-    below it that applies that calculation item to the same measure."""
+    beside it that applies that calculation item to the same measure."""
     tiles = page.get("tiles", [])
     if not tiles:
         return []
@@ -371,15 +371,17 @@ def tile_specs(page: dict, layout: dict) -> list[tuple[str, dict]]:
         x = layout["x"] + i * (width + layout["gutter"])
         label = tile.get("label", tile["measure"])
         measure = [layout["measures"], tile["measure"], "Measure"]
-        value_h = layout["value_h"] if tile.get("delta") else layout["h"]
+        # the value card with its title on the left, the delta card (value and label, no title) on the right: Desktop's
+        # classic card needs about 80 px of height for a title and a value, so the two sit side by side in one row
+        value_w = round(width * 0.62) if tile.get("delta") else width
         value = {
             "type": "card",
             "x": x,
             "y": layout["y"],
-            "w": width,
-            "h": value_h,
+            "w": value_w,
+            "h": layout["h"],
             "title": label,
-            "label_size": 20,
+            "label_size": 16,
             "roles": {"Values": [measure]},
         }
         if tile.get("item"):
@@ -388,10 +390,10 @@ def tile_specs(page: dict, layout: dict) -> list[tuple[str, dict]]:
         if tile.get("delta"):
             delta = {
                 "type": "card",
-                "x": x,
-                "y": layout["y"] + value_h,
-                "w": width,
-                "h": layout["h"] - value_h,
+                "x": x + value_w,
+                "y": layout["y"],
+                "w": width - value_w,
+                "h": layout["h"],
                 "title": f"{label} {layout['delta_label']}",
                 "title_hidden": True,
                 "label_size": 11,

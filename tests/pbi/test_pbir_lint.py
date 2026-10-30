@@ -25,7 +25,7 @@ NOTE = "Demo with invented data for a fictional company"
 FOOTER = "Rebuilt from memory as a demo. The original client's name and data are not used."
 SLICER_ROW = (SPEC["slicer_row"]["y"], SPEC["slicer_row"]["y"] + SPEC["slicer_row"]["h"])
 TILE_ROW = (SPEC["tiles"]["y"], SPEC["tiles"]["y"] + SPEC["tiles"]["h"])
-CONTENT_TOP = 212
+CONTENT_TOP = 244
 
 
 def lit(prop):
@@ -243,14 +243,29 @@ def test_reset_buttons_target_their_page_bookmark(report):
     assert not reset_problems(report)
 
 
+def slicer_filter_values(properties: dict) -> list[str]:
+    """The literal values of a slicer's `general.filter` selection; Desktop wraps the filter once more
+    (`properties.filter.filter`) when it saves."""
+    flt = properties["filter"]
+    if "Where" not in flt:
+        flt = flt["filter"]
+    where = flt["Where"][0]["Condition"]["In"]["Values"]
+    return [w["Literal"]["Value"] for row in where for w in row]
+
+
 def test_reset_bookmarks_restore_the_default_state(report):
     for bm in report.bookmarks:
         pid = bm["explorationState"]["activeSection"]
         states = bm["explorationState"]["sections"][pid]["visualContainers"]
-        year = states[stable_name(pid, "slicer", "Year")]["singleVisual"]["objects"]["merge"]["general"][0]
-        where = year["properties"]["filter"]["Where"][0]["Condition"]["In"]["Values"]
-        values = [w["Literal"]["Value"] for row in where for w in row]
-        assert values == ["2025L"], pid
+        year_name = stable_name(pid, "slicer", "Year")
+        year = states[year_name]["singleVisual"]["objects"]["merge"]["general"][0]
+        if year["properties"]:
+            assert slicer_filter_values(year["properties"]) == ["2025L"], pid
+        else:
+            # Desktop stores a bookmark state that equals the slicer's own definition as an empty merge: the
+            # Reset then restores the definition, so the definition must carry the 2025 selection.
+            slicer = next(v for pg in report.pages if pg.name == pid for v in pg.visuals if v.name == year_name)
+            assert slicer_filter_values(slicer.raw["visual"]["objects"]["general"][0]["properties"]) == ["2025L"], pid
         for name in ("Months", "Region", "Category"):
             state = states.get(stable_name(pid, "slicer", name))
             if state is not None:
@@ -275,7 +290,7 @@ def test_kpi_deltas_use_calculation_items_not_extra_measures(report):
         "Revenue vs PY",
         "Gross margin % vs PY",
         "Orders vs PY",
-        "Average order value vs PY",
+        "Avg. order value vs PY",
         "Discount % vs PY",
     ]
 

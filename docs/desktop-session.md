@@ -37,6 +37,7 @@ Some formatting objects are written from the published schemas but only Desktop 
 | PY lines | dashed and muted, Current in the accent (Overview, Trends) | Format, Lines, series PY, Line style Dashed |
 | Pareto chart | 40 bars sorted by revenue, the cumulative line on a secondary axis from 0 to 100 % | Filters pane, Product, Top N 40 by Revenue; Format, Y axis, Secondary, range 0 to 1 |
 | Products table | data bars on Revenue | Format, Cell elements, Revenue, Data bars on |
+| Products table | Rank runs 1, 2, 3 down the table across categories and Cumulative % rises from the top product's share of all products in the selected categories (neither restarts per category) | none: the measures lift the product filters with `ALLEXCEPT(DimProduct, DimProduct[Category])`, because a table row also filters the sort-by column `Category sort` |
 | Attainment bars (Targets) | ok colour at 100 % and above, warning colour below, a constant line at 100 % | Format, Bars, Color, fx, Rules; Analytics pane, Constant line, value 1 |
 | Attainment matrix (Targets) | background from warning (90 %) over the surface (100 %) to ok (110 %) | Format, Cell elements, Background color, fx, Gradient with a middle colour |
 | KPI tiles | the value card above the `vs PY` card, nothing cut off | resize the two cards inside the tile |
