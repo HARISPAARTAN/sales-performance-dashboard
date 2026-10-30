@@ -11,7 +11,7 @@ English: [README.md](README.md)
 ## Status
 
 - Die Datendateien entsprechen einem frischen Lauf von `tools/make_data.py`, und die Offline-Prüfungen von Modell und Bericht bestehen (`uv run pytest`).
-- Noch nicht in Power BI Desktop geöffnet.
+- Am 2026-10-30 in Power BI Desktop 2.159.883.0 geprüft: Das Modell lädt die Dateien aus `data/`, jede Seite wird ohne Fehler angezeigt, und alle 16 Abgleichsprüfungen stimmen mit der pandas-Referenz überein, zwei davon unter der Rolle `Regional manager` ([Abgleich](docs/reconciliation.md)).
 - Noch kein Release.
 
 ## Kundenauftrag
@@ -23,6 +23,8 @@ Rebuilt from memory as a demo. The original client's name and data are not used.
 ## Live-Demo
 
 [harispaartan.github.io/sales-performance-dashboard](https://harispaartan.github.io/sales-performance-dashboard/)
+
+![Die HTML-Nachbildung des Dashboards: der Reiter Overview mit fünf Kennzahlkacheln, dem Umsatz gegenüber dem Vorjahr und dem Umsatz nach Kategorie](docs/screenshots/09-replica.png)
 
 Die Nachbildung ist eine statische Seite mit den sechs Berichtsseiten als Reitern (Overview, Trends, Products, Regions, Customers, Targets), denselben Filtern (Jahr, Monate, Region, Kategorie, Kreuzfilter per Klick auf einen Balken) und denselben Regeln wie der Bericht, gezeichnet mit ECharts aus ganzzahligen Würfeln, die die Python-Referenz erzeugt. Sie läuft im Browser ohne Server und sendet keine Daten; die Filter bleiben nur in diesem Browser gespeichert. Nicht enthalten sind die Sicherheit auf Zeilenebene, die Seite Info (der Dialog About ersetzt sie), die Diagramme nach Segment und nach Vertriebsmitarbeitenden, das Diagramm zu Marge und Rabatt auf Trends und der Kategoriefilter auf Customers.
 
@@ -38,6 +40,20 @@ Acht Berichtsseiten (sieben auf einer Fläche von 1280 × 720, die Tooltip-Seite
 - **Targets**: Umsatz gegen Ziel je Monat, Zielerreichung je Region (ok oder Warnung gegenüber 100 %) und eine Matrix Region × Monat.
 - **Info**: was die Demo ist, ihre Quellen, das Modell und der Zeitraum.
 
+| Overview | Trends |
+|---|---|
+| ![Seite Overview mit fünf Kennzahlkacheln, aktuellem Jahr gegen Vorjahr, Umsatz und Bruttomarge je Monat und Analyse by Category](docs/screenshots/01-overview.png) | ![Seite Trends mit YTD, PYTD, R12 und Stückzahlen, den Verlaufslinien und der Matrix der Zeitberechnungen](docs/screenshots/02-trends.png) |
+
+| Products | Regions |
+|---|---|
+| ![Seite Products mit dem Pareto-Diagramm der 40 umsatzstärksten Produkte, der Produkttabelle und dem Umsatz nach Kategorie](docs/screenshots/03-products.png) | ![Seite Regions mit dem Umsatz nach Region gegen das Vorjahr, der Ländermatrix und Rabatt gegen Marge](docs/screenshots/04-regions.png) |
+
+| Customers | Targets |
+|---|---|
+| ![Seite Customers mit Umsatz nach Segment und nach Vertriebsmitarbeitenden und der Kundentabelle](docs/screenshots/05-customers.png) | ![Seite Targets mit Umsatz gegen Ziel, Zielerreichung nach Region und der Zielerreichungsmatrix](docs/screenshots/06-targets.png) |
+
+![Seite Info mit dem Hinweis auf die fiktive Firma, den Quellen, dem Modell und dem Zeitraum](docs/screenshots/07-info.png)
+
 Regionalleitungen sehen nur ihre Regionen: Die Rolle `Regional manager` filtert über die Anmeldeadresse und die Tabelle `Security`; eine neue Regionalleitung ist eine neue Zeile in `data/security.csv`, keine Modelländerung.
 
 ## So funktioniert es
@@ -47,6 +63,8 @@ Regionalleitungen sehen nur ihre Regionen: Die Rolle `Regional manager` filtert 
 Der Generator mit festem Startwert schreibt die Dateien des Kundenunternehmens: drei Jahresarbeitsmappen mit Auftragspositionen und sechs CSV-Dateien. Power Query im Power-BI-Projekt kombiniert die Arbeitsmappen, überspringt die Titelzeilen und typisiert jede Spalte mit der Kultur en-US; Modell und Bericht liegen als Text vor (TMDL und PBIR). Unabhängig davon berechnet `tools/reference.py` jede Kennzahl mit pandas in ganzen Cent. Beide treffen sich im [Abgleich](docs/reconciliation.md): Sechzehn Kennzahlen aus Python und aus Power BI Desktop müssen übereinstimmen. Dieselbe Referenz erzeugt die Daten der Nachbildung. Mehr in [docs/architecture.md](docs/architecture.md).
 
 ## Datenmodell
+
+![Die Modellansicht in Power BI Desktop: FactSales und FactTargets mit fünf Dimensionen, die Kennzahlentabelle, die Berechnungsgruppe, der Feldparameter und die Sicherheitstabelle](docs/screenshots/08-model.png)
 
 Ein Sternschema: `FactSales` (Auftragspositionen) und `FactTargets` (Region × Monat) mit `DimDate`, `DimProduct`, `DimCustomer`, `DimRegion` und `DimSalesRep`; 22 Kennzahlen in `_Measures`; die Berechnungsgruppe `Time intelligence` (Current, PY, YoY, YoY %, YTD, PYTD, R12) auf Fenstern über den Monatsindex, sodass das angebrochene Jahr 2025 Januar bis September mit denselben Monaten 2024 vergleicht; der Feldparameter `Analyse by`; die verborgene Tabelle `Security` für die Sicherheit auf Zeilenebene. Tabellen, Spalten und die Regeln des Generators stehen in [docs/data-model.md](docs/data-model.md), jede Kennzahl mit ihrem DAX in [docs/measures.md](docs/measures.md).
 
