@@ -10,7 +10,7 @@
       "nodes": [
         {
           "location": {
-            "x": 0.0,
+            "x": 0,
             "y": 0
           },
           "nodeIndex": "DimDate",
@@ -23,7 +23,7 @@
         },
         {
           "location": {
-            "x": 294.0,
+            "x": 294,
             "y": 0
           },
           "nodeIndex": "DimProduct",
@@ -36,7 +36,7 @@
         },
         {
           "location": {
-            "x": 588.0,
+            "x": 588,
             "y": 0
           },
           "nodeIndex": "DimCustomer",
@@ -49,7 +49,7 @@
         },
         {
           "location": {
-            "x": 882.0,
+            "x": 882,
             "y": 0
           },
           "nodeIndex": "DimRegion",
@@ -62,7 +62,7 @@
         },
         {
           "location": {
-            "x": 1176.0,
+            "x": 1176,
             "y": 0
           },
           "nodeIndex": "DimSalesRep",
@@ -75,7 +75,7 @@
         },
         {
           "location": {
-            "x": 441.0,
+            "x": 441,
             "y": 430
           },
           "nodeIndex": "FactSales",
@@ -88,7 +88,7 @@
         },
         {
           "location": {
-            "x": 735.0,
+            "x": 735,
             "y": 430
           },
           "nodeIndex": "FactTargets",
@@ -101,7 +101,7 @@
         },
         {
           "location": {
-            "x": 147.0,
+            "x": 147,
             "y": 860
           },
           "nodeIndex": "_Measures",
@@ -114,7 +114,7 @@
         },
         {
           "location": {
-            "x": 441.0,
+            "x": 441,
             "y": 860
           },
           "nodeIndex": "Time intelligence",
@@ -127,7 +127,7 @@
         },
         {
           "location": {
-            "x": 735.0,
+            "x": 735,
             "y": 860
           },
           "nodeIndex": "Analyse by",
@@ -140,7 +140,7 @@
         },
         {
           "location": {
-            "x": 1029.0,
+            "x": 1029,
             "y": 860
           },
           "nodeIndex": "Security",

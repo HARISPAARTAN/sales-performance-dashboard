@@ -13,3 +13,4 @@ pbip/**/.pbi/cache.abf
 pbip/**/.pbi/editorSettings.json
 pbip/**/.pbi/unappliedChanges.json
 pbip/**/cache.abf
+pbip/**/.pbi/daxQueries.json

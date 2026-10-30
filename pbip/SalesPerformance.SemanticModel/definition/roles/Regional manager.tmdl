@@ -9,3 +9,6 @@ role 'Regional manager'
 	tablePermission DimCustomer = DimCustomer[RegionKey] IN CALCULATETABLE(VALUES(Security[RegionKey]), Security[User e-mail] = USERPRINCIPALNAME())
 
 	tablePermission DimSalesRep = DimSalesRep[RegionKey] IN CALCULATETABLE(VALUES(Security[RegionKey]), Security[User e-mail] = USERPRINCIPALNAME())
+
+	annotation PBI_Id = 689b09c6e47948469aaf681b1ce19588
+

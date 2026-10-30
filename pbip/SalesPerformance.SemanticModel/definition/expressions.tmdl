@@ -15,3 +15,4 @@ expression EndDate = #date(2025, 12, 31) meta [IsParameterQuery = true, Type = "
 	lineageTag: 672473c5-7c9c-5783-884f-fc053042cf76
 
 	annotation PBI_ResultType = Date
+

@@ -1,48 +1,21 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "364c73cfb27153f6bf4e",
   "position": {
-    "height": 212,
-    "tabOrder": 18,
-    "width": 616,
     "x": 16,
     "y": 492,
-    "z": 18
+    "z": 18,
+    "height": 212,
+    "width": 616,
+    "tabOrder": 18
   },
   "visual": {
-    "drillFilterOtherVisuals": true,
-    "expansionStates": [
-      {
-        "levels": [
-          {
-            "isCollapsed": false,
-            "isPinned": true,
-            "queryRefs": [
-              "DimRegion.Region"
-            ]
-          },
-          {
-            "isPinned": true,
-            "queryRefs": [
-              "DimCustomer.Country"
-            ]
-          }
-        ],
-        "roles": [
-          "Rows"
-        ],
-        "root": {
-          "isToggled": true
-        }
-      }
-    ],
-    "objects": {},
+    "visualType": "pivotTable",
     "query": {
       "queryState": {
         "Rows": {
           "projections": [
             {
-              "active": true,
               "field": {
                 "Column": {
                   "Expression": {
@@ -53,11 +26,11 @@
                   "Property": "Region"
                 }
               },
+              "queryRef": "DimRegion.Region",
               "nativeQueryRef": "Region",
-              "queryRef": "DimRegion.Region"
+              "active": true
             },
             {
-              "active": true,
               "field": {
                 "Column": {
                   "Expression": {
@@ -68,8 +41,9 @@
                   "Property": "Country"
                 }
               },
+              "queryRef": "DimCustomer.Country",
               "nativeQueryRef": "Country",
-              "queryRef": "DimCustomer.Country"
+              "active": true
             }
           ]
         },
@@ -86,11 +60,10 @@
                   "Property": "Revenue"
                 }
               },
-              "nativeQueryRef": "Revenue",
-              "queryRef": "_Measures.Revenue"
+              "queryRef": "_Measures.Revenue",
+              "nativeQueryRef": "Revenue"
             },
             {
-              "displayName": "Margin %",
               "field": {
                 "Measure": {
                   "Expression": {
@@ -101,8 +74,9 @@
                   "Property": "Gross margin %"
                 }
               },
+              "queryRef": "_Measures.Gross margin %",
               "nativeQueryRef": "Gross margin %",
-              "queryRef": "_Measures.Gross margin %"
+              "displayName": "Margin %"
             },
             {
               "field": {
@@ -115,11 +89,10 @@
                   "Property": "Discount %"
                 }
               },
-              "nativeQueryRef": "Discount %",
-              "queryRef": "_Measures.Discount %"
+              "queryRef": "_Measures.Discount %",
+              "nativeQueryRef": "Discount %"
             },
             {
-              "displayName": "Customers",
               "field": {
                 "Measure": {
                   "Expression": {
@@ -130,11 +103,11 @@
                   "Property": "Active customers"
                 }
               },
+              "queryRef": "_Measures.Active customers",
               "nativeQueryRef": "Active customers",
-              "queryRef": "_Measures.Active customers"
+              "displayName": "Customers"
             },
             {
-              "displayName": "AOV",
               "field": {
                 "Measure": {
                   "Expression": {
@@ -145,13 +118,38 @@
                   "Property": "Average order value"
                 }
               },
+              "queryRef": "_Measures.Average order value",
               "nativeQueryRef": "Average order value",
-              "queryRef": "_Measures.Average order value"
+              "displayName": "AOV"
             }
           ]
         }
       }
     },
+    "expansionStates": [
+      {
+        "roles": [
+          "Rows"
+        ],
+        "levels": [
+          {
+            "queryRefs": [
+              "DimRegion.Region"
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "DimCustomer.Country"
+            ],
+            "isPinned": true
+          }
+        ],
+        "root": {
+          "isToggled": true
+        }
+      }
+    ],
     "visualContainerObjects": {
       "general": [
         {
@@ -187,6 +185,6 @@
         }
       ]
     },
-    "visualType": "pivotTable"
+    "drillFilterOtherVisuals": true
   }
 }

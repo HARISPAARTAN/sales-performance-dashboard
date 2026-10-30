@@ -1,55 +1,21 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "34bd9a25267c56ec9988",
   "position": {
-    "height": 212,
-    "tabOrder": 16,
-    "width": 616,
     "x": 16,
     "y": 492,
-    "z": 16
+    "z": 16,
+    "height": 212,
+    "width": 616,
+    "tabOrder": 16
   },
   "visual": {
-    "drillFilterOtherVisuals": true,
-    "expansionStates": [
-      {
-        "levels": [
-          {
-            "isCollapsed": false,
-            "isPinned": true,
-            "queryRefs": [
-              "DimDate.Calendar.Year"
-            ]
-          },
-          {
-            "isCollapsed": false,
-            "isPinned": true,
-            "queryRefs": [
-              "DimDate.Calendar.Quarter"
-            ]
-          },
-          {
-            "isPinned": true,
-            "queryRefs": [
-              "DimDate.Calendar.Month name"
-            ]
-          }
-        ],
-        "roles": [
-          "Rows"
-        ],
-        "root": {
-          "isToggled": true
-        }
-      }
-    ],
-    "objects": {},
+    "visualType": "pivotTable",
     "query": {
       "queryState": {
         "Columns": {
           "projections": [
             {
-              "active": true,
               "field": {
                 "Column": {
                   "Expression": {
@@ -60,8 +26,9 @@
                   "Property": "Time calculation"
                 }
               },
+              "queryRef": "Time intelligence.Time calculation",
               "nativeQueryRef": "Time calculation",
-              "queryRef": "Time intelligence.Time calculation"
+              "active": true
             }
           ]
         },
@@ -83,8 +50,9 @@
                   "Level": "Year"
                 }
               },
+              "queryRef": "DimDate.Calendar.Year",
               "nativeQueryRef": "Year",
-              "queryRef": "DimDate.Calendar.Year"
+              "active": true
             },
             {
               "field": {
@@ -102,8 +70,9 @@
                   "Level": "Quarter"
                 }
               },
+              "queryRef": "DimDate.Calendar.Quarter",
               "nativeQueryRef": "Quarter",
-              "queryRef": "DimDate.Calendar.Quarter"
+              "active": false
             },
             {
               "field": {
@@ -121,8 +90,9 @@
                   "Level": "Month name"
                 }
               },
+              "queryRef": "DimDate.Calendar.Month name",
               "nativeQueryRef": "Month name",
-              "queryRef": "DimDate.Calendar.Month name"
+              "active": false
             }
           ]
         },
@@ -139,13 +109,43 @@
                   "Property": "Revenue"
                 }
               },
-              "nativeQueryRef": "Revenue",
-              "queryRef": "_Measures.Revenue"
+              "queryRef": "_Measures.Revenue",
+              "nativeQueryRef": "Revenue"
             }
           ]
         }
       }
     },
+    "expansionStates": [
+      {
+        "roles": [
+          "Rows"
+        ],
+        "levels": [
+          {
+            "queryRefs": [
+              "DimDate.Calendar.Year"
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "DimDate.Calendar.Quarter"
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "DimDate.Calendar.Month name"
+            ],
+            "isPinned": true
+          }
+        ],
+        "root": {
+          "isToggled": true
+        }
+      }
+    ],
     "visualContainerObjects": {
       "general": [
         {
@@ -181,6 +181,6 @@
         }
       ]
     },
-    "visualType": "pivotTable"
+    "drillFilterOtherVisuals": true
   }
 }

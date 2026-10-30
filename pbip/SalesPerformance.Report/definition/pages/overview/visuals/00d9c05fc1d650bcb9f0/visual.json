@@ -1,16 +1,109 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "00d9c05fc1d650bcb9f0",
   "position": {
-    "height": 376,
-    "tabOrder": 21,
-    "width": 476,
     "x": 788,
     "y": 328,
-    "z": 21
+    "z": 21,
+    "height": 376,
+    "width": 476,
+    "tabOrder": 21
   },
   "visual": {
-    "drillFilterOtherVisuals": true,
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimProduct"
+                    }
+                  },
+                  "Property": "Category"
+                }
+              },
+              "queryRef": "DimProduct.Category",
+              "nativeQueryRef": "Category",
+              "active": true,
+              "displayName": "Category"
+            }
+          ],
+          "fieldParameters": [
+            {
+              "parameterExpr": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Analyse by"
+                    }
+                  },
+                  "Property": "Analyse by"
+                }
+              },
+              "index": 0,
+              "length": 1
+            }
+          ]
+        },
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Gross margin %"
+                }
+              },
+              "queryRef": "_Measures.Gross margin %",
+              "nativeQueryRef": "Gross margin %"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Revenue"
+                }
+              },
+              "queryRef": "_Measures.Revenue",
+              "nativeQueryRef": "Revenue"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Measures"
+                  }
+                },
+                "Property": "Revenue"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
     "objects": {
       "categoryAxis": [
         {
@@ -121,97 +214,6 @@
         }
       ]
     },
-    "query": {
-      "queryState": {
-        "Category": {
-          "fieldParameters": [
-            {
-              "index": 0,
-              "length": 1,
-              "parameterExpr": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Analyse by"
-                    }
-                  },
-                  "Property": "Analyse by"
-                }
-              }
-            }
-          ],
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "DimProduct"
-                    }
-                  },
-                  "Property": "Category"
-                }
-              },
-              "nativeQueryRef": "Category",
-              "queryRef": "DimProduct.Category"
-            }
-          ]
-        },
-        "Tooltips": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Gross margin %"
-                }
-              },
-              "nativeQueryRef": "Gross margin %",
-              "queryRef": "_Measures.Gross margin %"
-            }
-          ]
-        },
-        "Y": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Revenue"
-                }
-              },
-              "nativeQueryRef": "Revenue",
-              "queryRef": "_Measures.Revenue"
-            }
-          ]
-        }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "direction": "Descending",
-            "field": {
-              "Measure": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "_Measures"
-                  }
-                },
-                "Property": "Revenue"
-              }
-            }
-          }
-        ]
-      }
-    },
     "visualContainerObjects": {
       "general": [
         {
@@ -247,6 +249,6 @@
         }
       ]
     },
-    "visualType": "clusteredBarChart"
+    "drillFilterOtherVisuals": true
   }
 }

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "SalesPerformance"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "c2586935-272f-4a68-b051-e0d475364eff"
+  }
+}

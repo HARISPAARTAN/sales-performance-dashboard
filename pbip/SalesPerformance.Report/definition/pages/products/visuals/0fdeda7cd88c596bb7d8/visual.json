@@ -1,16 +1,117 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "0fdeda7cd88c596bb7d8",
   "position": {
-    "height": 460,
-    "tabOrder": 17,
-    "width": 476,
     "x": 788,
     "y": 244,
-    "z": 17
+    "z": 17,
+    "height": 460,
+    "width": 476,
+    "tabOrder": 17
   },
   "visual": {
-    "drillFilterOtherVisuals": true,
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "HierarchyLevel": {
+                  "Expression": {
+                    "Hierarchy": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DimProduct"
+                        }
+                      },
+                      "Hierarchy": "Products"
+                    }
+                  },
+                  "Level": "Category"
+                }
+              },
+              "queryRef": "DimProduct.Products.Category",
+              "nativeQueryRef": "Category",
+              "active": true
+            },
+            {
+              "field": {
+                "HierarchyLevel": {
+                  "Expression": {
+                    "Hierarchy": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DimProduct"
+                        }
+                      },
+                      "Hierarchy": "Products"
+                    }
+                  },
+                  "Level": "Subcategory"
+                }
+              },
+              "queryRef": "DimProduct.Products.Subcategory",
+              "nativeQueryRef": "Subcategory",
+              "active": false
+            }
+          ]
+        },
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Gross margin %"
+                }
+              },
+              "queryRef": "_Measures.Gross margin %",
+              "nativeQueryRef": "Gross margin %"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Revenue"
+                }
+              },
+              "queryRef": "_Measures.Revenue",
+              "nativeQueryRef": "Revenue"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Measures"
+                  }
+                },
+                "Property": "Revenue"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
     "objects": {
       "categoryAxis": [
         {
@@ -121,105 +222,6 @@
         }
       ]
     },
-    "query": {
-      "queryState": {
-        "Category": {
-          "projections": [
-            {
-              "field": {
-                "HierarchyLevel": {
-                  "Expression": {
-                    "Hierarchy": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "DimProduct"
-                        }
-                      },
-                      "Hierarchy": "Products"
-                    }
-                  },
-                  "Level": "Category"
-                }
-              },
-              "nativeQueryRef": "Category",
-              "queryRef": "DimProduct.Products.Category"
-            },
-            {
-              "field": {
-                "HierarchyLevel": {
-                  "Expression": {
-                    "Hierarchy": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "DimProduct"
-                        }
-                      },
-                      "Hierarchy": "Products"
-                    }
-                  },
-                  "Level": "Subcategory"
-                }
-              },
-              "nativeQueryRef": "Subcategory",
-              "queryRef": "DimProduct.Products.Subcategory"
-            }
-          ]
-        },
-        "Tooltips": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Gross margin %"
-                }
-              },
-              "nativeQueryRef": "Gross margin %",
-              "queryRef": "_Measures.Gross margin %"
-            }
-          ]
-        },
-        "Y": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Revenue"
-                }
-              },
-              "nativeQueryRef": "Revenue",
-              "queryRef": "_Measures.Revenue"
-            }
-          ]
-        }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "direction": "Descending",
-            "field": {
-              "Measure": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "_Measures"
-                  }
-                },
-                "Property": "Revenue"
-              }
-            }
-          }
-        ]
-      }
-    },
     "visualContainerObjects": {
       "general": [
         {
@@ -310,6 +312,6 @@
         }
       ]
     },
-    "visualType": "clusteredBarChart"
+    "drillFilterOtherVisuals": true
   }
 }

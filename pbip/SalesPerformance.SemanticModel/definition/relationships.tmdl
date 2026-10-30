@@ -25,3 +25,4 @@ relationship facttargets-dimdate
 relationship facttargets-dimregion
 	fromColumn: FactTargets.RegionKey
 	toColumn: DimRegion.RegionKey
+

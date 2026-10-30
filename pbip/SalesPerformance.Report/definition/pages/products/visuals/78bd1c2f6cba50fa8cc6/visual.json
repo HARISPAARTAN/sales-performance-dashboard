@@ -1,68 +1,39 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
-  "filterConfig": {
-    "filters": [
-      {
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Revenue"
-          }
-        },
-        "filter": {
-          "From": [
-            {
-              "Entity": "_Measures",
-              "Name": "f0",
-              "Type": 0
-            }
-          ],
-          "Version": 2,
-          "Where": [
-            {
-              "Condition": {
-                "Comparison": {
-                  "ComparisonKind": 1,
-                  "Left": {
-                    "Measure": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Source": "f0"
-                        }
-                      },
-                      "Property": "Revenue"
-                    }
-                  },
-                  "Right": {
-                    "Literal": {
-                      "Value": "0D"
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        },
-        "name": "1ef706603b1454fc9b85",
-        "type": "Advanced"
-      }
-    ]
-  },
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "78bd1c2f6cba50fa8cc6",
   "position": {
-    "height": 80,
-    "tabOrder": 3,
-    "width": 200,
     "x": 16,
     "y": 56,
-    "z": 3
+    "z": 3,
+    "height": 80,
+    "width": 200,
+    "tabOrder": 3
   },
   "visual": {
-    "drillFilterOtherVisuals": true,
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimDate"
+                    }
+                  },
+                  "Property": "Year"
+                }
+              },
+              "queryRef": "DimDate.Year",
+              "nativeQueryRef": "Year",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
     "objects": {
       "data": [
         {
@@ -82,14 +53,14 @@
           "properties": {
             "filter": {
               "filter": {
+                "Version": 2,
                 "From": [
                   {
+                    "Name": "d",
                     "Entity": "DimDate",
-                    "Name": "s",
                     "Type": 0
                   }
                 ],
-                "Version": 2,
                 "Where": [
                   {
                     "Condition": {
@@ -99,7 +70,7 @@
                             "Column": {
                               "Expression": {
                                 "SourceRef": {
-                                  "Source": "s"
+                                  "Source": "d"
                                 }
                               },
                               "Property": "Year"
@@ -172,34 +143,6 @@
         }
       ]
     },
-    "query": {
-      "queryState": {
-        "Values": {
-          "projections": [
-            {
-              "active": true,
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "DimDate"
-                    }
-                  },
-                  "Property": "Year"
-                }
-              },
-              "nativeQueryRef": "Year",
-              "queryRef": "DimDate.Year"
-            }
-          ]
-        }
-      }
-    },
-    "syncGroup": {
-      "fieldChanges": true,
-      "filterChanges": true,
-      "groupName": "Year"
-    },
     "visualContainerObjects": {
       "general": [
         {
@@ -235,6 +178,63 @@
         }
       ]
     },
-    "visualType": "slicer"
+    "syncGroup": {
+      "groupName": "Year",
+      "fieldChanges": true,
+      "filterChanges": true
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "1ef706603b1454fc9b85",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Revenue"
+          }
+        },
+        "type": "Advanced",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "f0",
+              "Entity": "_Measures",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Comparison": {
+                  "ComparisonKind": 1,
+                  "Left": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "f0"
+                        }
+                      },
+                      "Property": "Revenue"
+                    }
+                  },
+                  "Right": {
+                    "Literal": {
+                      "Value": "0D"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
   }
 }

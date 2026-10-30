@@ -1,16 +1,39 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "42ed453d5fd451139912",
   "position": {
-    "height": 72,
-    "tabOrder": 20,
-    "width": 476,
     "x": 788,
     "y": 244,
-    "z": 20
+    "z": 20,
+    "height": 72,
+    "width": 476,
+    "tabOrder": 20
   },
   "visual": {
-    "drillFilterOtherVisuals": true,
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Analyse by"
+                    }
+                  },
+                  "Property": "Analyse by"
+                }
+              },
+              "queryRef": "Analyse by.Analyse by",
+              "nativeQueryRef": "Analyse by",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
     "objects": {
       "data": [
         {
@@ -40,6 +63,97 @@
                 "Literal": {
                   "Value": "false"
                 }
+              }
+            },
+            "filter": {
+              "filter": {
+                "Version": 2,
+                "From": [
+                  {
+                    "Name": "a",
+                    "Entity": "Analyse by",
+                    "Type": 0
+                  }
+                ],
+                "Where": [
+                  {
+                    "Condition": {
+                      "In": {
+                        "Expressions": [
+                          {
+                            "Column": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Source": "a"
+                                }
+                              },
+                              "Property": "Analyse by Fields"
+                            }
+                          }
+                        ],
+                        "Values": [
+                          [
+                            {
+                              "Literal": {
+                                "Value": "'''DimProduct''[Category]'"
+                              }
+                            }
+                          ]
+                        ]
+                      }
+                    },
+                    "Annotations": {
+                      "filterExpressionMetadata": {
+                        "expressions": [
+                          {
+                            "Column": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Analyse by"
+                                }
+                              },
+                              "Property": "Analyse by"
+                            }
+                          }
+                        ],
+                        "decomposedIdentities": {
+                          "values": [
+                            [
+                              {
+                                "0": [
+                                  {
+                                    "Literal": {
+                                      "Value": "'''DimProduct''[Category]'"
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          ],
+                          "columns": [
+                            {
+                              "value": {
+                                "Column": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Entity": "Analyse by"
+                                    }
+                                  },
+                                  "Property": "Analyse by Fields"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "valueMap": [
+                          {
+                            "0": "Category"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
               }
             }
           }
@@ -86,29 +200,6 @@
         }
       ]
     },
-    "query": {
-      "queryState": {
-        "Values": {
-          "projections": [
-            {
-              "active": true,
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Analyse by"
-                    }
-                  },
-                  "Property": "Analyse by"
-                }
-              },
-              "nativeQueryRef": "Analyse by",
-              "queryRef": "Analyse by.Analyse by"
-            }
-          ]
-        }
-      }
-    },
     "visualContainerObjects": {
       "general": [
         {
@@ -144,6 +235,24 @@
         }
       ]
     },
-    "visualType": "slicer"
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "7ed06a41d31a3586b664",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Analyse by"
+              }
+            },
+            "Property": "Analyse by"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
   }
 }

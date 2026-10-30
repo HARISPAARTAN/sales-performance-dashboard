@@ -49,3 +49,4 @@ table 'Analyse by'
 				    ("Segment", NAMEOF('DimCustomer'[Segment]), 2),
 				    ("Channel", NAMEOF('DimCustomer'[Channel]), 3)
 				}
+

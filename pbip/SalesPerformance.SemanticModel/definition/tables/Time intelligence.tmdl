@@ -174,3 +174,4 @@ table 'Time intelligence'
 		sourceColumn: Ordinal
 
 		annotation SummarizationSetBy = Automatic
+

@@ -1,97 +1,6 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
   "displayName": "Reset Targets",
-  "explorationState": {
-    "activeSection": "targets",
-    "objects": {},
-    "sections": {
-      "targets": {
-        "visualContainers": {
-          "38e1e1012af6537faf51": {
-            "singleVisual": {
-              "objects": {
-                "remove": [
-                  {
-                    "object": "general",
-                    "property": "filter"
-                  }
-                ]
-              },
-              "visualType": "slicer"
-            }
-          },
-          "41f1c27d8a7a5d16b337": {
-            "singleVisual": {
-              "objects": {
-                "remove": [
-                  {
-                    "object": "general",
-                    "property": "filter"
-                  }
-                ]
-              },
-              "visualType": "slicer"
-            }
-          },
-          "ee96fb7d4e30581cba6c": {
-            "singleVisual": {
-              "objects": {
-                "merge": {
-                  "general": [
-                    {
-                      "properties": {
-                        "filter": {
-                          "From": [
-                            {
-                              "Entity": "DimDate",
-                              "Name": "s",
-                              "Type": 0
-                            }
-                          ],
-                          "Version": 2,
-                          "Where": [
-                            {
-                              "Condition": {
-                                "In": {
-                                  "Expressions": [
-                                    {
-                                      "Column": {
-                                        "Expression": {
-                                          "SourceRef": {
-                                            "Source": "s"
-                                          }
-                                        },
-                                        "Property": "Year"
-                                      }
-                                    }
-                                  ],
-                                  "Values": [
-                                    [
-                                      {
-                                        "Literal": {
-                                          "Value": "2025L"
-                                        }
-                                      }
-                                    ]
-                                  ]
-                                }
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "visualType": "slicer"
-            }
-          }
-        }
-      }
-    },
-    "version": "1.3"
-  },
   "name": "03a639b816125abe93fc",
   "options": {
     "applyOnlyToTargetVisuals": true,
@@ -100,5 +9,56 @@
       "41f1c27d8a7a5d16b337",
       "ee96fb7d4e30581cba6c"
     ]
+  },
+  "explorationState": {
+    "version": "1.3",
+    "activeSection": "targets",
+    "sections": {
+      "targets": {
+        "visualContainers": {
+          "38e1e1012af6537faf51": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "remove": [
+                  {
+                    "object": "general",
+                    "property": "filter"
+                  }
+                ]
+              }
+            }
+          },
+          "41f1c27d8a7a5d16b337": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "remove": [
+                  {
+                    "object": "general",
+                    "property": "filter"
+                  }
+                ]
+              }
+            }
+          },
+          "ee96fb7d4e30581cba6c": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "general": [
+                    {
+                      "properties": {}
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "objects": {}
   }
 }
