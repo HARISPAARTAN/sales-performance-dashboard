@@ -31,7 +31,7 @@ The replica is a static page with the six report pages as tabs (Overview, Trends
 
 ## What it does
 
-Eight report pages (seven on a 1280 × 720 canvas, the product tooltip on 320 × 240) with the theme Veltrano Dark: a header with the data date, a slicer row (Year, Months, Region, Category, Reset) synced across the pages, a row of KPI tiles with the change against the previous year, and the charts below.
+Eight report pages (seven on a 1280 × 720 canvas, the product tooltip on 320 × 344) with the theme Veltrano Dark: a header with the data date, a slicer row (Year, Months, Region, Category, Reset) synced across the pages, a row of KPI tiles with the change against the previous year, and the charts below.
 
 - **Overview**: revenue, gross margin %, orders, average order value and discount %; the monthly trend against the previous year; revenue and margin by month; revenue by a dimension you choose (Analyse by: category, region, segment or channel).
 - **Trends**: year to date, previous year to date, rolling 12 months and units; units by category; a matrix with all seven time calculations by month.
@@ -47,7 +47,7 @@ Eight report pages (seven on a 1280 × 720 canvas, the product tooltip on 320 ×
 
 | Products | Regions |
 |---|---|
-| ![Products page with the Pareto chart of the top 40 products, the product table and revenue by category](docs/screenshots/03-products.png) | ![Regions page with revenue by region against the previous year, the country matrix and discount against margin](docs/screenshots/04-regions.png) |
+| ![Products page with the Pareto chart of the top 40 products and the product tooltip open, the product table and revenue by category](docs/screenshots/03-products.png) | ![Regions page with revenue by region against the previous year, the country matrix and discount against margin](docs/screenshots/04-regions.png) |
 
 | Customers | Targets |
 |---|---|

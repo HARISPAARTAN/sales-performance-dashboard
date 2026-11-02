@@ -523,7 +523,8 @@ def _bookmark_json(page: dict, spec: dict, visuals: list[dict]) -> dict:
         slicer = spec["slicers"][name]
         vname = stable_name(pid, "slicer", name)
         if slicer.get("default"):
-            objects = {"merge": {"general": [{"properties": slicer_selection(*slicer["field"], slicer["default"])}]}}
+            selection = slicer_selection(*slicer["field"], slicer["default"])
+            objects = {"merge": {"general": [{"properties": {"filter": selection}}]}}
         else:
             objects = {"remove": [{"object": "general", "property": "filter"}]}
         states[vname] = {"singleVisual": {"visualType": "slicer", "objects": objects}}

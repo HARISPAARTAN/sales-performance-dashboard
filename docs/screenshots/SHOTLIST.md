@@ -6,7 +6,7 @@ The images the READMEs show. Images 01 to 08 come from the Power BI Desktop sess
 |---|---|
 | `01-overview.png` | Overview: five KPI tiles, current vs previous year, revenue and gross margin %, Analyse by Category |
 | `02-trends.png` | Trends: YTD, PYTD, R12 and Units, the time-intelligence matrix |
-| `03-products.png` | Products: the Pareto chart of the top 40 products, the product table with rank and class, revenue by category |
+| `03-products.png` | Products: the Pareto chart of the top 40 products with the product tooltip open, the product table with rank and class, revenue by category |
 | `04-regions.png` | Regions: current vs PY by region, monthly revenue by region, the country matrix, discount vs margin |
 | `05-customers.png` | Customers: revenue by segment and by sales rep, the customer table |
 | `06-targets.png` | Targets: revenue vs target, attainment by region, the region × month attainment matrix |

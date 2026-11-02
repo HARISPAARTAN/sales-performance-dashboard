@@ -176,7 +176,7 @@ def reset_problems(report):
 def tooltip_problems(report):
     out = []
     tip = page(report, "Product tooltip")
-    if (tip.page_type, tip.visibility, tip.width, tip.height) != ("Tooltip", "HiddenInViewMode", 320, 240):
+    if (tip.page_type, tip.visibility, tip.width, tip.height) != ("Tooltip", "HiddenInViewMode", 320, 344):
         out.append("the tooltip page is not a hidden 320 x 240 tooltip page")
     if (tip.raw.get("pageBinding") or {}).get("type") != "Tooltip":
         out.append("the tooltip page has no tooltip binding")
@@ -184,7 +184,7 @@ def tooltip_problems(report):
         v = next(v for v in page(report, "Products").visuals if v.title == title)
         props = v.raw["visual"]["visualContainerObjects"].get("visualTooltip", [{}])[0].get("properties", {})
         if (
-            lit(props.get("type", {"expr": {"Literal": {"Value": ""}}})) != "'ReportPage'"
+            lit(props.get("type", {"expr": {"Literal": {"Value": ""}}})) != "'Canvas'"
             or lit(props["section"]).strip("'") != tip.name
         ):
             out.append(f"{title}: no report-page tooltip {tip.name!r}")

@@ -1487,7 +1487,7 @@
       "displayName": "Product tooltip",
       "type": "Tooltip",
       "width": 320,
-      "height": 240,
+      "height": 344,
       "header": false,
       "slicers": [],
       "tiles": [],
@@ -1497,7 +1497,7 @@
           "x": 8,
           "y": 8,
           "w": 304,
-          "h": 40,
+          "h": 56,
           "title": "Selected product",
           "title_hidden": true,
           "label_size": 12,
@@ -1514,9 +1514,9 @@
         {
           "type": "card",
           "x": 8,
-          "y": 56,
+          "y": 72,
           "w": 148,
-          "h": 52,
+          "h": 88,
           "title": "Revenue",
           "label_size": 12,
           "roles": {
@@ -1532,9 +1532,9 @@
         {
           "type": "card",
           "x": 164,
-          "y": 56,
+          "y": 72,
           "w": 148,
-          "h": 52,
+          "h": 88,
           "title": "Gross margin %",
           "label_size": 12,
           "roles": {
@@ -1550,9 +1550,9 @@
         {
           "type": "card",
           "x": 8,
-          "y": 116,
+          "y": 168,
           "w": 148,
-          "h": 52,
+          "h": 88,
           "title": "Units",
           "label_size": 12,
           "roles": {
@@ -1568,9 +1568,9 @@
         {
           "type": "card",
           "x": 164,
-          "y": 116,
+          "y": 168,
           "w": 148,
-          "h": 52,
+          "h": 88,
           "title": "Product rank",
           "label_size": 12,
           "roles": {
@@ -1586,9 +1586,9 @@
         {
           "type": "lineChart",
           "x": 8,
-          "y": 176,
+          "y": 264,
           "w": 304,
-          "h": 56,
+          "h": 72,
           "title": "Revenue by month",
           "title_hidden": true,
           "axes": false,

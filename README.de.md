@@ -31,7 +31,7 @@ Die Nachbildung ist eine statische Seite mit den sechs Berichtsseiten als Reiter
 
 ## Was es kann
 
-Acht Berichtsseiten (sieben auf einer Fläche von 1280 × 720, die Tooltip-Seite auf 320 × 240) im Design Veltrano Dark: eine Kopfzeile mit dem Datenstand, eine Slicer-Zeile (Year, Months, Region, Category, Reset), die über die Seiten synchronisiert ist, eine Reihe Kennzahlkacheln mit der Veränderung zum Vorjahr und darunter die Diagramme.
+Acht Berichtsseiten (sieben auf einer Fläche von 1280 × 720, die Tooltip-Seite auf 320 × 344) im Design Veltrano Dark: eine Kopfzeile mit dem Datenstand, eine Slicer-Zeile (Year, Months, Region, Category, Reset), die über die Seiten synchronisiert ist, eine Reihe Kennzahlkacheln mit der Veränderung zum Vorjahr und darunter die Diagramme.
 
 - **Overview**: Umsatz, Bruttomarge in %, Aufträge, durchschnittlicher Auftragswert und Rabatt in %; der Monatsverlauf gegenüber dem Vorjahr; Umsatz und Marge je Monat; Umsatz nach einer wählbaren Dimension (Analyse by: Kategorie, Region, Segment oder Kanal).
 - **Trends**: seit Jahresbeginn, Vorjahr bis zum selben Monat, rollierende 12 Monate und Stückzahlen; Stückzahlen nach Kategorie; eine Matrix mit allen sieben Zeitberechnungen je Monat.
@@ -47,7 +47,7 @@ Acht Berichtsseiten (sieben auf einer Fläche von 1280 × 720, die Tooltip-Seite
 
 | Products | Regions |
 |---|---|
-| ![Seite Products mit dem Pareto-Diagramm der 40 umsatzstärksten Produkte, der Produkttabelle und dem Umsatz nach Kategorie](docs/screenshots/03-products.png) | ![Seite Regions mit dem Umsatz nach Region gegen das Vorjahr, der Ländermatrix und Rabatt gegen Marge](docs/screenshots/04-regions.png) |
+| ![Seite Products mit dem Pareto-Diagramm der 40 umsatzstärksten Produkte und geöffnetem Produkt-Tooltip, der Produkttabelle und dem Umsatz nach Kategorie](docs/screenshots/03-products.png) | ![Seite Regions mit dem Umsatz nach Region gegen das Vorjahr, der Ländermatrix und Rabatt gegen Marge](docs/screenshots/04-regions.png) |
 
 | Customers | Targets |
 |---|---|

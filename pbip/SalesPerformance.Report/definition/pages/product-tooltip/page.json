@@ -3,7 +3,7 @@
   "name": "product-tooltip",
   "displayName": "Product tooltip",
   "displayOption": "FitToPage",
-  "height": 240,
+  "height": 344,
   "width": 320,
   "pageBinding": {
     "name": "d9b253d63dc755b6a34e",

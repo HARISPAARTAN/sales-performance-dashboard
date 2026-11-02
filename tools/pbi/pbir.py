@@ -346,7 +346,7 @@ class Visual:
                     objects[key] = items
         if tooltip_page:
             container_objects["visualTooltip"] = [{"properties": {
-                "show": _literal("true"), "type": _literal("'ReportPage'"), "section": _text(tooltip_page)}}]
+                "show": _literal("true"), "type": _literal("'Canvas'"), "section": _text(tooltip_page)}}]
         if sync_group:
             v["visual"]["syncGroup"] = {"groupName": sync_group, "fieldChanges": True, "filterChanges": True}
         if selection:
