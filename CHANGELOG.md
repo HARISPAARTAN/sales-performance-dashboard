@@ -2,7 +2,7 @@
 
 All notable changes to this project are listed here.
 
-## Unreleased
+## v0.1.0 (2026-11-02)
 
 - Seeded generator for the data of the fictional wholesaler Veltrano Outdoor: three yearly order workbooks (59,539 order lines from January 2023 to September 2025) and six CSV files; `--check` compares a fresh build with the committed files.
 - Power BI project (PBIP): a TMDL model with a star schema, 22 measures, the calculation group `Time intelligence` with seven items on month-index windows, the field parameter `Analyse by` and the role `Regional manager` with dynamic row-level security; a PBIR report with eight pages, synced slicers, reset bookmarks, a tooltip page and the theme `Veltrano Dark` built from the portfolio-kit tokens; the saved DAX query `Reconciliation`.
