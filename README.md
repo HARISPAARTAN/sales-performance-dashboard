@@ -13,7 +13,7 @@ Deutsch: [README.de.md](README.de.md)
 - CI passed on 2026-11-02 for commit `fd95023`: ruff, the Python tests, the checks that the data, the replica data and the theme equal a fresh build, the scrub, the replica's filter and chart tests, contrast, page weight, the links and the kit check against portfolio-kit v0.1.0 ([run](https://github.com/HARISPAARTAN/sales-performance-dashboard/actions/runs/41524977166)).
 - The replica on GitHub Pages passed the browser check of `tools/checks/shots.mjs` on 2026-11-02: six tabs at 1440 and 390 px in both themes, the drill, the customer search and Reset, no request outside the page and no console error.
 - Validated in Power BI Desktop 2.159.883.0 on 2026-10-30: the model refreshes from the files in `data/`, every page renders without an error, and all 16 reconciliation checks match the pandas reference, two of them under the role `Regional manager` ([reconciliation](docs/reconciliation.md)).
-- Release v0.1.0 (2026-11-02): [GitHub Releases](https://github.com/HARISPAARTAN/sales-performance-dashboard/releases/tag/v0.1.0).
+- Release v0.1.1 (2026-11-02): [GitHub Releases](https://github.com/HARISPAARTAN/sales-performance-dashboard/releases/tag/v0.1.1).
 
 ## Client brief
 

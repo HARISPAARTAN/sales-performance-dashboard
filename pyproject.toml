@@ -1,6 +1,6 @@
 [project]
 name = "sales-performance-dashboard"
-version = "0.1.0"
+version = "0.1.1"
 description = "Power BI sales dashboard for a fictional outdoor-equipment wholesaler: PBIP source, a pandas reference and an HTML replica."
 readme = "README.md"
 requires-python = ">=3.13"

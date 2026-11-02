@@ -2,6 +2,12 @@
 
 All notable changes to this project are listed here.
 
+## v0.1.1 (2026-11-02)
+
+- The product tooltip shows the tooltip page instead of the default tooltip; the page is 320 × 344 so that the cards show their values.
+- The Reset buttons return Year to 2025.
+- The ECharts NOTICE and the d3 licence ship with the vendored bundle.
+
 ## v0.1.0 (2026-11-02)
 
 - Seeded generator for the data of the fictional wholesaler Veltrano Outdoor: three yearly order workbooks (59,539 order lines from January 2023 to September 2025) and six CSV files; `--check` compares a fresh build with the committed files.
