@@ -10,7 +10,8 @@ English: [README.md](README.md)
 
 ## Status
 
-- Die Datendateien entsprechen einem frischen Lauf von `tools/make_data.py`, und die Offline-Prüfungen von Modell und Bericht bestehen (`uv run pytest`).
+- CI am 2026-11-02 für Commit `fd95023` bestanden: ruff, die Python-Tests, die Prüfungen, dass Daten, Nachbildungsdaten und Theme einem frischen Lauf entsprechen, der Scrub, die Filter- und Diagrammtests der Nachbildung, Kontrast, Seitengewicht, die Links und der Kit-Abgleich mit portfolio-kit v0.1.0 ([Lauf](https://github.com/HARISPAARTAN/sales-performance-dashboard/actions/runs/41524977166)).
+- Die Nachbildung auf GitHub Pages hat am 2026-11-02 die Browserprüfung von `tools/checks/shots.mjs` bestanden: sechs Reiter bei 1440 und 390 px in beiden Themes, der Drilldown, die Kundensuche und Zurücksetzen, keine Anfrage außerhalb der Seite und kein Konsolenfehler.
 - Am 2026-10-30 in Power BI Desktop 2.159.883.0 geprüft: Das Modell lädt die Dateien aus `data/`, jede Seite wird ohne Fehler angezeigt, und alle 16 Abgleichsprüfungen stimmen mit der pandas-Referenz überein, zwei davon unter der Rolle `Regional manager` ([Abgleich](docs/reconciliation.md)).
 - Noch kein Release.
 
