@@ -19,7 +19,7 @@ dev = [
   "jsonschema==4.26.0",
   "pytest==9.2.0",
   "referencing==0.37.0",
-  "ruff==0.17.3",
+  "ruff==0.17.4",
 ]
 pbi = ["pythonnet==3.2.1"]
 
